@@ -15,7 +15,8 @@ TEMPLATE_PATH = os.path.join(dirname, 'templates')
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", MainHandler)
+            (r"/", MainHandler),
+            (r"/info", InfoApiHandler),
         ]
         settings = {
             "template_path": TEMPLATE_PATH,
