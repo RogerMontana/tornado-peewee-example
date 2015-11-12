@@ -1,0 +1,90 @@
+@font-face {
+  font-family: PNR;
+  src: url(../fonts/proxima-nova-regular.otf);
+}
+
+h2 {
+  font-size: 1.775em; //30px
+}
+
+h4 {
+  font-size: 1.025em; //18px
+}
+
+.zaglushka{
+  height:100vh;
+  min-height: 500px;
+  background: #e7f2f9;
+  display: table-cell;
+  vertical-align: top;
+  font-family: PNR;
+  font-weight: lighter;
+}
+
+.content{
+  vertical-align: middle;
+}
+
+.illustration{
+  width: 55%;
+}
+
+.table{
+  border:1px solid #d0d4d9;
+  margin-top: 4%;
+}
+.table div{
+  padding: 1.5% 0;
+}
+.table .vk:hover img,
+.table .tw:hover img,
+.table .fb:hover img,
+.table .ig:hover img{
+  right: 0;
+  transition: .25s right ease-in-out;
+}
+h2, a, a:hover{
+  color:#2d2c33;
+}
+h4{
+  color:#686868;
+}
+.social-heading{
+  border-bottom: 1px solid #d0d4d9;
+}
+.social-heading h4{
+  color:#2d2c33 !important;
+}
+.divider{
+  background: #d0d4d9;
+  padding: 0% 0% !important;
+  height: 1px;
+  width: 90%;
+  margin-left: 5%;
+}
+.table img{
+  width:18.5%;
+  position: relative;
+  right: 4%;
+  transition: .25s right ease-in-out;
+}
+a{
+  text-decoration: underline;
+  font-size:.8em;
+  font-family: PNR;
+}
+
+@media screen and (max-width:767px){
+  .table{
+    width: 50%;
+    margin: 0 25%;
+  }
+  .table div{
+    text-align: center;
+  }
+  
+  .table img{
+    width:2.5% !important;
+    right: 2%;
+  }
+}
