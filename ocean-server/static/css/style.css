@@ -89,6 +89,9 @@ a{
     width: 70%;
     margin: 0 15%;
   }
+  a{
+    font-size: 1.08em;
+  }
   .table div{
     text-align: center;
   }
