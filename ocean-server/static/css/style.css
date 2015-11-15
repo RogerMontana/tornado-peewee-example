@@ -63,8 +63,8 @@ h4{
   margin-left: 5%;
 }
 .table img{
-  width:18px;
-  height: 18px;
+  width:15px;
+  height: 15px;
   position: relative;
   right: 4%;
   transition: .25s right ease-in-out;
@@ -89,8 +89,11 @@ a{
     width: 70%;
     margin: 0 15%;
   }
+  .table img{
+    display: none;
+  }
   a{
-    font-size: 1.08em;
+    font-size: 1.25em;
   }
   .table div{
     text-align: center;
