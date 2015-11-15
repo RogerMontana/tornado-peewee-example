@@ -63,7 +63,8 @@ h4{
   margin-left: 5%;
 }
 .table img{
-  width:18.5%;
+  width:18px;
+  height: 18px;
   position: relative;
   right: 4%;
   transition: .25s right ease-in-out;
@@ -75,16 +76,17 @@ a{
 }
 
 @media screen and (max-width:767px){
+  body{
+    font-size: 14px;
+  }
+  .illustration{
+    width: 100%;
+  }
   .table{
-    width: 50%;
-    margin: 0 25%;
+    width: 70%;
+    margin: 0 15%;
   }
   .table div{
     text-align: center;
-  }
-  
-  .table img{
-    width:2.5% !important;
-    right: 2%;
   }
 }
