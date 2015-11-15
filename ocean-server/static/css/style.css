@@ -78,7 +78,9 @@ a{
 @media screen and (max-width:767px){
   body{
     font-size: 14px;
-    padding-bottom: 30%;
+  }
+  .zaglushka{
+    height: 120vh;
   }
   .illustration{
     width: 100%;
