@@ -2,8 +2,6 @@ import os
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
-import settings
-from moltin.moltin import Moltin
 from handlers import *
 
 # TODO Refactor settings
@@ -17,6 +15,8 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", MainHandler),
             (r"/info", InfoApiHandler),
+            (r"api/info", InfoApiHandler),
+            (r"api/test", LoginHandler),
         ]
         settings = {
             "template_path": TEMPLATE_PATH,
