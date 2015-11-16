@@ -24,7 +24,7 @@ class InfoApiHandler(tornado.web.RequestHandler):
     def get(self):
         clsmembers = inspect.getmembers(sys.modules[__name__], inspect.isclass)
         template = templates.Loader(TEMPLATE_PATH)
-        self.write(template.load("api_list.html").generate(info = clsmembers))
+        self.write(template.load("api_info.html").generate(info = clsmembers))
 
 
 
