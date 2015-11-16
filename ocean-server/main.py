@@ -15,7 +15,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", MainHandler),
             (r"/info", InfoApiHandler),
-            (r"api/login", LoginHandler),
+            (r"/login", LoginHandler),
         ]
         settings = {
             "template_path": TEMPLATE_PATH,
