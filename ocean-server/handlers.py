@@ -18,9 +18,6 @@ class MainHandler(tornado.web.RequestHandler):
 
 class LoginHandler(tornado.web.RequestHandler):
     def get(self):
-        # m = Moltin()
-        # access_token = m.authenticate()
-        # m.set_access_token(access_token)
         self.write("login mocked")
 
 class InfoApiHandler(tornado.web.RequestHandler):
