@@ -1,7 +1,6 @@
 __author__ = 'artem'
 import tornado.web
 import tornado.template as templates
-from moltin.moltin import Moltin
 import sys, inspect
 import os
 
