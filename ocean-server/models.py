@@ -47,14 +47,12 @@ class Orders(Model):
         )
 
 if 'HEROKU' in os.environ:
-    print("Im in heroku config")
     import urlparse, psycopg2
     urlparse.uses_netloc.append('postgres')
-    url = urlparse.urlparse(os.environ["postgres://zqhwxkznrkqnza:MAKKRjiqJ0j5lziAN78TOCCIjC@ec2-54-247-170-228.eu-west-1.compute.amazonaws.com:5432/d4k58q1gap3hki"])
+    url = urlparse.urlparse(os.environ["://zqhwxkznrkqnza:MAKKRjiqJ0j5lziAN78TOCCIjC@ec2-54-247-170-228.eu-west-1.compute.amazonaws.com:5432"])
     db = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname, port=url.port)
     db_proxy.initialize(db)
 else:
-    print("Im in local config")
     db = SqliteDatabase('persons.db')
     db_proxy.initialize(db)
 
