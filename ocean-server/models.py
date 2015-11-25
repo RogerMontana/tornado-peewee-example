@@ -6,7 +6,7 @@ from peewee import *
 db_proxy = Proxy()
 
 
-class Recipe(Model):
+class Recipes(Model):
     title = CharField(unique=True)
     smallTitle = CharField()
     description = CharField()
@@ -58,4 +58,5 @@ else:
 
 if __name__ == '__main__':
     db_proxy.connect()
-    db_proxy.create_table([Recipe], safe=True)
+    db_proxy.create_table(Recipes, safe=True)
+    db_proxy.create_table(Orders, safe=True)
