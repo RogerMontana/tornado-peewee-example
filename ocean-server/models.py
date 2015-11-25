@@ -26,6 +26,7 @@ class Recipe(Model):
     is_published = BooleanField(default=True)
 
     class Meta:
+        database = db_proxy
         indexes = (
             # create a unique on fields below
             (('title','portion','complexity_rate','price', 'publication_date',), True),
@@ -39,6 +40,7 @@ class Orders(Model):
     created_date = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
+        database = db_proxy
         indexes = (
             # create a unique on Ingredient type
             (('type',), True),
