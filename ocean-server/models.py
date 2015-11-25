@@ -28,7 +28,7 @@ class Recipe(Model):
     class Meta:
         indexes = (
             # create a unique on fields below
-            (('title','portion','complexity_rate','price', 'publication_date'), True),
+            (('title','portion','complexity_rate','price', 'publication_date',), True),
         )
 
 class Orders(Model):
@@ -41,7 +41,7 @@ class Orders(Model):
     class Meta:
         indexes = (
             # create a unique on Ingredient type
-            (('type'), True),
+            (('type',), True),
         )
 
 if 'HEROKU' in os.environ:
