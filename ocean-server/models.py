@@ -29,7 +29,7 @@ class Recipes(Model):
         database = db_proxy
         indexes = (
             # create a unique on fields below
-            (('title',), True),
+            (('title','main_ingredient','complexity_rate','publication_date',), True),
         )
 
 class Orders(Model):
@@ -43,7 +43,7 @@ class Orders(Model):
         database = db_proxy
         indexes = (
             # create a unique on Ingredient type
-            (('type',), True),
+            (('type','status',), True),
         )
 
 if 'HEROKU' in os.environ:
@@ -58,4 +58,5 @@ else:
 
 if __name__ == '__main__':
     db_proxy.connect()
-    db_proxy.create_table([Recipes, Orders,] , safe=True)
+    db_proxy.create_table(Recipes , safe=True)
+    db_proxy.create_table(Orders , safe=True)
