@@ -22,7 +22,7 @@ recipe = Recipes.create(
         publication_date = datetime.datetime.now(),
         is_published =True
         )
-recipe.save()
+
 recipe2 = Recipes.create(
         title = 'sdfsdsdfsdfsdf',
         smallTitle = 'sdfsdsdfsdfsdf',
@@ -42,4 +42,5 @@ recipe2 = Recipes.create(
         publication_date = datetime.datetime.now(),
         is_published =True
         )
+recipe.save()
 recipe2.save()
