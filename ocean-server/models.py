@@ -53,9 +53,9 @@ if 'HEROKU' in os.environ:
     db = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname, port=url.port)
     db_proxy.initialize(db)
 else:
-    db = SqliteDatabase('persons.db')
+    db = SqliteDatabase('ocean04-dev.db')
     db_proxy.initialize(db)
 
 if __name__ == '__main__':
     db_proxy.connect()
-    db_proxy.create_table(Recipes, safe=True)
+    db_proxy.create_table([Recipes, Orders,] , safe=True)
