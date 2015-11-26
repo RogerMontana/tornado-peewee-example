@@ -5,7 +5,7 @@ import sys, inspect
 import os
 from models import *
 import json
-import peewee
+
 dirname = os.path.dirname(__file__)
 
 STATIC_PATH = os.path.join(dirname, 'static')
@@ -29,7 +29,10 @@ class InfoApiHandler(tornado.web.RequestHandler):
 
 class AllRecipesHandler(tornado.web.RequestHandler):
     def get(self):
-        recipes = Recipes.select().get()
-        json_data = json.dumps(model_to_dict(recipes))
-        self.write(json_data)
+        recipes = Recipes.select()
+        response =[]
+        for recipe in recipes:
+            data = str(recipe.get())
+            response.append(data)
+        self.write(json.dumps(response))
 
