@@ -3,7 +3,7 @@ from models import *
 from peewee import *
 
 
-    recipe = Recipes.create(
+recipe = Recipes.create(
         title = 'sdfsdf',
         smallTitle = 'sdfsdf',
         description = 'sdfsdf',
@@ -22,8 +22,8 @@ from peewee import *
         publication_date = datetime.datetime.now(),
         is_published =True
         )
-    recipe.save()
-    recipe2 = Recipes.create(
+recipe.save()
+recipe2 = Recipes.create(
         title = 'sdfsdsdfsdfsdf',
         smallTitle = 'sdfsdsdfsdfsdf',
         description = 'sdfsdsdfsdfsdf',
@@ -42,4 +42,4 @@ from peewee import *
         publication_date = datetime.datetime.now(),
         is_published =True
         )
-    recipe2.save()
+recipe2.save()
