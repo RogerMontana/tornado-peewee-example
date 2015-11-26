@@ -1,7 +1,7 @@
-
 import os
 import datetime
 from peewee import *
+import json
 
 db_proxy = Proxy()
 
@@ -24,6 +24,15 @@ class Recipes(Model):
     nutrients_calories = DecimalField()
     publication_date = DateTimeField(default=datetime.datetime.now)
     is_published = BooleanField(default=True)
+
+    def __str__(self):
+        r = {}
+        for k in self._data.keys():
+         try:
+           r[k] = str(getattr(self, k))
+         except:
+           r[k] = json.dumps(getattr(self, k))
+        return str(r)
 
     class Meta:
         database = db_proxy
