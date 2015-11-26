@@ -3,7 +3,9 @@ import tornado.web
 import tornado.template as templates
 import sys, inspect
 import os
-
+from models import *
+import json
+import peewee
 dirname = os.path.dirname(__file__)
 
 STATIC_PATH = os.path.join(dirname, 'static')
@@ -25,5 +27,9 @@ class InfoApiHandler(tornado.web.RequestHandler):
         template = templates.Loader(TEMPLATE_PATH)
         self.write(template.load("api_info.html").generate(info = clsmembers))
 
-
+class AllRecipesHandler(tornado.web.RequestHandler):
+    def get(self):
+        recipes = Recipes.select().get()
+        json_data = json.dumps(model_to_dict(user_obj))
+        self.write(json_data)
 
