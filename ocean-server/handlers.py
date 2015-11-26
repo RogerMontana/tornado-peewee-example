@@ -30,6 +30,6 @@ class InfoApiHandler(tornado.web.RequestHandler):
 class AllRecipesHandler(tornado.web.RequestHandler):
     def get(self):
         recipes = Recipes.select().get()
-        json_data = json.dumps(model_to_dict(user_obj))
+        json_data = json.dumps(model_to_dict(recipes))
         self.write(json_data)
 
