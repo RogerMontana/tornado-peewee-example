@@ -10,7 +10,6 @@ class Recipes(Model):
     title = CharField(unique=True)
     description = CharField()
     cooking_description = CharField()
-    portion = DecimalField()
     price = DecimalField()
     photo = CharField()
     ingredientsPhoto = CharField()
