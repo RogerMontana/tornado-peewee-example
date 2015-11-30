@@ -8,22 +8,20 @@ db_proxy = Proxy()
 
 class Recipes(Model):
     title = CharField(unique=True)
-    smallTitle = CharField()
     description = CharField()
-    shortDescription = CharField()
+    cooking_description = CharField()
     portion = DecimalField()
-    complexity_rate =  DecimalField()
     price = DecimalField()
     photo = CharField()
     ingredientsPhoto = CharField()
     ingredients = CharField()
-    main_ingredient = CharField()
     nutrients_fat = DecimalField()
     nutrients_carbohydrates = DecimalField()
     nutrients_proteins = DecimalField()
     nutrients_calories = DecimalField()
     publication_date = DateTimeField(default=datetime.datetime.now)
     is_published = BooleanField(default=True)
+
 
     def __str__(self):
         r = {}
@@ -69,3 +67,23 @@ if __name__ == '__main__':
     db_proxy.connect()
     db_proxy.create_table(Recipes , safe=True)
     db_proxy.create_table(Orders , safe=True)
+    recipe = Recipes.create(
+        title = 'sdfsdf',
+        description = 'sdfsdf',
+        cooking_description = 'sdfsdf',
+        price = 1,
+        photo = 'sdfsdf',
+        ingredientsPhoto = 'sdfsdf',
+        ingredients = 'sdfsdf',
+        nutrients_fat = 1,
+        nutrients_carbohydrates = 1,
+        nutrients_proteins = 1,
+        nutrients_calories = 1,
+        publication_date = datetime.datetime.now(),
+        is_published =True
+        )
+
+    print(str(recipe))
+    recipe.save()
+
+
