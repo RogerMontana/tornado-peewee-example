@@ -29,6 +29,8 @@ class InfoApiHandler(tornado.web.RequestHandler):
 
 class AllRecipesHandler(tornado.web.RequestHandler):
     def get(self):
+        self.set_header("Content-Type", "application/json")
+        self.set_header("Access-Control-Allow-Origin", "*")
         recipes = Recipes.select()
         response =[]
         for recipe in recipes:
