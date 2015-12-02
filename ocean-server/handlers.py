@@ -34,7 +34,6 @@ class AllRecipesHandler(tornado.web.RequestHandler):
         recipes = Recipes.select()
         response =[]
         for recipe in recipes:
-            data = str(recipe.get())
-            response.append(data)
+            response.append((str(recipe.get()).replace('\'','\"')))
         self.write(json.dumps(response))
 
