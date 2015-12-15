@@ -5,6 +5,7 @@ import sys, inspect
 import os
 from models import *
 import json
+import plivo
 
 dirname = os.path.dirname(__file__)
 
@@ -36,4 +37,23 @@ class AllRecipesHandler(tornado.web.RequestHandler):
         for recipe in recipes:
             response.append((str(recipe.get()).replace('\'','\"')))
         self.write(json.dumps(response))
+
+class OrdersHandler(tornado.web.RequestHandler):
+    auth_id = "MAOGQ3NMU1N2EZNJHIM2"
+    auth_token = "ZTdmMDdlYjVhMmJjN2VkOTRhZjZlMmMxNjY2Yzc0"
+    number = "+14164647135"
+    msg = {
+        "src": "http://10.10.1.10:3128",
+        "dst": "http://10.10.1.10:1080",
+        "text":"test"
+    }
+    def get(self):
+        p = plivo.RestAPI(self.auth_id, self.auth_token)
+        params = {'dst': self.number,
+                  'src': 'OCEAN_04',
+                  'text': 'Hello from Ocean04 >:3'
+                  }
+        p.send_message(params)
+
+
 
