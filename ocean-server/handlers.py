@@ -5,7 +5,7 @@ import sys, inspect
 import os
 from models import *
 import json
-import plivo
+from twilio.rest import TwilioRestClient
 
 dirname = os.path.dirname(__file__)
 
@@ -39,21 +39,14 @@ class AllRecipesHandler(tornado.web.RequestHandler):
         self.write(json.dumps(response))
 
 class OrdersHandler(tornado.web.RequestHandler):
-    auth_id = "MAOGQ3NMU1N2EZNJHIM2"
-    auth_token = "ZTdmMDdlYjVhMmJjN2VkOTRhZjZlMmMxNjY2Yzc0"
-    number = "+14164647135"
-    msg = {
-        "src": "http://10.10.1.10:3128",
-        "dst": "http://10.10.1.10:1080",
-        "text":"test"
-    }
+    account_sid = "AC62c3e1728fb6f97d87e04c923a364450"
+    auth_token = "75f320c1bbe0b77ac012e9a796c2f2b5"
+    number = "+380504814277"
+
     def get(self):
-        p = plivo.RestAPI(self.auth_id, self.auth_token)
-        params = {'dst': self.number,
-                  'src': 'OCEAN_04',
-                  'text': 'Hello from Ocean04 >:3'
-                  }
-        p.send_message(params)
-
-
+        client = TwilioRestClient(self.account_sid, self.auth_token)
+        message = client.messages.create(body="rocket04 >:3",
+        to=self.number,    # Replace with your phone number
+        from_=self.account_sid) # Replace with your Twilio number
+        print(message.sid)
 
