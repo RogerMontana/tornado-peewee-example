@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 __author__ = 'artem'
+
 import tornado.web
 import tornado.template as templates
 import sys, inspect
@@ -36,17 +38,20 @@ class AllRecipesHandler(tornado.web.RequestHandler):
         response =[]
         for recipe in recipes:
             response.append((str(recipe.get()).replace('\'','\"')))
-        self.write(json.dumps(response))
+        self.write(str(json.dumps(response)))
 
 class OrdersHandler(tornado.web.RequestHandler):
-    account_sid = "AC62c3e1728fb6f97d87e04c923a364450"
+    account_sid = "ACb1df72c332a5e8443e84a6c64fb9cd76"
     auth_token = "75f320c1bbe0b77ac012e9a796c2f2b5"
     number = "+380504814277"
 
-    def get(self):
-        client = TwilioRestClient(self.account_sid, self.auth_token)
-        message = client.messages.create(body="rocket04 >:3",
-        to=self.number,    # Replace with your phone number
-        from_=self.account_sid) # Replace with your Twilio number
-        print(message.sid)
+    # def get(self):
+    #     client = TwilioRestClient(self.account_sid, self.auth_token)
+    #     message = client.messages.create(body="rocket04 >:3",
+    #     to=self.number,    # Replace with your phone number
+    #     from_='Rocket04') # Replace with your Twilio number
+    #     print(message.sid)
 
+    def post(self, *args, **kwargs):
+        self.set_header("Content-Type", "text/plain")
+        self.write("Your order_details " + self.get_argument("order_details") + self.get_argument("quantity"))
