@@ -59,7 +59,7 @@ class OrdersHandler(tornado.web.RequestHandler):
         order = Orders.create(
             order_details = result["order_details"],
             name = result["name"],
-            adress = result["adress"],
+            address = result["address"],
             status = "new",
             phone = result["phone"]
         )

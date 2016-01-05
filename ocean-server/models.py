@@ -38,7 +38,7 @@ class Recipes(Model):
 class Orders(Model):
     order_details = TextField()
     name = TextField()
-    adress = TextField()
+    address = TextField()
     status = TextField()
     phone = TextField()
     created_date = DateTimeField(default=datetime.datetime.now)
