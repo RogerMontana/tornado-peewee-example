@@ -5,7 +5,8 @@ import tornado.web
 import tornado.template as templates
 import sys, inspect
 import os
-from models import *
+from models import Recipes
+from models import Orders
 import json
 from twilio.rest import TwilioRestClient
 
@@ -54,4 +55,13 @@ class OrdersHandler(tornado.web.RequestHandler):
 
     def post(self, *args, **kwargs):
         self.set_header("Content-Type", "text/plain")
-        self.write("Your order_details " + self.get_argument("order_details") + self.get_argument("quantity"))
+        result = json.loads(self.request.body)
+        order = Orders.create(
+            order_details = result["order_details"],
+            name = result["name"],
+            adress = result["adress"],
+            status = "new",
+            phone = result["phone"]
+        )
+        order.save()
+        self.write("Your order_details " + result )

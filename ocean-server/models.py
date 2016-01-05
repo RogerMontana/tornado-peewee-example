@@ -36,10 +36,11 @@ class Recipes(Model):
         )
 
 class Orders(Model):
-    type = TextField()
-    quantity = DecimalField()
     order_details = TextField()
+    name = TextField()
+    adress = TextField()
     status = TextField()
+    phone = TextField()
     created_date = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
