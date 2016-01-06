@@ -38,8 +38,9 @@ class AllRecipesHandler(tornado.web.RequestHandler):
         recipes = Recipes.select()
         response =[]
         for recipe in recipes:
-            response.append((str(recipe.get()).replace('\'','\"')))
-        self.write(str(json.dumps(response)))
+            r = str(recipe.get()).replace('\'','\"')
+            response.append(r)
+        self.write(str(response).replace('\'',''))
 
 class OrdersHandler(tornado.web.RequestHandler):
     account_sid = "ACb1df72c332a5e8443e84a6c64fb9cd76"
