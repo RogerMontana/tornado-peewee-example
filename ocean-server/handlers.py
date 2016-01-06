@@ -33,13 +33,13 @@ class InfoApiHandler(tornado.web.RequestHandler):
 
 class AllRecipesHandler(tornado.web.RequestHandler):
     def get(self):
-        self.set_header("Content-Type", "application/json")
-        self.set_header("Access-Control-Allow-Origin", "*")
         recipes = Recipes.select()
         response =[]
         for recipe in recipes:
             r = str(recipe.get()).replace('\'','\"')
             response.append(r)
+        self.set_header("Content-Type", "application/json")
+        self.set_header("Access-Control-Allow-Origin", "*")
         self.write(str(response).replace('\'',''))
 
 class OrdersHandler(tornado.web.RequestHandler):

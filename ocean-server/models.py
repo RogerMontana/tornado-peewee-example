@@ -58,6 +58,8 @@ else:
 
 if __name__ == '__main__':
     db_proxy.connect()
+    # db.execute_sql("SET NAMES utf8;")
+    # db.execute_sql("SET CHARACTER SET utf8;")
     db_proxy.create_table(Recipes , safe=True)
     db_proxy.create_table(Orders , safe=True)
 
