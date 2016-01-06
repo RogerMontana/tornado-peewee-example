@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+
 __author__ = 'artem'
 
 import tornado.web
@@ -8,7 +10,7 @@ import os
 from models import Recipes
 from models import Orders
 import json
-from twilio.rest import TwilioRestClient
+
 
 dirname = os.path.dirname(__file__)
 
@@ -36,11 +38,19 @@ class AllRecipesHandler(tornado.web.RequestHandler):
         recipes = Recipes.select()
         response =[]
         for recipe in recipes:
-            r = str(recipe.get()).replace('\'','\"')
-            response.append(r)
+            recipe_obj = {
+                "title" : recipes.get().title,
+                "description" : recipes.get().description,
+                "price" : float(recipes.get().price),
+                "photo" : recipes.get().photo,
+                "ingredientsPhoto" : recipes.get().ingredientsPhoto,
+                "ingredients" : recipes.get().ingredients,
+                "nutrients" : recipes.get().nutrients
+            }
+            response.append(recipe_obj)
         self.set_header("Content-Type", "application/json")
         self.set_header("Access-Control-Allow-Origin", "*")
-        self.write(str(response).replace('\'',''))
+        self.write(json.dumps(response))
 
 class OrdersHandler(tornado.web.RequestHandler):
     account_sid = "ACb1df72c332a5e8443e84a6c64fb9cd76"
