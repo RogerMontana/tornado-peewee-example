@@ -57,14 +57,12 @@ class OrdersHandler(tornado.web.RequestHandler):
     account_sid = "ACb1df72c332a5e8443e84a6c64fb9cd76"
     auth_token = "75f320c1bbe0b77ac012e9a796c2f2b5"
     number = "+380504814277"
-
     # def get(self):
     #     client = TwilioRestClient(self.account_sid, self.auth_token)
     #     message = client.messages.create(body="rocket04 >:3",
     #     to=self.number,    # Replace with your phone number
     #     from_='Rocket04') # Replace with your Twilio number
     #     print(message.sid)
-
     def post(self, *args, **kwargs):
         self.set_header("Content-Type", "text/plain")
         result = json.loads(self.request.body)
