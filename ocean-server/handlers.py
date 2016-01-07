@@ -34,6 +34,7 @@ class InfoApiHandler(tornado.web.RequestHandler):
         self.write(template.load("api_info.html").generate(info = clsmembers))
 
 class AllRecipesHandler(tornado.web.RequestHandler):
+    
     def get(self):
         recipes = Recipes.select()
         response =[]
@@ -50,7 +51,7 @@ class AllRecipesHandler(tornado.web.RequestHandler):
             response.append(recipe_obj)
         self.set_header("Content-Type", "application/json")
         self.set_header("Access-Control-Allow-Origin", "*")
-        self.write(json.dumps(response))
+        self.write(json.dumps(response, ensure_ascii=False))
 
 class OrdersHandler(tornado.web.RequestHandler):
     account_sid = "ACb1df72c332a5e8443e84a6c64fb9cd76"
