@@ -9,6 +9,8 @@ import sys, inspect
 import os
 from models import Recipes
 from models import Orders
+from models import db_proxy
+from peewee import *
 import json
 
 
@@ -33,7 +35,17 @@ class InfoApiHandler(tornado.web.RequestHandler):
         template = templates.Loader(TEMPLATE_PATH)
         self.write(template.load("api_info.html").generate(info = clsmembers))
 
-class AllRecipesHandler(tornado.web.RequestHandler):
+class PeeweeRequestHandler(tornado.web.RequestHandler):
+    def prepare(self):
+        db_proxy.connect()
+        return super(PeeweeRequestHandler, self).prepare()
+
+    def on_finish(self):
+        if not db_proxy.is_closed():
+            db_proxy.close()
+        return super(PeeweeRequestHandler, self).on_finish()
+
+class AllRecipesHandler(PeeweeRequestHandler):
 
     def get(self):
         recipes = Recipes.select()
