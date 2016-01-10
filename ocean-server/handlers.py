@@ -50,13 +50,12 @@ class AllRecipesHandler(PeeweeRequestHandler):
         response =[]
         for recipe in Recipes.select():
             recipe_obj = {
-                "id": recipe.recipe_id,
+                "id": recipe.id,
                 "subtitle": recipe.subtitle,
                 "title" : recipe.title,
                 "description" : recipe.description,
                 "price" : float(recipe.price),
                 "photo" : recipe.photo,
-                "ingredientsPhoto" : recipe.ingredientsPhoto,
                 "ingredients" : recipe.ingredients,
                 "nutrients" : recipe.nutrients
             }
