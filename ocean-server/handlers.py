@@ -52,7 +52,7 @@ class AllRecipesHandler(PeeweeRequestHandler):
         response =[]
         for recipe in recipes:
             recipe_obj = {
-                "id": recipes.get().id,
+                "id": recipes.get().recipe_id,
                 "title" : recipes.get().title,
                 "description" : recipes.get().description,
                 "price" : float(recipes.get().price),

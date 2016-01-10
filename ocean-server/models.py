@@ -8,7 +8,9 @@ db_proxy = Proxy()
 
 
 class Recipes(Model):
+    recipe_id = IntegerField(unique=True)
     title = CharField(unique=True)
+    subtitle = TextField()
     description = TextField()
     price = DecimalField()
     photo = TextField()
@@ -64,7 +66,9 @@ if __name__ == '__main__':
     db_proxy.create_table(Orders , safe=True)
 
     recipe = Recipes.create(
+        recipe_id = 1,
         title = 'Творожная запеканка',
+        subtitle = '2|1',
         description = 'Диетическая запеканка из творога входит в меню разноплановых диет. Это блюдо используется в спортивном питании, оно полезно людям с различными патологиями, а кроме того, идеально подходит тем, кто стремится похудеть. Приготовленная по нашему рецепту творожная запеканка не перегружает организм калориями и идеально подходит как десерт даже вечером',
         price = 100,
         photo = 'http://richthediabetic.com/wp-content/uploads/2013/07/Pizza.jpg',
@@ -79,7 +83,9 @@ if __name__ == '__main__':
     recipe.save()
 
     recipe2 = Recipes.create(
+        recipe_id = 2,
         title = 'Панна-Котта',
+        subtitle = '2|1',
         description = 'Кажется, все самые вкусные десерты пришли к нам из прекрасной Италии! Нежная североитальянская гостья Панакота или Panna Cotta в переводе "вареный крем" по консистенции напоминает желе и дополняется различными ягодами. У нас сегодня яркая летняя клубника - "ягода любви"!',
         price = 100,
         photo = 'http://richthediabetic.com/wp-content/uploads/2013/07/Pizza.jpg',
@@ -94,7 +100,9 @@ if __name__ == '__main__':
     recipe2.save()
 
     recipe3 = Recipes.create(
+        recipe_id = 3,
         title = 'Кролик в томатно-чесночном соусе',
+        subtitle = '2|1',
         description = 'Мясо кролика всегда считалось одним из лучших — оно легкое, нежное, очень вкусное и при этом питательное и полезное. В нем содержится полноценный белок, жир, минеральные вещества и витамины, количество которых значительно выше, чем в мясе свиней, кур и других животных. В этом рецепте мы будем готовить кролик в нежном томатно-чесночном соусе, что добавить немного пикантности данному блюду.',
         price = 100,
         photo = 'http://richthediabetic.com/wp-content/uploads/2013/07/Pizza.jpg',
