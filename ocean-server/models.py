@@ -8,7 +8,7 @@ db_proxy = Proxy()
 
 
 class Recipes(Model):
-    recipe_id = IntegerField(unique=True)
+    recipe_id = IntegerField()
     title = CharField(unique=True)
     subtitle = TextField()
     description = TextField()
@@ -70,7 +70,7 @@ if __name__ == '__main__':
         title = 'Творожная запеканка',
         subtitle = '2|1',
         description = 'Диетическая запеканка из творога входит в меню разноплановых диет. Это блюдо используется в спортивном питании, оно полезно людям с различными патологиями, а кроме того, идеально подходит тем, кто стремится похудеть. Приготовленная по нашему рецепту творожная запеканка не перегружает организм калориями и идеально подходит как десерт даже вечером',
-        price = 100,
+        price = 121,
         photo = 'https://rocket04.imgix.net/tvorozhnya_zapekanka.jpg?s=461c55687546e78ad7dda61ce8810292',
         ingredientsPhoto = 'https://rocket04.imgix.net/krolik_tomato_sauce.jpg?s=0520ea80df1d1d365e5e7afc1eee003e',
         ingredients = 'Яйцо куриное|Творог обезжиренный|Крахмал кукурузный|Сахар|Лимон|Ваниль стручковая|Мята|Дрожжи',
@@ -80,15 +80,15 @@ if __name__ == '__main__':
         )
 
     print(str(recipe))
-    recipe.save()
+
 
     recipe2 = Recipes.create(
         recipe_id = 2,
         title = 'Панна-Котта',
         subtitle = '2|1',
         description = 'Кажется, все самые вкусные десерты пришли к нам из прекрасной Италии! Нежная североитальянская гостья Панакота или Panna Cotta в переводе "вареный крем" по консистенции напоминает желе и дополняется различными ягодами. У нас сегодня яркая летняя клубника - "ягода любви"!',
-        price = 100,
-        photo = ' https://rocket04.imgix.net/panna-kota.jpg?s=90196a8f9c8384c13914274aafaf0517',
+        price = 120,
+        photo = 'https://rocket04.imgix.net/panna-kota.jpg?s=90196a8f9c8384c13914274aafaf0517',
         ingredientsPhoto = 'https://rocket04.imgix.net/krolik_tomato_sauce.jpg?s=0520ea80df1d1d365e5e7afc1eee003e',
         ingredients = 'Молоко 3,2% 200гр|Сливки 38%|Ваниль стручковая|Желатин листовой|Сахар|Клубника',
         nutrients= '510|10|42|24',
@@ -97,7 +97,7 @@ if __name__ == '__main__':
         )
 
     print(str(recipe2))
-    recipe2.save()
+
 
     recipe3 = Recipes.create(
         recipe_id = 3,
@@ -114,7 +114,7 @@ if __name__ == '__main__':
         )
 
     print(str(recipe3))
-    recipe3.save()
+
 
 
 

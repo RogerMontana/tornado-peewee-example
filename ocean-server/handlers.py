@@ -46,20 +46,19 @@ class PeeweeRequestHandler(tornado.web.RequestHandler):
         return super(PeeweeRequestHandler, self).on_finish()
 
 class AllRecipesHandler(PeeweeRequestHandler):
-
     def get(self):
-        recipes = Recipes.select()
         response =[]
-        for recipe in recipes:
+        for recipe in Recipes.select():
             recipe_obj = {
-                "id": recipes.get().recipe_id,
-                "title" : recipes.get().title,
-                "description" : recipes.get().description,
-                "price" : float(recipes.get().price),
-                "photo" : recipes.get().photo,
-                "ingredientsPhoto" : recipes.get().ingredientsPhoto,
-                "ingredients" : recipes.get().ingredients,
-                "nutrients" : recipes.get().nutrients
+                "id": recipe.recipe_id,
+                "subtitle": recipe.subtitle,
+                "title" : recipe.title,
+                "description" : recipe.description,
+                "price" : float(recipe.price),
+                "photo" : recipe.photo,
+                "ingredientsPhoto" : recipe.ingredientsPhoto,
+                "ingredients" : recipe.ingredients,
+                "nutrients" : recipe.nutrients
             }
             response.append(recipe_obj)
         self.set_header("Content-Type", "application/json")
