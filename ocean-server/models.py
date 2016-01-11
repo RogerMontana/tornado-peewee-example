@@ -13,6 +13,7 @@ class Recipes(Model):
     description = TextField()
     price = DecimalField()
     photo = TextField()
+    tag = TextField()
     ingredients = TextField()
     nutrients = TextField()
     publication_date = DateTimeField(default=datetime.datetime.now)
@@ -68,11 +69,10 @@ if __name__ == '__main__':
         subtitle = '2|1',
         description = 'Диетическая запеканка из творога входит в меню разноплановых диет. Это блюдо используется в спортивном питании, оно полезно людям с различными патологиями, а кроме того, идеально подходит тем, кто стремится похудеть. Приготовленная по нашему рецепту творожная запеканка не перегружает организм калориями и идеально подходит как десерт даже вечером',
         price = 121,
+        tag = "десерт",
         photo = 'https://rocket04.imgix.net/tvorozhnya_zapekanka.jpg?s=461c55687546e78ad7dda61ce8810292',
         ingredients = 'Яйцо куриное|Творог обезжиренный|Крахмал кукурузный|Сахар|Лимон|Ваниль стручковая|Мята|Дрожжи',
         nutrients= '219|17|7|22',
-        publication_date = datetime.datetime.now(),
-        is_published =True
         )
 
     print(str(recipe))
@@ -83,11 +83,10 @@ if __name__ == '__main__':
         subtitle = '2|1',
         description = 'Кажется, все самые вкусные десерты пришли к нам из прекрасной Италии! Нежная североитальянская гостья Панакота или Panna Cotta в переводе "вареный крем" по консистенции напоминает желе и дополняется различными ягодами. У нас сегодня яркая летняя клубника - "ягода любви"!',
         price = 120,
+        tag = "десерт",
         photo = 'https://rocket04.imgix.net/panna-kota.jpg?s=90196a8f9c8384c13914274aafaf0517',
         ingredients = 'Молоко 3,2% 200гр|Сливки 38%|Ваниль стручковая|Желатин листовой|Сахар|Клубника',
         nutrients= '510|10|42|24',
-        publication_date = datetime.datetime.now(),
-        is_published =True
         )
 
     print(str(recipe2))
@@ -98,11 +97,10 @@ if __name__ == '__main__':
         subtitle = '2|1',
         description = 'Мясо кролика всегда считалось одним из лучших — оно легкое, нежное, очень вкусное и при этом питательное и полезное. В нем содержится полноценный белок, жир, минеральные вещества и витамины, количество которых значительно выше, чем в мясе свиней, кур и других животных. В этом рецепте мы будем готовить кролик в нежном томатно-чесночном соусе, что добавить немного пикантности данному блюду.',
         price = 100,
+        tag = "мясо",
         photo = 'https://rocket04.imgix.net/krolik_tomato_sauce.jpg?s=0520ea80df1d1d365e5e7afc1eee003e',
         ingredients = 'Томаты в собственном соку|Перец болгарский красный|Чеснок|Лук репчатый|Перец чили мини|Лист лавровый|Петрушка|Тимьян|Лимон|Кролик|Кинза|Фольга для запекания|Оливковое масло|Соль',
         nutrients= '644|67|35|16',
-        publication_date = datetime.datetime.now(),
-        is_published =True
         )
 
     print(str(recipe3))
