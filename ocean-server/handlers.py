@@ -78,12 +78,15 @@ class OrdersHandler(tornado.web.RequestHandler):
     def post(self, *args, **kwargs):
         self.set_header("Content-Type", "text/plain")
         result = json.loads(self.request.body)
-        order = Orders.create(
-            order_details = result["order_details"],
+        try:
+            order = Orders.create(
+            order_details = result["order_details"] + result["timegap"],
             name = result["name"],
             address = result["address"],
             status = "new",
             phone = result["phone"]
-        )
-        order.save()
-        self.write("Your order_details " + result )
+            )
+            order.save()
+        except:
+            raise tornado.web.HTTPError(400)
+        self.set_status(200)
