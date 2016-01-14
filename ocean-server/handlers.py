@@ -66,9 +66,15 @@ class AllRecipesHandler(PeeweeRequestHandler):
         self.write(json.dumps(response))
 
 class OrdersHandler(tornado.web.RequestHandler):
+
     account_sid = "ACb1df72c332a5e8443e84a6c64fb9cd76"
     auth_token = "75f320c1bbe0b77ac012e9a796c2f2b5"
     number = "+380504814277"
+
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "http://rocket04.github.io")
+
+
     # def get(self):
     #     client = TwilioRestClient(self.account_sid, self.auth_token)
     #     message = client.messages.create(body="rocket04 >:3",
