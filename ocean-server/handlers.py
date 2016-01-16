@@ -72,7 +72,8 @@ class OrdersHandler(tornado.web.RequestHandler):
     number = "+380504814277"
 
     def set_default_headers(self):
-        self.set_header("Access-Control-Allow-Origin", "http://rocket04.github.io")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Content-Type", "application/json")
 
 
     # def get(self):
