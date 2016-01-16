@@ -107,9 +107,9 @@ class OrdersHandler(tornado.web.RequestHandler):
             phone = result["phone"]
             )
             order.save()
+            self.write(json.dumps(self.response_ok))
         except:
             self.write(json.dumps(self.response_error))
-        self.write(json.dumps(self.response_ok))
 
     def get(self, *args, **kwargs):
         response =[]
