@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+from twilio.rest import TwilioRestClient
+from twilio import *
 
 __author__ = 'artem'
 
@@ -67,8 +68,8 @@ class AllRecipesHandler(PeeweeRequestHandler):
 
 class OrdersHandler(tornado.web.RequestHandler):
 
-    account_sid = "ACb1df72c332a5e8443e84a6c64fb9cd76"
-    auth_token = "75f320c1bbe0b77ac012e9a796c2f2b5"
+    account_sid = "AC62c3e1728fb6f97d87e04c923a364450"
+    auth_token = "{{75f320c1bbe0b77ac012e9a796c2f2b5}}"
     number = "+380504814277"
 
     def set_default_headers(self):
@@ -78,11 +79,7 @@ class OrdersHandler(tornado.web.RequestHandler):
 
 
     # def get(self):
-    #     client = TwilioRestClient(self.account_sid, self.auth_token)
-    #     message = client.messages.create(body="rocket04 >:3",
-    #     to=self.number,    # Replace with your phone number
-    #     from_='Rocket04') # Replace with your Twilio number
-    #     print(message.sid)
+
 
     # adress: "kosiora 27"
     # appartment: "24"
@@ -114,6 +111,12 @@ class OrdersHandler(tornado.web.RequestHandler):
             self.write(json.dumps(self.response_error))
 
     def get(self, *args, **kwargs):
+        client = TwilioRestClient(self.account_sid, self.auth_token)
+        message = client.messages.create(body="rocket04 >:3",
+        to=self.number,    # Replace with your phone number
+        from_="+17787620364") # Replace with your Twilio number
+        print(self.number)
+        print(message.sid)
         response =[]
         for order in Orders.select():
             order_obj = {
