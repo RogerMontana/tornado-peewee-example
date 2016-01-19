@@ -77,19 +77,6 @@ class OrdersHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "application/json")
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
 
-
-    # def get(self):
-
-
-    # adress: "kosiora 27"
-    # appartment: "24"
-    # name: "Alex"
-    # order_details: "Панна-Котта - 2"
-    # phone: "+380637691431"
-    # timegap: "Sun Jan 17 2016 22:13:55 GMT+0200 (Финляндия (зима))|16.00 - 19.00"
-
-
-
     response_ok = {'code':200, 'response':'OK'}
     response_error = {'code':400, 'response':'ERROR'}
     def post(self, *args, **kwargs):
@@ -97,26 +84,31 @@ class OrdersHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
         result = json.loads(self.request.body)
+        sms = result["name"]+", ваш заказ будет доставлен"+ result["timegap"]+". Спасибо за ваш заказ!"
         try:
             order = Orders.create(
-            order_details = result["order_details"] + result["timegap"] + result["appartment"],
+            order_details = result["order_details"],
             name = result["name"],
-            address = result["address"],
+            timegap = result["timegap"],
+            address = result["address"]+"/"+result["appartment"],
             status = "new",
             phone = result["phone"]
             )
             order.save()
+            try:
+                client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
+                message = client.messages.create(body=sms,
+                to=result["phone"],    # Replace with your phone number
+                from_="+17787620364") # Replace with your Twilio number
+                print(self.number)
+                print(message.sid)
+            except:
+                pass
             self.write(json.dumps(self.response_ok))
         except:
             self.write(json.dumps(self.response_error))
 
     def get(self, *args, **kwargs):
-        client = TwilioRestClient(self.account_sid, self.auth_token)
-        message = client.messages.create(body="rocket04 >:3",
-        to=self.number,    # Replace with your phone number
-        from_="+17787620364") # Replace with your Twilio number
-        print(self.number)
-        print(message.sid)
         response =[]
         for order in Orders.select():
             order_obj = {

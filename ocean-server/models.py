@@ -40,6 +40,7 @@ class Orders(Model):
     order_details = TextField()
     name = TextField()
     address = TextField()
+    timegap = TextField()
     status = TextField()
     phone = TextField()
     created_date = DateTimeField(default=datetime.datetime.now)
