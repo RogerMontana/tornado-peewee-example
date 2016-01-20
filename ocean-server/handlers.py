@@ -86,15 +86,15 @@ class OrdersHandler(tornado.web.RequestHandler):
         result = json.loads(self.request.body)
         # sms = result["name"]+", ваш заказ будет доставлен"+ result["timegap"]+". Спасибо за ваш заказ!"
 
-        # try:
-        #     client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
-        #     message = client.messages.create(body=result["name"]+", ваш заказ будет доставлен"+ result["timegap"]+". Спасибо за ваш заказ!",
-        #         to=result["phone"],    # Replace with your phone number
-        #         from_="+17787620364") # Replace with your Twilio number
-        #     print(self.number)
-        #     print(message.sid)
-        # except:
-        #     pass
+        try:
+            client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
+            message = client.messages.create(body=result["name"]+", ваш заказ будет доставлен"+ result["timegap"]+". Спасибо за ваш заказ!",
+                to=result["phone"],    # Replace with your phone number
+                from_="+17787620364") # Replace with your Twilio number
+            print(self.number)
+            print(message.sid)
+        except:
+            pass
 
         try:
             order = Orders.create(
