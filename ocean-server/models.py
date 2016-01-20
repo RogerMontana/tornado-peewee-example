@@ -71,11 +71,12 @@ if __name__ == '__main__':
     description  = 'Мясо кролика всегда считалось одним из лучших — оно легкое, нежное, очень вкусное и при этом питательное и полезное. В нем содержится полноценный белок, жир, минеральные вещества и витамины, количество которых значительно выше, чем в мясе свиней, кур и других животных. В этом рецепте мы будем готовить кролик в нежном томатно-чесночном соусе, что добавить немного пикантности данному блюду.',
     price = 100,
     tag = "мясо",
-    photo = 'https://rocket04.imgix.net/krolik-v-tomaton-soyse.png..',
+    photo = 'https://rocket04.imgix.net/krolik_tomato_sauce.jpg?s=0520ea80df1d1d365e5e7afc1eee003e',
     ingredients = 'Томаты в собственном соку|Перец болгарский красный|Чеснок|Лук репчатый|Перец чили мини|Лист лавровый|Петрушка|Тимьян|Лимон|Кролик|Кинза|Фольга для запекания|Оливковое масло|Соль',
     nutrients= '644|67|35|16',
     )
     print(str(recipe3))
+    recipe3.save()
 
     recipe4 = Recipes.create(
         title = 'Баранина с розмарином, цукини и мятой',
@@ -88,6 +89,7 @@ if __name__ == '__main__':
         nutrients= '295|20|22|5',
     )
     print(str(recipe4))
+    recipe4.save()
 
     recipe5 = Recipes.create(
        title = 'Каша из Булгура с тыквой и яблоками',
@@ -100,6 +102,7 @@ if __name__ == '__main__':
         nutrients= '556|14|19|82',
     )
     print(str(recipe5))
+    recipe5.save()
 
     recipe6 = Recipes.create(
         title = 'Курица с Пармезаном',
@@ -112,6 +115,7 @@ if __name__ == '__main__':
         nutrients= '700|34|38|50',
     )
     print(str(recipe6))
+    recipe6.save()
 
     recipe7 = Recipes.create(
         title = 'Форель с Грейпфрутом и Фенхелем',
@@ -124,6 +128,7 @@ if __name__ == '__main__':
         nutrients= '533|32|37|18',
     )
     print(str(recipe7))
+    recipe7.save()
 
     recipe8 = Recipes.create(
         title = 'Глинтвейн',
@@ -136,6 +141,7 @@ if __name__ == '__main__':
         nutrients= '766|2|0|60',
     )
     print(str(recipe8))
+    recipe8.save()
 
 
     recipe9 = Recipes.create(
@@ -149,6 +155,7 @@ if __name__ == '__main__':
         nutrients= '558|9|50|18',
     )
     print(str(recipe9))
+    recipe9.save()
 
     recipe10 = Recipes.create(
         title = 'Каша из Киноа с Соте из Груш',
@@ -161,6 +168,7 @@ if __name__ == '__main__':
         nutrients= '327|8|9|53',
         )
     print(str(recipe10))
+    recipe10.save()
 
     recipe11 = Recipes.create(
         title = 'Куриная Лапша',
@@ -173,6 +181,7 @@ if __name__ == '__main__':
         nutrients= '462|56|14|28',
         )
     print(str(recipe11))
+    recipe11.save()
 
     recipe12 = Recipes.create(
         title = 'Французский маффин с горячим шоколадом',
@@ -185,6 +194,7 @@ if __name__ == '__main__':
         nutrients= '220|17|8|20',
         )
     print(str(recipe12))
+    recipe12.save()
 
     recipe13 = Recipes.create(
         title = 'Овощные Оладьи',
@@ -197,6 +207,7 @@ if __name__ == '__main__':
         nutrients= '356|10|20|33',
         )
     print(str(recipe13))
+    recipe13.save()
 
     recipe14 = Recipes.create(
         title = 'Панини с Моцареллой и баклажанами',
@@ -209,6 +220,7 @@ if __name__ == '__main__':
         nutrients= '690|36|8|46',
         )
     print(str(recipe14))
+    recipe14.save()
 
     recipe15 = Recipes.create(
         title = 'Творожная запеканка',
@@ -221,6 +233,7 @@ if __name__ == '__main__':
         nutrients= '219|17|7|22',
         )
     print(str(recipe15))
+    recipe15.save()
 
     recipe16 = Recipes.create(
         title = 'Панна-Котта',
@@ -233,6 +246,7 @@ if __name__ == '__main__':
         nutrients= '510|10|42|24',
         )
     print(str(recipe16))
+    recipe16.save()
 
     recipe17 = Recipes.create(
         title = 'Пицца с красным луком и брокколи',
@@ -245,6 +259,7 @@ if __name__ == '__main__':
         nutrients= '720|30|36|70',
         )
     print(str(recipe17))
+    recipe17.save()
 
     recipe18 = Recipes.create(
         title = 'Ризотто из Ячменя с Буряком',
@@ -257,6 +272,7 @@ if __name__ == '__main__':
         nutrients= '600|22|12|60',
         )
     print(str(recipe18))
+    recipe18.save()
 
     recipe19 = Recipes.create(
         title = 'Стейк с Сальса-Росса',
@@ -269,6 +285,7 @@ if __name__ == '__main__':
         nutrients= '590|80|2|5',
         )
     print(str(recipe19))
+    recipe19.save()
 
     recipe20 = Recipes.create(
         title = 'Тальятелле с креветками и цукини',
@@ -281,6 +298,7 @@ if __name__ == '__main__':
         nutrients= '988|41|58|77',
         )
     print(str(recipe20))
+    recipe20.save()
 
     recipe21 = Recipes.create(
         title = 'Томатный суп с курицей и сельдереем',
@@ -293,6 +311,7 @@ if __name__ == '__main__':
         nutrients= '416|38|23|14',
         )
     print(str(recipe21))
+    recipe21.save()
 
 
 
