@@ -80,6 +80,7 @@ class OrdersHandler(tornado.web.RequestHandler):
     response_ok = {'code':200, 'response':'OK'}
     response_error = {'code':400, 'response':'ERROR'}
     def post(self, *args, **kwargs):
+        global message
         self.set_header("Content-Type", "application/json")
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
@@ -91,9 +92,11 @@ class OrdersHandler(tornado.web.RequestHandler):
             message = client.messages.create(body=result["name"]+", ваш заказ будет доставлен"+ result["timegap"]+". Спасибо за ваш заказ!",
                 to=result["phone"],    # Replace with your phone number
                 from_="+17787620364") # Replace with your Twilio number
+            print(message.sid)
+
+        except:
             print(self.number)
             print(message.sid)
-        except:
             pass
 
         try:
