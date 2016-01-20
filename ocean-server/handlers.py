@@ -96,7 +96,6 @@ class OrdersHandler(tornado.web.RequestHandler):
         except:
             print("sms was not sended")
             pass
-
         try:
             order = Orders.create(
             order_details = result["order_details"] + " "+ result["total"],
