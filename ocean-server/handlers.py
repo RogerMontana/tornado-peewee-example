@@ -30,6 +30,10 @@ class LoginHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("login mocked")
 
+class TestRocket(tornado.web.RequestHandler):
+    def get(self):
+        self.render("rocket.html")
+
 class InfoApiHandler(tornado.web.RequestHandler):
     def get(self):
         clsmembers = inspect.getmembers(sys.modules[__name__], inspect.isclass)

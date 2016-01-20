@@ -18,6 +18,7 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", MainHandler),
+            (r"/rockettest", TestRocket),
             (r"/info", InfoApiHandler),
             (r"/login", LoginHandler),
             (r"/get_recipes", AllRecipesHandler),
