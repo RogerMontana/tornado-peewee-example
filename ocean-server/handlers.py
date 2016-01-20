@@ -84,7 +84,18 @@ class OrdersHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
         result = json.loads(self.request.body)
-        sms = result["name"]+", ваш заказ будет доставлен"+ result["timegap"]+". Спасибо за ваш заказ!"
+        # sms = result["name"]+", ваш заказ будет доставлен"+ result["timegap"]+". Спасибо за ваш заказ!"
+
+        try:
+            client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
+            message = client.messages.create(body=result["name"]+", ваш заказ будет доставлен"+ result["timegap"]+". Спасибо за ваш заказ!",
+                to=result["phone"],    # Replace with your phone number
+                from_="+17787620364") # Replace with your Twilio number
+            print(self.number)
+            print(message.sid)
+        except:
+            pass
+        
         try:
             order = Orders.create(
             order_details = result["order_details"],
@@ -95,21 +106,13 @@ class OrdersHandler(tornado.web.RequestHandler):
             phone = result["phone"]
             )
             order.save()
-            try:
-                client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
-                message = client.messages.create(body=sms,
-                to=result["phone"],    # Replace with your phone number
-                from_="+17787620364") # Replace with your Twilio number
-                print(self.number)
-                print(message.sid)
-            except:
-                pass
             self.write(json.dumps(self.response_ok))
         except:
             self.write(json.dumps(self.response_error))
 
     def get(self, *args, **kwargs):
         response =[]
+
         for order in Orders.select():
             order_obj = {
                 "id": order.id,
