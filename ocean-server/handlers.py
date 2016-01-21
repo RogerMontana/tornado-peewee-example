@@ -70,7 +70,7 @@ class AllRecipesHandler(PeeweeRequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.write(json.dumps(response))
 
-class OrdersHandler(tornado.web.RequestHandler):
+class OrdersHandler(PeeweeRequestHandler):
 
     account_sid = "AC62c3e1728fb6f97d87e04c923a364450"
     auth_token = "{{75f320c1bbe0b77ac012e9a796c2f2b5}}"
