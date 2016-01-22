@@ -89,17 +89,18 @@ class OrdersHandler(PeeweeRequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
         result = json.loads(self.request.body)
-
-        try:
-            client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
-            message = client.messages.create(body=u" "+ result["name"]+u", ваш заказ будет доставлен"+ result["timegap"]+u". Спасибо за ваш заказ!" + result["total"],
-                to=result["phone"],    # Replace with your phone number
-                from_="+17787620364") # Replace with your Twilio number
-            print(message.sid)
-            print(result["phone"])
-        except:
-            print("sms was not sended")
-            pass
+        # SMS NOTIFICATION
+        # try:
+        #     client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
+        #     message = client.messages.create(body=u" "+ result["name"]+u", ваш заказ будет доставлен"+ result["timegap"]+u". Спасибо за ваш заказ!" + result["total"],
+        #         to=result["phone"],    # Replace with your phone number
+        #         from_="+17787620364") # Replace with your Twilio number
+        #     print(message.sid)
+        #     print(result["phone"])
+        # except:
+        #     print("sms was not sended")
+        #     pass
+        #
         try:
             order = Orders.create(
             order_details = result["order_details"] + " "+ result["total"],
