@@ -115,8 +115,8 @@ class OrdersHandler(PeeweeRequestHandler):
         except:
             self.write(json.dumps(self.response_error))
 
-    # def get(self, *args, **kwargs):
-    #     response =[]
+    def get(self, *args, **kwargs):
+        response =[]
     #     for order in Orders.select():
     #         order_obj = {
     #             "id": order.id,
@@ -127,6 +127,6 @@ class OrdersHandler(PeeweeRequestHandler):
     #             "phone" : order.phone
     #         }
     #         response.append(order_obj)
-    #     self.set_header("Content-Type", "application/json")
-    #     self.set_header("Access-Control-Allow-Origin", "*")
-    #     self.write(json.dumps(response))
+        self.set_header("Content-Type", "application/json")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.write(json.dumps(response))
