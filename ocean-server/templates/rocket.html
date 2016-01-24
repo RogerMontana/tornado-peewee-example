@@ -1,0 +1,72 @@
+<!doctype html>
+<html ng-app="ocean04App">
+  <head>
+    <meta charset="utf-8">
+    <title ng-bind="'Rocket04' + (pagetitle ? +' | ' +pagetitle:'')"></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="static/build/styles/main.css">
+    <link rel="stylesheet" href="static/build/styles/styles.css">
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="../static/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../static/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../static/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../static/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../static/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../static/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../static/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../static/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="../static/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="../static/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="../static/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="../static/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="../static/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="../static/manifest.json">
+    <link rel="mask-icon" href="../static/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    
+    <!-- mainNav -->
+    <rocket-navigation ng-hide="itemDescription"></rocket-navigation>
+
+    <!--Slick nav menu-->
+    <ul id="menuStick" style="display:none;" ng-hide="itemDescription">
+      <li><a href="#/how">Принцип Работы</a></li>
+      <li><a href="#/gifts">Подарки</a></li>
+      <li><a href="#/about">О Нас</a></li>
+      <li><a href="#/rocket04">Посмотреть Меню</a></li>
+    </ul>
+
+    <!-- Loader -->
+    <div class="loader" ng-show="isLoading">
+      <div class="c-loader" ng-hide="storeLoader"></div>
+      <div class="storeLoader text-center" ng-show="storeLoader">
+        <p class="spinner"></p>
+        <p>Загружаем Меню</p>
+      </div>
+    </div>
+
+    <!--Main view-->
+    <div ng-view ng-show="!isLoading" class="rocket-view"></div>
+
+    <!-- footer -->
+    <rocket-footer></rocket-footer>
+    
+    <script src="static/build/scripts/vendor.js"></script>
+
+    <script src="static/build/scripts/scripts.js"></script>
+    <script src="static/build/scripts/slicknav.min.js"></script>
+</body>
+</html>
