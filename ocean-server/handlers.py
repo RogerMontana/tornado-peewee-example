@@ -103,7 +103,7 @@ class OrdersHandler(PeeweeRequestHandler):
 
         try:
             order = Orders.create(
-            order_details = result["order_details"] + " "+ result["total"],
+            order_details = result["order_details"] + " "+ str(result["total"]),
             name = result["name"],
             timegap = result["timegap"],
             address = result["address"]+"/"+result["appartment"],
