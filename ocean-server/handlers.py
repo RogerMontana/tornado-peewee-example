@@ -90,17 +90,17 @@ class OrdersHandler(PeeweeRequestHandler):
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
         result = json.loads(self.request.body)
         # SMS NOTIFICATION
-        # try:
-        #     client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
-        #     message = client.messages.create(body=u" "+ result["name"]+u", ваш заказ будет доставлен"+ result["timegap"]+u". Спасибо за ваш заказ!" + result["total"],
-        #         to=result["phone"],    # Replace with your phone number
-        #         from_="+17787620364") # Replace with your Twilio number
-        #     print(message.sid)
-        #     print(result["phone"])
-        # except:
-        #     print("sms was not sended")
-        #     pass
-        #
+        try:
+            client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
+            message = client.messages.create(body="Vash zakaz bydet dostavlen " + result["timegap"] + ". K oplate " + result["total"] + "UAH",
+                to=result["phone"],    # Replace with your phone number
+                from_="Rocket04") # Replace with your Twilio number
+            print(message.sid)
+            print(result["phone"])
+        except:
+            print("sms was not sended")
+            pass
+
         try:
             order = Orders.create(
             order_details = result["order_details"] + " "+ result["total"],
@@ -115,18 +115,18 @@ class OrdersHandler(PeeweeRequestHandler):
         except:
             self.write(json.dumps(self.response_error))
 
-    def get(self, *args, **kwargs):
-        response =[]
-        for order in Orders.select():
-            order_obj = {
-                "id": order.id,
-                "order_details" : order.order_details,
-                "address" : order.address,
-                "name" : order.name,
-                "status" : order.status,
-                "phone" : order.phone
-            }
-            response.append(order_obj)
-        self.set_header("Content-Type", "application/json")
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.write(json.dumps(response))
+    # def get(self, *args, **kwargs):
+    #     response =[]
+    #     for order in Orders.select():
+    #         order_obj = {
+    #             "id": order.id,
+    #             "order_details" : order.order_details,
+    #             "address" : order.address,
+    #             "name" : order.name,
+    #             "status" : order.status,
+    #             "phone" : order.phone
+    #         }
+    #         response.append(order_obj)
+    #     self.set_header("Content-Type", "application/json")
+    #     self.set_header("Access-Control-Allow-Origin", "*")
+    #     self.write(json.dumps(response))
