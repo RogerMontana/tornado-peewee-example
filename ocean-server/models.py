@@ -143,7 +143,6 @@ if __name__ == '__main__':
     print(str(recipe8))
     recipe8.save()
 
-
     recipe9 = Recipes.create(
         title = 'Греческий Салат',
         subtitle = '2|10',
