@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="ocean04App" ng-init="centerin(); storeLoader = false;">
+<html ng-app="ocean04App">
   <head>
     <meta charset="utf-8">
     <title ng-bind="'Rocket04' + (pagetitle ? +' | ' +pagetitle:'')"></title>
@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="static/build/styles/main.css">
     <link rel="stylesheet" href="static/build/styles/styles.css">
+
 
     <link rel="apple-touch-icon" sizes="57x57" href="../static/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="../static/apple-touch-icon-60x60.png">
@@ -62,12 +63,6 @@
 
     <!-- footer -->
     <rocket-footer></rocket-footer>
-
-    <script type="text/javascript">
-      if (window.location.protocol !== "https:"){
-        window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
-      }
-    </script>
     
     <script src="static/build/scripts/vendor.js"></script>
 
