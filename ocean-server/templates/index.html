@@ -1,6 +1,11 @@
 <!doctype html>
 <html ng-app="ocean04App" ng-init="centerin(); storeLoader = false;">
   <head>
+    <script type="text/javascript">
+      if (window.location.protocol !== "https:"){
+        window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+      }
+    </script>
     <meta charset="utf-8">
     <title ng-bind="'Rocket04' + (pagetitle ? +' | ' +pagetitle:'')"></title>
     <meta name="description" content="">
@@ -62,12 +67,6 @@
 
     <!-- footer -->
     <rocket-footer></rocket-footer>
-
-    <script type="text/javascript">
-      if (window.location.protocol !== "https:"){
-        window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
-      }
-    </script>
     
     <script src="static/build/scripts/vendor.js"></script>
 
