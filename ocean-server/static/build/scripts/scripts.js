@@ -1,2 +1,1238 @@
-"use strict";angular.module("ocean04App",["ngAnimate","ngCookies","ngResource","ngRoute","ngSanitize","ngTouch","ngCart.fulfilment","ui.bootstrap","GoogleMapsNative"]).config(function(a,b){a.when("/",{templateUrl:"views/main.html",controller:"MainCtrl",controllerAs:"main"}).when("/about",{templateUrl:"views/about.html",controller:"AboutCtrl",controllerAs:"about"}).when("/gifts",{templateUrl:"views/gifts.html",controller:"GiftsCtrl",controllerAs:"gifts"}).when("/how",{templateUrl:"views/how.html",controller:"HowCtrl",controllerAs:"how"}).when("/rocket04",{templateUrl:"views/store.html",controller:"storeCtrl",controllerAs:"store"}).when("/cart",{templateUrl:"views/cart.html",controller:"cartCtrl",controllerAs:"cart"}).when("/desc/:id",{templateUrl:"views/fulldesc.html",controller:"FulldescCtrl",controllerAs:"f"}).when("/gMap",{templateUrl:"views/gmap.html",controller:"GmapCtrl",controllerAs:"gMap"}).when("/contract",{templateUrl:"views/contract.html",controller:"ContractCtrl",controllerAs:"contract"}).when("/contacts",{templateUrl:"views/contacts.html",controller:"ContactsCtrl",controllerAs:"contacts"}).otherwise({redirectTo:"/"})}).run(["$location",function(){function a(){var a=(document.body.clientWidth-120)/2/document.body.clientWidth*100,b=a+"%";$(".slicknav_brand").css("left",b),$(".navbar-header").css("left",b);var c=(document.body.clientWidth-26)/2/document.body.clientWidth*100,d=c+"%";$(".c-loader").css("left",d);var e=(document.body.clientWidth-105)/2/document.body.clientWidth*100,f=e+"%";$(".storeLoader").css("left",f)}$("#menuStick").slicknav({brand:'<a href="#/"><img src="https://rocket04.imgix.net/logo.svg?s=533089706d3998f2811d218fd2fe2fa5" alt=""></a>',label:"  ",closeOnClick:!0}),$(window).resize(function(){a()}),a()}]).animation(".rocket-view",function(){return{enter:function(a,b){return a.css("display","none"),a.fadeIn(500,b),function(){a.stop()}},leave:function(a,b){return a.fadeOut(500,b),function(){a.stop()}}}}),angular.module("ocean04App").controller("MainCtrl",function(a){$(document).scrollTop(0)}),angular.module("ocean04App").controller("AboutCtrl",function(a){a.pageTitle="О Нас",$(document).scrollTop(0)}),angular.module("ocean04App").controller("GiftsCtrl",function(a,b,c){$(document).scrollTop(0);$(".giftCard");$("#phone").mask("+38(999)999-99-99"),b.formUser={},a.pageTitle="Подарки",b.selectedGift,b.selectGift=function(a,c){b.selectedGift=a,b.formUser.order_details="Подарочный сертификат стоимостью: "+c.price},b.gifts=[{img:"https://rocket04.imgix.net/gifts_1.jpg?s=fa9dea2977649ce50e30185840863067",price:50,text:"Быстро. Вкусно. Надёжно. Идеальный вариант, если других вариантов нет.",id:1,popular:""},{img:"https://rocket04.imgix.net/gifts_2.jpg?s=77307f3ac2cd865f502625a63ad84970",id:2,price:100,text:"Целая неделя вкусных обедов и ужинов на двоих.",popular:""},{img:"https://rocket04.imgix.net/gifts_3.jpg?s=67d0cef4aafa8c934c57a971ee6f4e22",id:3,price:250,text:"Идеальные выходные без головной боли на двоих.",popular:"Популярное"},{img:"https://rocket04.imgix.net/gifts_4.jpg?s=bf19b02e7d7a5a76de7773444db6656f",id:4,price:500,text:"Целая неделя вкусных обедов и ужинов на двоих.",popular:""}],b.buyGift=function(){for(var a=[],d=0;d<b.formUser.phone.length;d++)")"!==b.formUser.phone[d]&&"("!==b.formUser.phone[d]&&"-"!==b.formUser.phone[d]&&a.push(b.formUser.phone[d]);b.formUser.phone=a.join(""),c.receipe.orders(b.formUser).then(function(a){},function(a){})}}),angular.module("ocean04App").controller("HowCtrl",function(a){$(document).scrollTop(0),a.pageTitle="Принцип Работы"}),angular.module("ocean04App").controller("storeCtrl",function(a,b,c,d,e,f){$(document).scrollTop(0),b.itemDescription=!1,b.storeLoader=!0,b.pageTitle="Ежедневное Меню",$(".slicknav_menu").show(),a.receipeLst1=[],a.recepie,a.spinner=!1,a.colourIncludes=[],this.getReceipesList=function(){d.notAllowed(),c.receipe.store().then(function(b){a.receipeLst1=b,d.allowed()},function(b){a.receipeLst1=[],d.allowed()})},a.includeColour=function(b){var c=$.inArray(b,a.colourIncludes);c>-1?a.colourIncludes.splice(c,1):a.colourIncludes.push(b)},a.colourFilter=function(b){return a.colourIncludes.length>0&&$.inArray(b.tag,a.colourIncludes)<0?void 0:a.receipeLst1},a.clearFilter=function(){a.colourIncludes=[],$('input[type="checkbox"]').prop("checked",!1).parent().css("background","white")},this.getInCartQuantity=function(a){var b=e.getItemById(a),c=b._quantity;return this.inCartQunatity=c,this.inCartQunatity},this.removeFromCart=function(a){var b=e.getItemById(a);if(1===b._quantity)e.removeItemById(a);else{if(!(b._quantity>1))return;b.setQuantity(-1,!0)}this.getInCartQuantity(a)},this.AddToCart=function(a,b,c,d,f){var g=e.getItemById(a),d=d;g._quantity>=1&&(d=g._quantity+1),e.addItem(a,b,c,d,f),this.getInCartQuantity(a)},$(window).scroll(function(){var a=$(".storeNav"),b=$(window).scrollTop();b>=80?a.addClass("fixed"):a.removeClass("fixed")}),this.getReceipesList()}),angular.module("ocean04App").controller("cartCtrl",function(a,b,c,d,e){$(document).scrollTop(0),$("#phone").mask("+38(999)999-99-99"),$(".slicknav_menu").show(),b.itemDescription=!1,b.pageTitle="Корзина",a.formUser={},a.deliveryDate;var f=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];a.checkShipping=function(){c.totalCost()>500?a.shipping=0:a.shipping=20},a.getDeliveryDate=function(){var b=["Вс","Пн","Вт","Ср","Чт","Пт","Сб"][(new Date).getDay()];switch(b){case"Пн":a.deliveryDate=new Date(+new Date+1728e5);break;case"Вт":a.deliveryDate=new Date(+new Date+864e5);break;case"Ср":a.deliveryDate=new Date(+new Date+3456e5);break;case"Чт":a.deliveryDate=new Date(+new Date+2592e5);break;case"Пт":a.deliveryDate=new Date(+new Date+1728e5);break;case"Сб":a.deliveryDate=new Date(+new Date+864e5);break;case"Вс":a.deliveryDate=new Date(+new Date+2592e5)}},a.getDeliveryDate(),a.cartItems=c.getCart(),a.getCart=function(){a.cartTotal=c.totalCost()},a.removeItem=function(a){c.removeItemById(a)},a.countTotal=function(){a.checkShipping(),a.totalWithShipping=c.totalCost()+a.shipping},a.getCart(),a.checkShipping(),a.countTotal(),a.checkout=function(){a.formUser.total=c.totalCost()+a.shipping;var b=[];c.getCart().items.forEach(function(a){b.push(a._name+" - "+a._quantity)}),a.formUser.order_details=b.join(", ");var g=new Date(a.deliveryDate),h=g.getDate()+" "+f[g.getMonth()];a.formUser.timegap=h+"|"+$("li.active>a")[0].innerHTML;for(var i=[],j=0;j<a.formUser.phone.length;j++)")"!==a.formUser.phone[j]&&"("!==a.formUser.phone[j]&&"-"!==a.formUser.phone[j]&&i.push(a.formUser.phone[j]);a.formUser.phone=i.join(""),d.receipe.orders(a.formUser).then(function(b){a.notification=!0,a.successOrder=!0,e(function(){a.successOrder=!1,a.notification=!1},9e3)},function(b){a.notification=!0,a.errorOrder=!0,e(function(){a.errorOrder=!1,a.notification=!1},9e3)})}}),angular.module("ocean04App").service("api",function(a,b,c){a.defaults.useXDomain=!0;var d="https://rocket04.com/",e=function(c,e,f){return b(function(b,e){a({method:"GET",url:d+c,params:f}).success(function(a){for(var c=0;c<a.length;c++){var d=a[c].price.toString().split(".");a[c].price,a[c].newPrice={grand:d[0],cents:d[1]}}localStorage.setItem("items",JSON.stringify(a)),b(a)}).error(function(a,b,c,d){e&&e(a)})})},f=function(a,c){return b(function(b,e){var f=JSON.stringify(c);$.ajax({url:d+a,type:"post",data:f,headers:{"Content-Type":"application/json"},dataType:"json"}).success(function(a){b(a)}).error(function(a,b,c,d){e(a)})})};return{receipe:{store:function(){return e("get_recipes")},orders:function(a){return f("order",a)}}}}),angular.module("ocean04App").controller("FulldescCtrl",["$scope","api","$rootScope","$routeParams","loader","ngCart",function(a,b,c,d,e,f){$(document).scrollTop(0),c.itemDescription=!0,$(".slicknav_menu").css("display","none !important"),a.receipe,c.pageTitle,this.getRecepieById=function(b){var d=JSON.parse(localStorage.getItem("items")).filter(function(a){return a.id==b?!0:void 0}),e=d[0],f=e.price.toString().split("."),g=e.nutrients.split("|"),h=e.subtitle.split("|");e.ingredients=e.ingredients.split("|"),e.portions=h[0],e.time=h[1],e.newPrice={grand:f[0],cents:f[1]},e.newNutrients={callories:g[0],proteins:g[1],fats:g[2],carbohydrates:g[3]},a.receipe=e,c.pageTitle=a.receipe.title},this.getInCartQuantity=function(a){var b=f.getItemById(a),c=b._quantity;return this.inCartQunatity=c,this.inCartQunatity},this.removeFromCart=function(a){var b=f.getItemById(a);if(1===b._quantity)f.removeItemById(a);else{if(!(b._quantity>1))return;b.setQuantity(-1,!0)}this.getInCartQuantity(a)},this.AddToCart=function(a,b,c,d,e){var g=f.getItemById(a),d=d;g._quantity>=1&&(d=g._quantity+1),f.addItem(a,b,c,d,e),this.getInCartQuantity(a)},this.getRecepieById(d.id)}]),angular.module("ocean04App").service("loader",function(a,b){return{allowed:function(){b.isLoading=!1},notAllowed:function(){b.isLoading=!0}}}),angular.module("ocean04App").directive("rocketNavigation",function(a){return{templateUrl:"static/build/views/directives/nav/nav.html",restrict:"E"}}),angular.module("ocean04App").directive("rocketFooter",function(){return{templateUrl:"static/build/views/directives/footer/footer.html",restrict:"E"}}),angular.module("ocean04App").config([function(){}]).provider("$ngCart",function(){this.$get=function(){}}).run(["$rootScope","ngCart","ngCartItem","store",function(a,b,c,d){a.$on("ngCart:change",function(){b.$save()}),angular.isObject(d.get("cart"))?b.$restore(d.get("cart")):b.init()}]).service("ngCart",["$rootScope","ngCartItem","store",function(a,b,c){this.init=function(){this.$cart={shipping:null,taxRate:null,tax:null,items:[]}},this.addItem=function(c,d,e,f,g){var h=this.getItemById(c);if("object"==typeof h)h.setQuantity(f,!1);else{var i=new b(c,d,e,f,g);this.$cart.items.push(i),a.$broadcast("ngCart:itemAdded",i)}a.$broadcast("ngCart:change",{})},this.getItemById=function(a){var b=this.getCart().items,c=!1;return angular.forEach(b,function(b){b.getId()===a&&(c=b)}),c},this.setShipping=function(a){return this.$cart.shipping=a,this.getShipping()},this.getShipping=function(){return 0==this.getCart().items.length?0:this.getCart().shipping},this.setTaxRate=function(a){return this.$cart.taxRate=+parseFloat(a).toFixed(2),this.getTaxRate()},this.getTaxRate=function(){return this.$cart.taxRate},this.getTax=function(){return+parseFloat(this.getSubTotal()/100*this.getCart().taxRate).toFixed(2)},this.setCart=function(a){return this.$cart=a,this.getCart()},this.getCart=function(){return this.$cart},this.getItems=function(){return this.getCart().items},this.getTotalItems=function(){var a=0,b=this.getItems();return angular.forEach(b,function(b){a+=b.getQuantity()}),a},this.getTotalUniqueItems=function(){return this.getCart().items.length},this.getSubTotal=function(){var a=0;return angular.forEach(this.getCart().items,function(b){a+=b.getTotal()}),+parseFloat(a).toFixed(2)},this.totalCost=function(){return+parseFloat(this.getSubTotal()+this.getShipping()+this.getTax()).toFixed(2)},this.removeItem=function(b){this.$cart.items.splice(b,1),a.$broadcast("ngCart:itemRemoved",{}),a.$broadcast("ngCart:change",{})},this.removeItemById=function(b){var c=this.getCart();angular.forEach(c.items,function(a,d){a.getId()===b&&c.items.splice(d,1)}),this.setCart(c),a.$broadcast("ngCart:itemRemoved",{}),a.$broadcast("ngCart:change",{})},this.empty=function(){a.$broadcast("ngCart:change",{}),this.$cart.items=[],localStorage.removeItem("cart")},this.isEmpty=function(){return this.$cart.items.length>0?!1:!0},this.toObject=function(){if(0===this.getItems().length)return!1;var a=[];return angular.forEach(this.getItems(),function(b){a.push(b.toObject())}),{shipping:this.getShipping(),tax:this.getTax(),taxRate:this.getTaxRate(),subTotal:this.getSubTotal(),totalCost:this.totalCost(),items:a}},this.$restore=function(a){var c=this;c.init(),c.$cart.shipping=a.shipping,c.$cart.tax=a.tax,angular.forEach(a.items,function(a){c.$cart.items.push(new b(a._id,a._name,a._price,a._quantity,a._data))}),this.$save()},this.$save=function(){return c.set("cart",JSON.stringify(this.getCart()))}}]).factory("ngCartItem",["$rootScope","$log",function(a,b){var c=function(a,b,c,d,e){this.setId(a),this.setName(b),this.setPrice(c),this.setQuantity(d),this.setData(e)};return c.prototype.setId=function(a){a?this._id=a:b.error("An ID must be provided")},c.prototype.getId=function(){return this._id},c.prototype.setName=function(a){a?this._name=a:b.error("A name must be provided")},c.prototype.getName=function(){return this._name},c.prototype.setPrice=function(a){var c=parseFloat(a);c?0>=c?b.error("A price must be over 0"):this._price=c:b.error("A price must be provided")},c.prototype.getPrice=function(){return this._price},c.prototype.setQuantity=function(c,d){var e=parseInt(c);e%1===0?(d===!0?this._quantity+=e:this._quantity=e,this._quantity<1&&(this._quantity=1)):(this._quantity=1,b.info("Quantity must be an integer and was defaulted to 1")),a.itemQuantity=this._quantity,a.$broadcast("ngCart:change",{})},c.prototype.getQuantity=function(){return this._quantity},c.prototype.setData=function(a){a&&(this._data=a)},c.prototype.getData=function(){return this._data?this._data:void b.info("This item has no data")},c.prototype.getTotal=function(){return+parseFloat(this.getQuantity()*this.getPrice()).toFixed(2)},c.prototype.toObject=function(){return{id:this.getId(),name:this.getName(),price:this.getPrice(),quantity:this.getQuantity(),data:this.getData(),total:this.getTotal()}},c}]).service("store",["$window",function(a){return{get:function(b){if(a.localStorage[b]){var c=angular.fromJson(a.localStorage[b]);return JSON.parse(c)}return!1},set:function(b,c){return void 0===c?a.localStorage.removeItem(b):a.localStorage[b]=angular.toJson(c),a.localStorage[b]}}}]).controller("CartController",["$scope","ngCart",function(a,b){a.ngCart=b}]).value("version","1.0.0"),angular.module("ocean04App").controller("CartController",["$rootScope","$scope","ngCart",function(a,b,c){b.ngCart=c}]).directive("ngcartAddtocart",["ngCart",function(a){return{restrict:"E",controller:"CartController",scope:{id:"@",name:"@",quantity:"@",quantityMax:"@",price:"@",data:"="},transclude:!0,templateUrl:function(a,b){return"undefined"==typeof b.templateUrl?"static/build/views/directives/ngCart/addtocart.html":b.templateUrl},link:function(b,c,d){b.attrs=d,b.inCart=function(){return a.getItemById(d.id)},b.inCart()?b.q=a.getItemById(d.id).getQuantity():b.q=parseInt(b.quantity),b.qtyOpt=[];for(var e=1;e<=b.quantityMax;e++)b.qtyOpt.push(e)}}}]).directive("ngcartCart",[function(){return{restrict:"E",controller:"CartController",scope:{},templateUrl:function(a,b){return"undefined"==typeof b.templateUrl?"static/build/views/directives/ngCart/cart.html":b.templateUrl},link:function(a,b,c){}}}]).directive("ngcartSummary",[function(){return{restrict:"E",controller:"CartController",scope:{},transclude:!0,templateUrl:function(a,b){return"undefined"==typeof b.templateUrl?"static/build/views/directives/ngCart/summary.html":b.templateUrl}}}]).directive("ngcartCheckout",[function(){return{restrict:"E",controller:["$rootScope","$scope","ngCart","fulfilmentProvider",function(a,b,c,d){b.ngCart=c,b.checkout=function(){d.setService(b.service),d.setSettings(b.settings),d.checkout().success(function(b,c,d,e){a.$broadcast("ngCart:checkout_succeeded",b)}).error(function(b,c,d,e){a.$broadcast("ngCart:checkout_failed",{statusCode:c,error:b})})}}],scope:{service:"@",settings:"="},transclude:!0,templateUrl:function(a,b){return"undefined"==typeof b.templateUrl?"static/build/views/directives/ngCart/checkout.html":b.templateUrl}}}]),angular.module("ngCart.fulfilment",[]).service("fulfilmentProvider",["$injector",function(a){this._obj={service:void 0,settings:void 0},this.setService=function(a){this._obj.service=a},this.setSettings=function(a){this._obj.settings=a},this.checkout=function(){var b=a.get("ngCart.fulfilment."+this._obj.service);return b.checkout(this._obj.settings)}}]).service("ngCart.fulfilment.log",["$q","$log","ngCart",function(a,b,c){this.checkout=function(){var d=a.defer();return b.info(c.toObject()),d.resolve({cart:c.toObject()}),d.promise}}]).service("ngCart.fulfilment.http",["$http","ngCart",function(a,b){this.checkout=function(c){return a.post(c.url,{data:b.toObject(),options:c.options})}}]).service("ngCart.fulfilment.paypal",["$http","ngCart",function(a,b){}]),angular.module("ocean04App").directive("rocketNavstore",function(a){return{templateUrl:"static/build/views/directives/navStore/navStore.html",restrict:"E"}}),angular.module("ocean04App").controller("GmapCtrl",function(a){$(document).scrollTop(0),a.pageTitle="Зона Доставки"}),angular.module("ocean04App").controller("ContractCtrl",function(a){$(document).scrollTop(0),a.pageTitle="Приватность и Условия"}),angular.module("ocean04App").controller("ContactsCtrl",function(a){$(document).scrollTop(0),a.pageTitle="Контакты"}),angular.module("ocean04App").run(["$templateCache",function(a){a.put("views/about.html",'<div class="about"> <div class="container-fluid intro hero"> <div class="heroContent text-left col-lg-5 col-md-5 col-sm-12 col-xs-12"> <h1 class="text-uppercase">Миссия <br> "а что покушать?"</h1> <h5> Мы здесь что бы сделать вашу жить проще и вкуснее </h5> </div> </div> <div class="aboutContent container-fluid"> <div class="col-xs-12 col-md-10 col-md-offset-1 aboutCard"> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">Антон Мозговой</h3> <p> Что вообще такое Rocket 04? Это команда талантливых молодых ребят, которая хочет изменить мир к лучшему через свою призму мышления. Сложность предстоящей задачи была ясна, но именно благодаря такой команде проект от простой мысли кушать вкусно быстро и легко, перешагнул в стартап с новым уровнем принципов. Rocket04 это образ мышления, где центром всего остаётся желание отдавать, а не получать. </p> <p>Любимое блюдо: Мусака</p> </div> <div class="col-xs-12 col-md-8 image"> <img src="http://rocket04.imgix.net/mozgovoy.jpg?s=154f54e2b66a513e21a22af9107bb304" alt="" class="pull-right"> </div> </div> <div class="col-xs-12 col-md-10 col-md-offset-1 aboutCard"> <div class="col-xs-12 hidden-sm hidden-xs col-md-8 image"> <img src="https://rocket04.imgix.net/rozanov.jpg?s=188dff8351513a72445374826314fbfd" alt="" class="pull-left"> </div> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">Алексей Розанов</h3> <p> Rocket 04 это поистене уникальный сервис на Украине. Меня, как и многих людей, всегда раздражало стоять в длинных очередях супермаркетов и покупать ненужное количество товара, когда мне необходимо совсем немного для изящного и вкусного блюда. Мы в Rocket 04 хотим подарить вам немного больше времени на те вещи которые действительного того заслуживают и избавить вас от ненужной ежедневной рутины похода за продуктами. Мы уверены, после нашего сервиса вы увидете мир готовки другими глазами. </p> <p>Любимое блюдо: Чиз Бургер</p> </div> <div class="col-xs-12 hidden-md hidden-lg col-md-8 image"> <img src="https://rocket04.imgix.net/rozanov.jpg?s=188dff8351513a72445374826314fbfd" alt="" class="pull-left"> </div> </div> <div class="col-xs-12 col-md-10 col-md-offset-1 aboutCard"> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">Богдан Татарчук</h3> <p> Когда возникла идея создать Rocket 04, я понимал что основные трудности не в технической части, но в операционной. Это необычный концепт для Украины и мы каждый день сталкиваемся с множеством проблем как и все остальные стартапы в Украине. Все зависит лишь от того, насколько сильно мы сами верим в свою идею. </p> <p>Любимое блюдо: Тофу с клубникой</p> </div> <div class="col-xs-12 col-md-8 image"> <img src="https://rocket04.imgix.net/tatarchuk.jpg?s=fbdcb64e0fc8f17669de77cd10857a69" alt="" class="pull-right"> </div> </div> <div class="col-xs-12 col-md-10 col-md-offset-1 aboutCard"> <div class="col-xs-12 col-md-8 hidden-sm hidden-xs image"> <img src="https://rocket04.imgix.net/karpov.jpg?s=8655d69ac2d99a10d0597fe4fd22a36d" alt="" class="pull-left"> </div> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">Артём Карпов</h3> <p> Я один из разработчиков Rocket04, я надеюсь мы сделаем жизнь людей проще и сэкономим время и силы тем кто очень занят, а так же поможем научить готовить людей что то новое ✌ </p> <p>Любимое блюдо: Стейк</p> </div> <div class="col-xs-12 col-md-8 hidden-md hidden-lg image"> <img src="https://rocket04.imgix.net/karpov.jpg?s=8655d69ac2d99a10d0597fe4fd22a36d" alt="" class="pull-left"> </div> </div> <div class="col-xs-12 col-md-10 col-md-offset-1 aboutCard"> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">Станислав Пинчук</h3> <p> Я всегда был любителем вкусно поесть, поэтому когда я занимался rocket04, я понимал, что именно этот сервис я хотел бы увидеть в нашем городе </p> <p>Любимое блюдо: Пицца</p> </div> <div class="col-xs-12 col-md-8 image"> <img src="https://rocket04.imgix.net/pinchuk.jpg?s=229c0605f9a0f8a24c61c3d71d6a6279" alt="" class="pull-right"> </div> </div> </div> </div>'),a.put("views/cart.html",'<div class="container-fluid cart"> <div class="container-fluid notification fadein fadeout" ng-show="notification"> <div class="col-xs-12 text-center"> <h5 ng-show="successOrder" class="fadein fadeout">Ура! Ваш заказ был принят. Теперь остаётся только ждать своих вкусняшек.</h5> <h5 ng-show="errorOrder" class="fadein fadeout">Упс! Кажется что-то пошло не так. Поробуйте ещё раз через 30 секунд.</h5> </div> </div> <div class="wrapper"> <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8"> <div class="row"> <div class="column cartInColumnWrapper" style="padding-top:0"> <div class="firstStep"> <div class="col-xs-12 bottom-border text-center stepHeading"> <h2>Шаг 1: Выберите окно доставки</h2> </div> <div class="row"> <div class="col-xs-12 date"> <h3><strong>Ближайшая доступная дата доставки: </strong><span class="text-capitalize">{{deliveryDate|date:\'EEEE, d MMMM\'}}</span></h3> </div> <div class="col-xs-12"> <uib-tabset> <uib-tab heading="10.00 - 13.00"></uib-tab> <uib-tab heading="13.00 - 16.00"></uib-tab> <uib-tab heading="16.00 - 19.00"></uib-tab> <uib-tab heading="19.00 - 22.00"></uib-tab> </uib-tabset> </div> <div class="col-xs-12 cartTable"> <table class="table table-responsive" cols="4"> <tbody> <tr ng-repeat="item in cartItems.items"> <td class="imgPreview text-left" background="{{item._data.img}}" width="48px" height="48px"> <!-- <img ng-src="{{item._data.img}}" alt=""/> --> </td> <td class="text-left infoBox"> <strong>{{item._name}}</strong> <br> <span>{{item._price | currency:"\\u20b4"}}</span> </td> <td class="text-center plusMinusBox" width="10%"> <a class="btn btn-xs removeFromCart" ng-click="item.setQuantity(-1, true); getCart(); countTotal(); checkShipping()"> <i class="glyphicon glyphicon-minus"></i> </a> &nbsp;<span>{{item._quantity}}</span>&nbsp; <a class="btn btn-xs removeFromCart" ng-click="item.setQuantity(1, true); getCart(); countTotal(); checkShipping()"> <i class="glyphicon glyphicon-plus"></i> </a> </td> <td class="text-center" width="10%"> <span ng-click="removeItem(item._id); getCart(); countTotal(); checkShipping()"> <h5 class="removeFromCart">Убрать</h5> </span> </td> </tr> <tr ng-hide="cartItems.items.length"> <td colspan="4" class="text-center">Вы ещё ничего не добавили сюда.</td> </tr> </tbody> </table> </div> </div> </div> <div class="secondStep"> <div class="col-xs-12 bottom-border text-center stepHeading"> <h2>Шаг 2: Выберите адрес для доставки</h2> </div> <div class="row"> <div class="form" ng-form="customerDetails" novalidate> <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"> <label for="adress">Адрес</label> <input id="adress" type="text" class="adressDetails adress" placeholder="Введите адрес" ng-model="formUser.address" required> </div> <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"> <label for="appartment">Номер Квартиры</label> <input id="appartment" type="text" class="adressDetails appartment" ng-model="formUser.appartment"> </div> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <label for="name">Имя</label> <input id="name" type="text" class="adressDetails name" ng-model="formUser.name" required> </div> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <label for="surname">Фамилия</label> <input id="surname" type="text" class="adressDetails surname" ng-model="formUser.surname" required> </div> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <label for="phone">Номер Телефона</label> <input id="phone" type="tel" class="adressDetails phone" ng-model="formUser.phone" value="+38" required> </div> </div> </div> </div> </div> </div> </div> <!-- <div class="col-lg-1 col-md-1"></div> --> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <div class="row"> <div class="column cartInColumnWrapper pull-right"> <button ng-disabled="customerDetails.$invalid || cartTotal == 0" class="btn text-center makeOrder" ng-click="checkout();">Сделать Заказ</button> <h5 class="summaryHeading"><strong>Сведения о Заказе</strong></h5> <div class="col-xs-12"> <table class="table orderSummary"> <tbody> <tr> <td class="text-left">Продукты</td> <td class="text-right">{{ cartTotal | currency:"\\u20b4" }}</td> </tr> <tr> <td class="text-left">Доставка</td> <td class="text-right">{{ shipping | currency:"\\u20b4" }}</td> </tr> </tbody> </table> </div> <h6 class="subHeading"> Вы сможете оплатить свой заказ как наличными, так и кредитной картой при доставке </h6> <hr class="separator"> <table class="table summaryFinalPrice"> <thead> <tr> <th class="text-left">ИТОГО</th> <th class="text-right">{{ totalWithShipping | currency:"\\u20b4" }}</th> </tr> </thead> </table> </div> </div> </div> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 cartSmallText"> <h6>Делая заказ вы соглашаетесь с нашими <a href="#/contract" class="text-underline">Правилами и Условиями</a></h6> </div> </div> </div>'),a.put("views/contacts.html",'<div class="contacts"> <div class="container-fluid"> <div class="col-xs-12 col-md-8 col-md-offset-2 contatcsBody"> <div class="col-xs-12"> <h1 class="contactsHeading text-center text-uppercase indent-10">Контакты</h1> </div> <div class="col-xs-12 contactsBody"> <div class="contactsCart"> <h3>Техническая поддержка</h3> <table class="table"> <tr> <td>Email</td> <td><a href="">Email Поддержка</a></td> <td>24/7</td> </tr> <tr> <td>Телефон</td> <td>+38 050 341 56 46</td> <td>07:00 - 21:00</td> </tr> </table> </div> <div class="contactsCart"> <h3>Общие вопросы</h3> <a href="help@rocket04.com" class="email">help@rocket04.com</a> </div> <div class="contactsCart"> <h3>Вопросы по сотрудничеству</h3> <a href="@rocket04.com" class="email">anton@rocket04.com</a> </div> <div class="contactsCart"> <h3>Адрес</h3> <address> Rocket04<br> ул.Баррикадная 4-Б<br> Днепропетровск 49000<br> Телефон - +380503415646 </address> </div> </div> </div> </div> </div>'),a.put("views/contract.html","<div class=\"contract\"> <div class=\"container-fluid\"> <div class=\"wrapper\"> <div class=\"col-xs-12 text-center text-uppercase\"> <h1 class=\"contractHeading\">пользовательское соглашение</h1> </div> <div class=\"contractbody col-xs-12 col-md-8 col-md-offset-2\"> <span> 1. ТЕРМІНИ, ЩО ВИКОРИСТОВУЮТЬСЯ В ДОГОВОРІ <br><br> 1.1 Публічна Оферта – пропозиція до придбання Товарів та/або Послуг Продавця, яка опублікована на Сайті Продавця, звернена до невизначеного кола осіб, в тому числі до Користувачів. <br> 1.2. Товар - продукти харчування, супутні товари та послуги, замовлення яких здійснюється за зразками, представленими в Інтернет-магазині. <br> 1.3. Покупець (Користувач) - особа, яка розміщує замовлення на Товари через інтернет-сторінку за адресою http://rocket04.com або за допомогою телефонного зв'язку. <br> 1.4. Сайт Продавця - інформаційний ресурс в мережі Інтернет, що належить Продавцю, розташований за адресою http://rocket04.com. <br> 1.5. Служба доставки - підрозділ Продавця, або стороння організація, що здійснює доставку Товарів. <br> 1.6. Умови доставки - умови, які регламентують порядок доставки та оплати Товарів. Умови доставки розміщені на інтернет-сторінці за адресою http://rocket04.com/delivery. <br> 2. ПРЕДМЕТ ДОГОВОРУ <br><br> 2.1. Продавець надає Покупцеві можливість здійснювати замовлення Товарів на сайті Продавця або за допомогою телефонного зв'язку. Продавець може надавати Користувачу інші послуги на умовах Додатків до Договору. <br> 3. ЗАГАЛЬНІ ПОЛОЖЕННЯ <br><br> 3.1. Фізична особа-підприємець Спєваков Кирило Ігорович (номер запису в Державному реєстрі юридичних осіб та фізичних осіб підприємців: 2 224 000 0000 100773, Дата запису: 13.07.2015), іменований надалі «Продавець», з одного боку, і користувач мережі Інтернет, іменований надалі «Покупець», з іншого боку, спільно іменовані «Сторони» , уклали цей договір (далі - «Договір»). <br> 3.2. Публічний Договір, відповідно до статті 633 Цивільного кодексу України, є договір, в якому одна сторона - підприємець взяла на себе обов'язок здійснювати продаж товарів, виконання робіт або надання послуг кожному, хто до неї звернеться. <br> 3.3. Відповідно до статті 642 Цивільного Кодексу України, якщо особа, яка одержала пропозицію укласти договір, у межах строку для відповіді вчинила дію відповідно до вказаних у пропозиції умов договору (відвантажила товари, надала послуги, виконала роботи, сплатила відповідну суму грошей тощо), яка засвідчує її бажання укласти договір, ця дія є прийняттям пропозиції. <br> 3.4. Претензії щодо якості продукції приймаються протягом 7 (семи) робочих днів з моменту доставки Товару. Офіційна державна експертиза проводиться за рахунок зацікавленої сторони і тільки при збереженні цілісності упаковки. Адреси та інші контактні відомості для направлення претензій: 49000, м. Дніпропетровськ, вулиця Баррикадна 4-Б, телефони: +38 (050) 341-56-46, або на адресу електронної пошти: help@rocket04.com. <br> 4. ПРАВА ТА ОБОВ'ЯЗКИ СТОРІН <br><br> 4.1. Для реєстрації Покупця на сайті Продавця Покупець заповнює форму реєстрації, висловлює згоду з умовами цього Договору шляхом натискання кнопки «Замовити». <br> 4.2. Якщо Покупець надає невірну інформацію або у Продавця є серйозні підстави вважати, що надана ним інформація невірна, неповна або неточна, Продавець має право призупинити або скасувати реєстрацію Покупця і / або відмовити зареєстрованому Покупцеві у використанні своїх послуг. <br> 4.3. Вказуючи свій номер телефону та адресу електронної пошти при реєстрації, Покупець погоджується отримувати від Продавця SMS та Email повідомлення інформаційного характеру. <br> 5. ОПИС ПОСЛУГ <br><br> 5.1. Сайт Продавця є основним способом для ознайомлення з Товаром і оформленням замовлення Покупцем. <br> 5.2. У разі відсутності замовленого Товару на момент прийняття замовлення в роботу співробітник Продавця вправі узгодити з Покупцем заміну Товару, виключити відсутній Товар або скасувати замовлення. Продавець зобов'язується повідомити Покупця про зміну комплектності його замовлення шляхом направлення повідомлення на електронну адресу, вказану при реєстрації в Інтернет-магазині, за допомогою телефонного зв'язку або SMS повідомлення. <br> 5.3. При отриманні Продавцем замовлення на доставку Товару, узгодження замовлення з Покупцем відбувається за допомогою SMS-повідомлення або телефонного дзвінка, залежно способу зв'язку, обраного Покупцем при замовленні або при минулих замовленнях. <br> 5.4. Доставка Товару здійснюється в межах м. Дніпропетровськ, за адресою, зазначеною Покупцем при оформленні замовлення та за умови підтвердження доставки Продавцем. Доставка здійснюється відповідно з датою і часом, погодженими з Покупцем. Підтвердження доставки проводиться Продавцем по телефону та / або за допомогою SMS повідомлення. <br> 5.5. Покупець згоден приймати на зазначені ним при реєстрації та / або розміщенні замовлення телефонні номери дзвінки операторів і кур'єрів Продавця, а також SMS повідомлення і листи електронною поштою, з приводу виконання замовлення, а також приймати повідомлення по іншим зазначеним засобам зв'язку. Покупець згоден приймати від співробітника Продавця або уповноваженої ним особи замовлений Товар за адресою, вказаною Покупцем при реєстрації та / або розміщенні замовлення. <br> 5.6. Покупець в момент замовлення зобов'язаний надати Продавцю максимально точну інформацію про своє місцезнаходження за вказаною ним адресою, а також забезпечити вільний і безперешкодний доступ співробітника Продавця або уповноваженої ним особи за вказаною Покупцем адресою. <br> 5.7. Усі матеріали, представлені на сайті Продавця, носять довідковий характер і не завжди в повній мірі передають достовірну інформацію про властивості Товару. Продавець не несе відповідальність за її невідповідність реальним характеристикам Товару. Термін зберігання поставленого Товару та інгредієнтів, що входять до складу Товару, дорівнює 6 (шести) календарним дням з дня доставки Товару Покупцеві. Продавець не несе відповідальності за шкоду, заподіяну в ході порушення Покупцем зазначених умов і термінів зберігання придбаних Товарів та інгредієнтів. <br> 5.8. Покупець має право відмовитися від замовленого Товару в будь-який час, але не пізніше середи, попередньої узгодженим дня доставки Товару. У будь-який час після середи, але не пізніше 24 годин до погодженого часу доставки, Покупець має право перенести дату доставки на один з наступних тижнів. <br> 5.9. При оплаті банківською картою повернення грошових коштів здійснюється на ту карту, з якої був здійснений платіж. Покупець не вправі відмовитися від сплаченого Замовлення (або його частини) належної якості. Товари належної якості обміну та поверненню не підлягають. <br> 5.10. Покупець за погодженням з Продавцем має право здійснити зміну замовлення. Така зміна має проводитися не пізніше ніж за 24 години до узгодженого часу доставки. При цьому якщо оплата здійснювалася безготівковим розрахунком, Продавець здійснює коригування оплати шляхом повернення частини коштів на ту карту, з якої був здійснений платіж. <br> 5.11. У випадку, якщо Товари були доставлені за адресою і в терміни, встановлені в замовленні, але не були вручені Покупцеві з причин, не залежних від Продавця (відмова Покупця від приймання Товару належної якості; Покупець неправильно вказав адресу при замовленні, в призначений час в межах 15 хвилин за вказаною адресою Товар ніхто не прийняв і при цьому за телефонним номером, вказаним при замовленні, ніхто не відповів, і т.п.), Продавець має право вимагати з Покупця відшкодування повної вартості неприйнятих Товарів. Якщо оплата здійснювалася безготівковим розрахунком, Продавець не здійснює повернення грошових коштів. Якщо оплата повинна була бути проведена готівковим розрахунком, Продавець має право вимагати від Покупця оплату повної вартості неприйнятих Товарів. <br> 5.12. У разі виявлення недоліків Товару Покупець має право за своїм вибором вимагати заміни такого Товару товаром належної якості або відповідного зменшення купівельної ціни. Замість пред'явлення зазначених вимог Покупець має право відмовитися від придбаного Товару і зажадати повернення сплаченої за товар грошової суми. При цьому Покупець на вимогу Продавця і за його рахунок повинен повернути отриманий товар неналежної якості. <br> 5.13. Відповідно до ч. 8 ст. 8 Закону України «Про захист прав споживачів», у разі придбання споживачем продовольчих товарів неналежної якості продавець зобов'язаний замінити їх на товари належної якості або повернути споживачеві сплачені ним гроші, якщо недоліки виявлено у межах строку придатності. При цьому розрахунки із споживачем провадяться в порядку, передбаченому абзацом третім частини сьомої статті 8. Претензії щодо якості Товару можуть бути пред'явлені Покупцем Продавцеві протягом терміну придатності Товару, зазначеного в п. 5.7 цього Договору. <br> 6. УМОВИ ВИКОРИСТАННЯ МАТЕРІАЛІВ, РОЗМІЩЕНИХ НА САЙТІ ПРОДАВЦЯ <br><br> 6.1. Сайт Продавця містить матеріали, що охороняються авторським правом, товарні знаки та інші охоронювані законом матеріали, включаючи, але не обмежуючись: тексти, фотографії, графічні зображення. <br> 6.2. Продавцевi належать виключні права на використання змісту сайту Продавця, крім випадків, окремо зазначених у змісті опублікованих на сайті матеріалів. <br> 6.3. Покупець, а також будь-яка особа, що відвідала сайт Продавця, не має права вносити зміни, публікувати, передавати третім особам, брати участь у продажу або поступку, створювати похідні продукти або іншим чином використовувати, частково або повністю, зміст сайту Продавця. <br> 7. ДОСТАВКА, ОПЛАТА ТА ПОВЕРНЕННЯ <br><br> 7.1. Вартість доставки, способи оплати придбаних товарів та послуг і процедура оформлення замовлення вказані в розділі «Доставка і оплата» за адресою http://partiyaedi.ru/delivery. Оформляючи замовлення, Покупець погоджується, що сповіщений і згоден з оплатою вартості Товарів і їх доставки. <br> 7.2. Оплата повинна бути здійснена не пізніше моменту прийому Товару Покупцем готівкою або банківською картою. <br> 7.9. Для повернення грошових коштів, зарахованих на розрахунковий рахунок Продавця помилково, за допомогою платіжних систем, Покупець повинен звернутися з письмовою заявою та додатком копії паспорта та чеків / квитанцій, підтверджуючих помилкове зарахування. Дана заява необхідно направити за адресою: help@rocket04.com. <br> 7.10. Після отримання письмової заяви з додатком копії паспорта та чеків / квитанцій, Продавець здійснює повернення в термін до 21 (двадцяти одного) робочого дня з дня отримання 3аяви на розрахунковий рахунок Покупця, зазначений у заяві. У цьому випадку, сума повернення буде дорівнювати вартості Замовлення. Термін розгляду Заяви та повернення грошових коштів Покупцеві починає обчислюватися з моменту отримання Продавцем Заяви і розраховується в робочих днях без урахування свят / вихідних днів. <br> 7.11. Порядок повернення регулюється правилами міжнародних платіжних систем. Повернення готівковими коштами не допускається. <br> 7.12. У разі прийому Товару та його оплати, Покупець зобов'язаний розписатися в супровідних документах, зробивши позначки про прийом або відмову від замовлення (його частини) та про внесені суми. <br> 8. ТЕРМІН ДІЇ ДОГОВОРУ <br><br> 8.1. Договір набуває чинності з моменту оформлення заказу Користувачем на сайті http://rocket04.com і діє до повного виконання Сторонами своїх зобов'язань. <br> 9. ІНДИВІДУАЛЬНІ ВИПАДКИ СТАНУ ЗДОРОВ'Я, АЛЕРГІЧНІ РЕАКЦІЇ ТА ОСОБИСТІ ПРОТИПОКАЗАННЯ <br><br> 9.1. До складу продуктів можуть бути включені інгредієнти, що викликають особисті алергічні реакції і непереносимість. Роблячи замовлення на Товари на сайті Продавця, Покупець підтверджує, що ознайомився з їхнім складом і не має до нього претензій. <br> 10. ОБСТАВИНИ НЕПЕРЕБОРНОЇ СИЛИ <br><br> 10.1. Сторони звільняються від відповідальності за часткове або повне невиконання зобов'язань за цим Договором у випадку, якщо таке невиконання стало прямим наслідком обставин непереборної сили (форс-мажорних обставин), що виникли після укладення Договору, в результаті подій надзвичайного характеру, а саме: пожежі, повені, урагану і землетруси або накладення органами державної влади обмежень на діяльність будь-якої з Сторін, і якщо ці обставини Сторони не могли ні передбачити, ні запобігти розумними заходами. <br> 11. ВИРІШЕННЯ СПОРІВ <br><br> 11.1. Спори і розбіжності, які можуть виникнути з даного Договору, вирішуються шляхом переговорів з дотриманням досудового (претензійного) порядку. Термін розгляду Продавцем претензії - 14 (чотирнадцять) календарних днів з моменту її отримання від Покупця. <br> 11.2. Якщо Сторони не дійдуть згоди, ці суперечки і розбіжності вирішуються у судовому порядку згідно чинного законодавства України. <br> 12. ПОВІДОМЛЕННЯ ПРО КОНФІДЕНЦІЙНІСТЬ <br><br> 12.1 Згода користувача на надання персональної інформації визначається згодою з цієї публічної офертою, що відбувається автоматично при реєстрації Покупця на сайті Продавця або при здійсненні ним добровільного платежу. <br> 12.2 Для надання послуг Продавець збирає та зберігає тільки необхідні персональні дані користувача. Продвець може використовувати персональні дані користувача для його ідентифікації, уточнення даних платежу, надання персоналізованих сервісів, зворотного зв'язку з Покупцем, обробки заявок і запитів, виконання знеособлених статистичних обчислень і поліпшення якості послуг, що надаються Покупцю. <br> 12.3. Продавець вправі передати персональну інформацію користувача третім особам тільки у випадках, якщо: покупець висловив свою згоду на такі дії, передача необхідна для надання послуги Покупцю, передача передбачена законодавством України. <br> 13. ІНШІ УМОВИ <br><br> 13.1. У випадку, якщо будь-яке положення або будь-яка частина положення Договору визнані недійсними або що не мають юридичної сили, решта положень і частини положень Договору залишаються в повній силі і дії. <br> 13.2. Всі Додатки до цього Договору (при їх наявності) є його невід'ємною частиною. <br> 13.3. У всьому іншому Сторони домовилися керуватися чинним законодавством України. <br> 13.4. Продавець має право вносити зміни до Договору з обов'язковим розміщенням відповідної інформації на Сайті Продавця за 14 (чотирнадцять) календарних днів до вступу відповідних змін в силу. <br> 13.5. За всіма питаннями Покупець має право звертатися за адресою електронної пошти: help@rocket04.com або за телефонами, вказаними на сайті Продавця. </span> </div> </div> </div> </div>"),
-a.put("views/fulldesc.html",'<div ng-controller="FulldescCtrl as f" class="container-fluid fullDesc" style="margin-top: -52px"> <div class="wrapper"> <div class="fullDescNav"> <div class="col-xs-7 pull-left backToMenu"> <a href="#/rocket04"><img src="https://rocket04.imgix.net/back_to_menu.svg?s=6e3904559d38807931f181f7d9120327" alt="" width="26px"> <strong>НАЗАД В МЕНЮ</strong></a> </div> <div class="col-xs-5 text-right pull-right"> <a href="#/cart"><ngcart-summary></ngcart-summary></a> </div> </div> <div class="col-xs-12 col-lg-6 text-center photoColumn columnWrapper"> <div class="image photo-container" ng-class="{\'quantity\':f.getInCartQuantity(receipe.id)}"> <div ng-hide="!f.getInCartQuantity(receipe.id)" class="inCart fadein fadeout"> <p>{{f.getInCartQuantity(receipe.id)}} в Вашей корзине</p> </div> <img ng-src="{{receipe.photo}}"> </div> </div> <div class="col-xs-12 col-lg-6 primaryColumn columnWrapper"> <div class="text-left"> <div class="heading col-xs-12"> <h3 style="display: inline-block" class="pull-left"><strong>{{receipe.title}}</strong></h3> <i class="spaces">&nbsp;</i> <p style="display: inline-block" class="pull-right text-xs-left text-sm-left price"> &#8372;{{receipe.newPrice.grand}}.<sup>{{receipe.newPrice.cents}}<span ng-hide="receipe.newPrice.cents.length">00</span></sup> </p> </div> <div class="description col-xs-12"> <p class="text-muted small-description">Порция на {{receipe.portions}}. Время приготовления {{receipe.time}} минут.</p> </div> <div class="actions col-xs-12"> <button class="btn btn-md btnAdd" ng-click="f.AddToCart(receipe.id, receipe.title, receipe.price, 1, {img:receipe.photo})"><i class="glyphicon glyphicon-plus"></i> Добавить</button> <button class="btn btn-md btnRemove" ng-click="f.removeFromCart(receipe.id)" ng-hide="!f.getInCartQuantity(receipe.id)"><i class="glyphicon glyphicon-minus"></i></button> </div> </div> </div> <div class="col-xs-12 col-lg-6 tabsetColumn columnWrapper"> <div class="col-xs-12"> <uib-tabset> <uib-tab heading="Детали"> <p class="description">{{receipe.description}}</p> </uib-tab> <uib-tab heading="Ингредиенты"> <p class="ingredientsHeading">Ингредиенты</p> <div class="ingredientsContent"> <span ng-repeat="ing in receipe.ingredients" class="ingredientsContent"> <p class="ingredients">{{ing}}</p> </span> </div> </uib-tab> <uib-tab heading="Нутриенты"> <table class="table descriptionTable"> <tr> <th> <p class="heading">Калории</p> <p class="content"> {{receipe.newNutrients.callories}} </p> </th> <th> <p class="heading">Белки</p> <p class="content"> {{receipe.newNutrients.proteins}}g </p> </th> <th> <p class="heading">Жиры</p> <p class="content"> {{receipe.newNutrients.fats}}g </p> </th> <th> <p class="heading">Углеводы</p> <p class="content"> {{receipe.newNutrients.carbohydrates}}g </p> </th> </tr> </table> </uib-tab> </uib-tabset> </div> </div> </div> </div>'),a.put("views/gifts.html",'<div class="gifts" ng-controller="GiftsCtrl"> <div class="container-fluid"> <div class="row"> <img src="https://rocket04.imgix.net/banner_gifts.jpg?s=416b94cf6608ed05f7b259e789195785" alt="" width="100%"> </div> </div> <div class="container-fluid intro hero"> <div class="heroContent text-center col-lg-12 col-md-12 col-sm-12 col-xs-12"> <h1 class="text-uppercase">подарите подарок, который пригодится каждому</h1> <h5> Идеален для молодых родителей, занятых людей, и всех кто любит вкусно покушать в Днепропетровске. </h5> </div> </div> <div class="container-fluid giftsContent"> <div class="col-xs-12 col-md-10 col-md-offset-1 step firstStep"> <h4 class="text-left"><strong>Шаг 1</strong> &nbsp;&nbsp;&nbsp;&nbsp;Выберите подарочный сертификат</h4> <div class="row"> <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 giftCard" ng-repeat="gift in gifts" ng-click="selectGift(gift.id, gift);" ng-class="{active :(selectedGift == gift.id)}"> <div class="giftCardHeading"> <h3 ng-model="formUser.gift">&#8372;{{gift.price}}<sup>00</sup><span pull-right>{{gift.popular}}</span></h3> </div> <div class="giftCardImg" style="background-image:url({{gift.img}}); background-size: cover" ng-class="{quantity :(selectedGift == gift.id)}"> <div class="inCart"> <h1 class="text-uppercase fadein fadeout" ng-show="selectedGift == gift.id">выбрано</h1> </div> </div> <div class="giftCardDescr"> <p class="text-center">{{gift.text}}</p> </div> </div> </div> </div> <div class="col-xs-12 col-md-10 col-md-offset-1 step secondStep" ng-form="giftForm"> <h4 class="text-left"><strong>Шаг 2</strong> &nbsp;&nbsp;&nbsp;Предоставьте свои данные</h4> <div class="form row" ng-form="customerDetails" novalidate> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <label for="name">Ваше Имя</label> <input id="name" type="text" class="adressDetails name" ng-model="formUser.name" required> </div> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <label for="surname">Ваша Фамилия</label> <input id="surname" type="text" class="adressDetails surname" ng-model="formUser.surname" required> </div> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <label for="phone">Ваш Номер Телефона</label> <input id="phone" type="tel" class="adressDetails phone" ng-model="formUser.phone" value="+38" required> </div> </div> </div> </div> <div class="container-fluid"> <dvi class="row"> <div class="separator"></div> </dvi> </div> <div class="container-fluid"> <dvi class="row text-center"> <div class="col-xs-2 div col-xs-offset-5"> <button ng-disabled="giftForm.$invalid" class="btn text-center makeOrder" ng-click="buyGift();">Сделать Заказ</button> </div> </dvi> </div> </div>'),a.put("views/gmap.html",'<div class="map"> <div class="container-fluid"> <div class="col-xs-12 text-center text-uppercase"> <h2 class="mapHeading">зона доставки в днепропетровске и области</h2> </div> <div class="col-xs-12 col-sm-10 col-sm-offset-1 mapContainer"> <gm-map options="{center: [48.46238585,35.05232421], zoom: 10}"> <gm-kmllayer options="{url:\'https://rocket04.github.io/1.kml\', opts: {suppressInfoWindows: true}}"> </gm-kmllayer> </gm-map> </div> </div> </div>'),a.put("views/how.html",'<div class="how"> <div class="container-fluid intro hero"> <div class="heroContent text-center col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-4"> <h3 class="text-uppercase">что такое</h3> <h1 class="text-uppercase">rocket04?</h1> <h5> Rocket04 это абсолютно новый образ питания. Мы доставляем самые свежие ингредиенты по нашим уникальным, вкусным и полезным рецептам. </h5> </div> </div> <div class="container-fluid text-center text-uppercase howHeading"> <h2>как это работает</h2> </div> <div class="howContent container-fluid"> <div class="col-xs-12 col-md-10 col-md-offset-1 howCard first"> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">расфасованные продукты</h3> <p> Наша команда выбирает, закупает и расфасовывает только самые лучшие и свежие ингредиенты. Каждый рецепт и заказ обрабатывается в ручную. </p> <p> Все продукты мы покупаем только у местных производителей, поддерживая украинское производство </p> </div> <div class="col-xs-12 col-md-8 image"> <img src="https://rocket04.imgix.net/how_it_works_1.jpg?s=a23bb848a46e611f6e200e914cf2da6e" alt="" class="pull-right"> </div> </div> <div class="col-xs-12 col-md-10 col-md-offset-1 howCard second"> <div class="col-xs-12 col-md-8 hidden-xs hidden-sm image"> <img src="https://rocket04.imgix.net/how_it_works_2.jpg?s=a1137a58bf73f1169ca499b1cdf02028" alt="" class="pull-left"> </div> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">приготовление еды это просто</h3> <p> Вы можете сделать заказ через наш сайт или социальные медиа. Выбрать любое блюдо из 8 категорий от главных блюд с мясом, так и вегетарианских рецептов, супов, дессертов и напитков. Все наши рецепты сбалансированы и основаны на принципах здорового питания. </p> <p> Вы можете выбрать удобный для вас доступный день доставки и мы доставим вам всё что необходимо для приготовления идеального блюда. </p> </div> <div class="col-xs-12 col-md-8 hidden-md hidden-lg image"> <img src="https://rocket04.imgix.net/how_it_works_2.jpg?s=a1137a58bf73f1169ca499b1cdf02028" alt="" class="pull-left"> </div> </div> </div> <div class="container-fluid"> <div class="row"> <div class="col-xs-12 col-md-10 col-md-offset-1 middleHero hero"> <div class="heroContent text-center col-lg-12 col-md-12 col-sm-12 col-xs-12"> <h1 class="text-uppercase">посмотрите наше меню</h1> <p class="">Все безумно вкусно</p> <a href="" class="btn btn-md text-capitalize" ng-href="#/rocket04">наше меню</a> </div> </div> </div> </div> <div class="howContent container-fluid"> <div class="col-xs-12 col-md-10 col-md-offset-1 howCard third"> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">доставка в любое место</h3> <p> Мы доставим ваш заказ точно в срок. Мы используем специальную упаковочную продукцию чтобы ваши ингредиенты всегда оставались свежими и охлаждёнными. </p> </div> <div class="col-xs-12 col-md-8 image"> <img src="https://rocket04.imgix.net/how_it_works_3.jpg?s=b6570fa9801bf72074ce8e6e6df267d7" alt="" class="pull-right"> </div> </div> <div class="col-xs-12 col-md-10 col-md-offset-1 howCard fourth"> <div class="col-xs-12 col-md-8 hidden-xs hidden-sm image"> <img src="https://rocket04.imgix.net/how_it_works_6.jpg?s=1467f817f5899484ae82d6c7ab4fbb51" alt="" class="pull-left"> </div> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">еда, которую вы хотите</h3> <p> Разнообразие рецептов это очень сложная и утомительная работа. Нужно постоянно искать что-то новое, закупать необходимые продукты, беспокоиться о правильных пропорциях. Но с нами всё становится в разы проще! </p> </div> <div class="col-xs-12 col-md-8 hidden-md hidden-lg image"> <img src="https://rocket04.imgix.net/how_it_works_6.jpg?s=1467f817f5899484ae82d6c7ab4fbb51" alt="" class="pull-left"> </div> </div> <div class="col-xs-12 col-md-10 col-md-offset-1 howCard fifth"> <div class="col-xs-12 col-md-4 cardText"> <h3 class="text-uppercase">еда для всех</h3> <p> В основе нашего стартапа лежит желание сделать этот мир немного лучше. Поэтому на 2016 год у нас в планах накормить обедами 10,000 жителей Днепропетровска, которые в этом нуждаются. </p> </div> <div class="col-xs-12 col-md-8 image"> <img src="https://rocket04.imgix.net/how_it_works_4.jpg?s=aeb27fef710a8e8af6f12ede6e3e071a" alt="" class="pull-right"> </div> </div> </div> <div class="container-fluid ending hero"> <div class="heroContent text-center col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3"> <h1 class="text-uppercase">посмотрите наше меню</h1> <p class="">Все безумно вкусно</p> <a href="" class="btn btn-md text-capitalize" ng-href="#/rocket04">наше меню</a> </div> </div> </div>'),a.put("views/main.html",'<div class="index"> <div class="container-fluid intro bottom-border hero"> <div class="heroContent text-center col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3"> <h3 class="text-uppercase">свежие продукты</h3> <h1 class="text-uppercase">с доставкой на дом</h1> <h5>Взвешенные и расфасованные ингредиенты <br> для уникальных рецептов</h5> <p class="text-capitalize">посмотрите наше меню</p> <a href="" class="btn btn-md text-capitalize" ng-href="#/rocket04">наше меню</a> </div> </div> <div class="container-fluid content bottom-border text-center"> <div class="wrapper"> <div class="row text-center advantages"> <h1 class="text-uppercase cardHeadign">Ужин на ваших правилах</h1> <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"> <ul class="list-unstyled"> <li> <img src="https://rocket04.imgix.net/Rocket_menu.svg?s=19cfa5825989dffbad1c0be0a2ab7bda" alt=""> </li> <li> <h2 class="text-capitalize">уникальное меню</h2> </li> <li> <p> Попробуйте абсолютно новые рецепты каждую неделю, подготовленные нашей кулинарной командой. Мы подбираем оптимально сбалансированные рецепты для здорового и вкусного питания. </p> </li> </ul> </div> <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"> <ul class="list-unstyled"> <li> <img src="https://rocket04.imgix.net/Rocket_package.svg?s=b861c58255928812744951275deecdd9" alt=""> </li> <li> <h2 class="text-capitalize">расфасованные продукты</h2> </li> <li> <p> Все ингредиенты расфасованы и точно отмеряны, поэтому больше не будет неиспользованных продуктов. Мы вручную отбираем идеальные свежие продукты специально под каждый ваш заказ. </p> </li> </ul> </div> <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"> <ul class="list-unstyled"> <li> <img src="https://rocket04.imgix.net/Rocket_delivery.svg?s=d9bd609d5448a79ffb0b28848bd7bc7f" alt=""> </li> <li> <h2 class="text-capitalize">удобная доставка</h2> </li> <li> <p> Доставка по всему региону в удобное для Вас время. Ваши продукты будут доставлены в специально завакуумированных упаковках, поэтому еда всегда останется свежей и охлажденной. </p> </li> </ul> </div> </div> <div class="teamQuote text-left row indent-5"> <div class="col-xs-12 col-sm-5 cardContent"> <h1 class="cardHeadign text-uppercase">Всё начинается с команды</h1> <p class="cardText"> Мы уверены в том, что правильное питание является важным елементом полноценной, здоровой жизни. И если при этом мы экономим Ваше время для действительно важных вещей - мы движемся в правильном направлении. </p> </div> <div class="col-xs-12 col-sm-7 image"> <img src="http://rocket04.imgix.net/team.png?s=eae2fc9db81ef0196fbf392c88af8a3a" alt="" class="pull-right" width="100%" style="visibility: hidden"> </div> </div> <div class="col-xs-12"> <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3"> <h1 class="text-uppercase cardHeadign principalsHeading">Наши основные принципы</h1> <p class="cardText"> Когда мы задумывали проект Rocket04, мы поставили перед собой цель создать нечто большее, чем обычную компанию. Мы хотим создать новое поколение стартапов в Украине с новыми принципами. </p> </div> </div> <div class="row text-center advantages princepals"> <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1"> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <ul class="list-unstyled"> <li class="principalsImg"> <img src="https://rocket04.imgix.net/whisk-fbd7e19c2b9439575671a6849e517473.svg?s=a44c57943be878118a03fe2f0677dbfc" alt=""> <div class="text-left" style="display:inline-block; width: 130px"> <h5>10,000</h5> <p>Пожертвованых обедов и ужинов</p> </div> </li> <li class="principalsHeading"> <h2 class="">Наша цель на 2016 год</h2> </li> <li> <p> Мы поставили перед собой задачу: в течении нашего первого года работы накормить 10 000 украинцев нуждающихся в этом. Наша цель изменить мир начинается в родном Днепропетровске и начинается вместе с вами. </p> </li> </ul> </div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <ul class="list-unstyled"> <li class="principalsImg"> <img src="https://rocket04.imgix.net/trees-e4cd4bd347f99ce059bb94f4772a4e5a.svg?s=062e0f0532b3fee07115114308dd0625" alt=""> <div class="text-left" style="display:inline-block; width: 150px"> <h5>X3</h5> <p>Больше потраченных средств на упаковку</p> </div> </li> <li class="principalsHeading"> <h2 class="">Все изменения начинаются с себя</h2> </li> <li> <p> Для всей упаковочной продукции, в которой доставляется ваш будущий кулинарный шедевр, мы используем только натуральные экологически чистые материалы от украинских производителей. </p> </li> </ul> </div> </div> </div> </div> </div> <div class="container-fluid ending bottom-border hero"> <div class="heroContent text-center col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-4 col-lg-offset-4"> <h1 class="text-uppercase cardHeadign">Блюдо именно так как вы хотите</h1> <p class="cardText"> Когда вы доверяете свои заботы о еде нам, у вас появляется больше свободного времени на то что действительно важно. И как использовать новое свободное время решать вам. </p> </div> </div> <div class="container-fluid endingintro bottom-border hero"> <div class="heroContent text-center col-lg-6 col-md-6 col-sm-12 col-xs-12 col-md-offset-3"> <h3 class="text-uppercase">свежие продукты</h3> <h1 class="text-uppercase">с доставкой на дом</h1> <h5>Взвешенные и расфасованные ингредиенты <br> для уникальных рецептов</h5> <p class="text-capitalize">посмотрите наше меню</p> <a href="" class="btn btn-md text-capitalize" ng-href="#/rocket04">наше меню</a> </div> </div> </div> '),a.put("views/store.html",'<div ng-controller="storeCtrl as s" class="store"> <rocket-navstore></rocket-navstore> <div class="container-fluid"> <div class="banner"> <img src="https://rocket04.imgix.net/banner_opening.png?s=a4ea20647512c015f0e5bf80b70090a0" width="100%" alt=""> </div> <div class="row"> <div class="col-xs-12"> <h3 class="text-uppercase menuHeader">Меню</h3> </div> <ul class="list-unstyled"> <li ng-repeat="i in receipeLst1 | filter:search:strict | filter:colourFilter"> <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 card"> <a ng-href="#/desc/{{i.id}}"> <div class="image photo-container" ng-class="{\'quantity fadein fadeout\':s.getInCartQuantity(i.id)}"> <div ng-hide="!s.getInCartQuantity(i.id)" class="inCart fadein fadeout"> <h1>{{s.getInCartQuantity(i.id)}}</h1> <p>в Вашей корзине</p> </div> <img ng-src="{{i.photo}}"> </div> </a> <div class="description"> <div class="title"> <h3>{{i.title}}</h3> </div> <div class="tags"> <p class="itemTag text-capitalize"> {{i.tag}} </p> </div> <div class="separator"></div> <div class="actions"> <div class="price" style="display: inline"> &#8372;{{i.newPrice.grand}}.<sup>{{i.newPrice.cents}}<span ng-hide="i.newPrice.cents.length">00</span></sup> </div> <div class="buttons pull-right" style="display: inline"> <a class="btn btn-sm removeFromCart" ng-click="s.removeFromCart(i.id)" ng-hide="!s.getInCartQuantity(i.id)"><i class="glyphicon glyphicon-minus"></i></a> <a class="btn btn-sm" ng-click="s.AddToCart(i.id, i.title, i.price, 1, {img:i.photo})"><i class="glyphicon glyphicon-plus"></i></a> </div> </div> </div> </div> </li> </ul> </div> </div></div>')}]);
+'use strict';
+
+/**
+ * @ngdoc overview
+ * @name ocean04App
+ * @description
+ * # ocean04App
+ *
+ * Main module of the application.
+ */
+angular
+  .module('ocean04App', [
+    'ngAnimate',
+    'ngCookies',
+    'ngResource',
+    'ngRoute',
+    'ngSanitize',
+    'ngTouch',
+    'ngCart.fulfilment', 
+    'ui.bootstrap',
+    'GoogleMapsNative'
+  ])
+  .config(function ($routeProvider,$httpProvider) {
+
+    $routeProvider
+      .when('/', {
+        templateUrl: 'static/build/views/main.html',
+        controller: 'MainCtrl',
+        controllerAs: 'main'
+      })
+      .when('/about', {
+        templateUrl: 'static/build/views/about.html',
+        controller: 'AboutCtrl',
+        controllerAs: 'about'
+      })
+      .when('/gifts', {
+        templateUrl: 'static/build/views/gifts.html',
+        controller: 'GiftsCtrl',
+        controllerAs: 'gifts'
+      })
+      .when('/how', {
+        templateUrl: 'static/build/views/how.html',
+        controller: 'HowCtrl',
+        controllerAs: 'how'
+      })
+      .when('/rocket04', {
+        templateUrl: 'static/build/views/store.html',
+        controller: 'storeCtrl',
+        controllerAs: 'store'
+      })
+      .when('/cart', {
+        templateUrl: 'static/build/views/cart.html',
+        controller: 'cartCtrl',
+        controllerAs: 'cart'
+      })
+      .when('/desc/:id', {
+        templateUrl: 'static/build/views/fulldesc.html',
+        controller: 'FulldescCtrl',
+        controllerAs: 'f'
+      })
+      .when('/gMap', {
+        templateUrl: 'static/build/views/gmap.html',
+        controller: 'GmapCtrl',
+        controllerAs: 'gMap'
+      })
+      .when('/contract', {
+        templateUrl: 'static/build/views/contract.html',
+        controller: 'ContractCtrl',
+        controllerAs: 'contract'
+      })
+      .when('/contacts', {
+        templateUrl: 'static/build/views/contacts.html',
+        controller: 'ContactsCtrl',
+        controllerAs: 'contacts'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+  }).run(['$location',function(){
+    $('#menuStick').slicknav({
+      brand:"<a href=\"#/\"><img src=\"https://rocket04.imgix.net/logo.svg?s=533089706d3998f2811d218fd2fe2fa5\" alt=\"\"></a>",
+      label:"  ",
+      closeOnClick: true
+    });
+
+    function centerin () {
+      var b = (((document.body.clientWidth - 120) / 2)/document.body.clientWidth)*100;
+      var c = b + "%";
+      $('.slicknav_brand').css('left', c);
+      $('.navbar-header').css('left', c);
+
+      var d = (((document.body.clientWidth - 26) / 2)/document.body.clientWidth)*100;
+      var e = d + "%";
+      $('.c-loader').css('left', e);
+
+      var f = (((document.body.clientWidth - 105) / 2)/document.body.clientWidth)*100;
+      var a = f + "%";
+      $('.storeLoader').css ('left', a);
+    };
+      
+    $(window).resize(function(){
+      centerin();
+    });
+
+    centerin();
+  }]).animation('.rocket-view', function() {
+    return {
+      enter: function(element, done) {
+        element.css('display', 'none');
+        element.fadeIn(500, done);
+        return function() {
+          element.stop();
+        };
+      },
+      leave: function(element, done) {
+        element.fadeOut(500, done);
+        return function() {
+          element.stop();
+        };
+      }
+    };
+  });
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:MainCtrl
+ * @description
+ * # MainCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('MainCtrl', function ($rootScope) {
+  	$(document).scrollTop(0);
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:AboutCtrl
+ * @description
+ * # AboutCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('AboutCtrl', function ($rootScope) {
+  	$rootScope.pageTitle = "О Нас";
+  	$(document).scrollTop(0);
+  });
+
+"use strict";
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:GiftsCtrl
+ * @description
+ * # GiftsCtrl
+ * Controller of the ocean04App
+ */
+angular.module("ocean04App")
+  .controller("GiftsCtrl", function ($rootScope, $scope, api) {
+  	$(document).scrollTop(0);
+
+  	var giftCards = $(".giftCard");
+
+    $("#phone").mask("+38(999)999-99-99");
+
+    $scope.formUser = {};
+
+    $rootScope.pageTitle = "Подарки";
+
+  	$scope.selectedGift;
+
+  	$scope.selectGift = function(id, gift){
+  		$scope.selectedGift = id;
+      $scope.formUser.order_details = "Подарочный сертификат стоимостью: " + gift.price;
+  	}
+
+  	$scope.gifts = [
+  		{
+  			img:"https://rocket04.imgix.net/gifts_1.jpg?s=fa9dea2977649ce50e30185840863067",
+  			price:50,
+  			text:"Быстро. Вкусно. Надёжно. Идеальный вариант, если других вариантов нет.",
+  			id:1,
+  			popular:""
+  		},{
+  			img:"https://rocket04.imgix.net/gifts_2.jpg?s=77307f3ac2cd865f502625a63ad84970",
+  			id:2,
+  			price:100,
+  			text:"Целая неделя вкусных обедов и ужинов на двоих.",
+  			popular:""
+  		},{
+  			img:"https://rocket04.imgix.net/gifts_3.jpg?s=67d0cef4aafa8c934c57a971ee6f4e22",
+  			id:3,
+  			price:250,
+  			text:"Идеальные выходные без головной боли на двоих.",
+  			popular:"Популярное"
+  		},{
+  			img:"https://rocket04.imgix.net/gifts_4.jpg?s=bf19b02e7d7a5a76de7773444db6656f",
+  			id:4,
+  			price:500,
+  			text:"Целая неделя вкусных обедов и ужинов на двоих.",
+  			popular:""
+  		}
+  	];
+
+    $scope.buyGift = function () {
+      var newPhone = [];
+      for (var i = 0; i<$scope.formUser.phone.length;i++){
+        if($scope.formUser.phone[i] !== ")"){
+          if($scope.formUser.phone[i] !== "("){
+            if($scope.formUser.phone[i] !== "-"){
+              newPhone.push($scope.formUser.phone[i]);
+            }
+          }
+        } 
+      }
+      $scope.formUser.phone = newPhone.join('');
+      api.receipe.orders($scope.formUser).then(function(response){
+      },function(err) {
+      });
+    }
+
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:HowCtrl
+ * @description
+ * # HowCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('HowCtrl', function ($rootScope) {
+  	$(document).scrollTop(0);
+  	$rootScope.pageTitle = "Принцип Работы";
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:TeamCtrl
+ * @description
+ * # TeamCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('storeCtrl', function ($scope, $rootScope, api, loader, ngCart, ngCartItem) {
+    $(document).scrollTop(0);
+    $rootScope.itemDescription = false;
+    $rootScope.storeLoader = true;
+    $rootScope.pageTitle = "Ежедневное Меню";
+    $(".slicknav_menu").show();
+    $scope.receipeLst1 = [];
+    $scope.recepie;
+    $scope.spinner=false;
+    $scope.colourIncludes = [];
+
+    //getting data from server Artem
+    this.getReceipesList = function() {
+      loader.notAllowed();
+      api.receipe.store().then(function(response) {
+        $scope.receipeLst1 = response;
+        loader.allowed();
+      }, function(err) {
+        $scope.receipeLst1 = [];
+        loader.allowed();
+      });
+    };
+      
+    $scope.includeColour = function(colour) {
+      var i = $.inArray(colour, $scope.colourIncludes);
+      if (i > -1) {
+        $scope.colourIncludes.splice(i, 1);
+      } else {
+        $scope.colourIncludes.push(colour);
+      }
+    }
+      
+    $scope.colourFilter = function(fruit) {
+      if ($scope.colourIncludes.length > 0) {
+        if ($.inArray(fruit.tag, $scope.colourIncludes) < 0)
+          return;
+      }  
+      return $scope.receipeLst1;
+    }
+
+    $scope.clearFilter = function () {
+      $scope.colourIncludes = [];
+      $('input[type="checkbox"]').prop( "checked", false ).parent().css('background', 'white');
+      // $('input[type="checkbox"]')
+    }
+
+    //getting quantity in cart by its id 
+    this.getInCartQuantity = function (id) {
+      var inCartQunatity = ngCart.getItemById(id);
+      var a = inCartQunatity._quantity;
+      this.inCartQunatity = a;
+      return this.inCartQunatity;
+    };
+
+    //removing or decrementing item quantity in cart
+    this.removeFromCart = function (id) {
+      var inCart = ngCart.getItemById(id);
+      if(inCart._quantity === 1){
+        ngCart.removeItemById(id);
+      }else if(inCart._quantity > 1){
+        inCart.setQuantity(-1, true)
+      }else{
+        return;
+      }
+      this.getInCartQuantity(id);
+    };
+
+    //adding or incrementing item quantity in cart
+    this.AddToCart = function (id, name, price, q, data) {
+      var a = ngCart.getItemById(id);
+      var q = q;
+      if(a._quantity >= 1){
+        q = a._quantity + 1;
+      }
+      ngCart.addItem(id, name, price, q, data);
+      this.getInCartQuantity(id);
+    };
+
+    $(window).scroll(function(){
+      var sticky = $('.storeNav'),
+          scroll = $(window).scrollTop();
+      if (scroll >= 80) sticky.addClass('fixed');
+      else sticky.removeClass('fixed');
+    });
+
+    this.getReceipesList();
+  });
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:TeamCtrl
+ * @description
+ * # TeamCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('cartCtrl', function ($scope, $rootScope, ngCart, api, $timeout) {
+    $(document).scrollTop(0);
+    $("#phone").mask("+38(999)999-99-99");
+    $(".slicknav_menu").show();
+    $rootScope.itemDescription = false;
+    $rootScope.pageTitle = "Корзина";
+    $scope.formUser = {};
+    $scope.deliveryDate;
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+    $scope.checkShipping = function () {
+      if(ngCart.totalCost()>500){
+        $scope.shipping = 0;
+      }else{
+        $scope.shipping = 20;
+      }
+    }
+
+    $scope.getDeliveryDate = function (){
+      var a = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"][new Date().getDay()];
+      switch(a){
+        case "Пн":
+          $scope.deliveryDate = new Date(+new Date()+(86400000*2));
+          break;
+        case "Вт":
+          $scope.deliveryDate = new Date(+new Date()+(86400000*1));
+          break;
+        case "Ср":
+          $scope.deliveryDate = new Date(+new Date()+(86400000*4));
+          break;
+        case "Чт":
+          $scope.deliveryDate = new Date(+new Date()+(86400000*3));
+          break;
+        case "Пт":
+          $scope.deliveryDate = new Date(+new Date()+(86400000*2));
+          break;
+        case "Сб":
+          $scope.deliveryDate = new Date(+new Date()+(86400000*1));
+          break;
+        case "Вс":
+          $scope.deliveryDate = new Date(+new Date()+(86400000*3));
+          break;
+        default:
+          break;
+      }
+    }
+    $scope.getDeliveryDate();
+    // 86400000 - one day in miliseconds
+
+    $scope.cartItems = ngCart.getCart();
+
+    $scope.getCart = function(){
+      $scope.cartTotal = ngCart.totalCost();
+    }
+
+    $scope.removeItem = function(id){
+      ngCart.removeItemById(id);
+    }
+
+    $scope.countTotal = function () {
+      $scope.checkShipping();
+      $scope.totalWithShipping = ngCart.totalCost() + $scope.shipping;
+    }
+
+    $scope.getCart();
+    $scope.checkShipping();
+    $scope.countTotal();    
+
+    $scope.checkout = function () {
+      $scope.formUser.total = (ngCart.totalCost() + $scope.shipping);
+
+      var order_details = [];
+      ngCart.getCart().items.forEach(function (key) {
+        order_details.push(key._name + " - " + key._quantity);
+      });
+      $scope.formUser.order_details = order_details.join(", ");
+
+      var b = new Date ($scope.deliveryDate);
+      var date = b.getDate()+' '+monthNames[b.getMonth()];
+
+      $scope.formUser.timegap = date + '|' + $("li.active>a")[0].innerHTML;
+
+      var newPhone = [];
+      for (var i = 0; i<$scope.formUser.phone.length;i++){
+        if($scope.formUser.phone[i] !== ")"){
+          if($scope.formUser.phone[i] !== "("){
+            if($scope.formUser.phone[i] !== "-"){
+              newPhone.push($scope.formUser.phone[i]);
+            }
+          }
+        } 
+      }
+      $scope.formUser.phone = newPhone.join('');
+
+      api.receipe.orders($scope.formUser).then(function(response){
+        $scope.notification = true;
+        $scope.successOrder = true;
+        $timeout(function(){
+          $scope.successOrder = false;
+          $scope.notification = false;
+        }, 9000);
+      },function(err) {
+        $scope.notification = true;
+        $scope.errorOrder = true;
+        $timeout(function(){
+          $scope.errorOrder = false;
+          $scope.notification = false;
+        }, 9000);
+      });
+    }
+
+  });
+
+'use strict';
+
+angular.module('ocean04App')
+  .service('api', function ($http,$q,$window) {
+    $http.defaults.useXDomain = true;
+    var url = 'https://rocket04.com/'
+
+// MAIN API REQUEST METHODS
+    var list =  function (suburl,field,param){
+      return $q(function(resolve, reject) {
+        $http({
+          method:'GET',
+          url: url+suburl,
+          params:param
+        }).success(function (data) {
+          for(var i = 0; i<data.length; i++){
+            var oldPrice = data[i].price.toString().split(".");
+            data[i].price;
+            data[i].newPrice = {
+              grand:oldPrice[0],
+              cents:oldPrice[1]
+            }
+          }
+          localStorage.setItem('items', JSON.stringify(data));
+          resolve(data);
+        }).error(function (data, status, headers, config) {
+          if(reject){
+            reject(data);
+          }
+        });
+      });
+    };
+
+    var post = function(suburl,param){
+      return $q(function(resolve, reject) {
+        //  $http.post(url+suburl,param,
+        //   {
+        //     headers: {'Content-Type': 'application/json'}
+        //   }
+        // )
+        var data =  JSON.stringify(param);
+        $.ajax({
+          url: url+suburl,
+          type: 'post',
+          data: data ,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          dataType: 'json'
+        })
+        .success(function (data) {
+          resolve(data);
+        }).error(function (data, status, headers, config) {
+          reject(data);
+        });
+      });
+    };
+
+//API functionality
+    return {
+      receipe: {
+        store: function () {
+          return list('get_recipes');
+        },
+        orders: function (order) {
+          return post('order', order);
+        }
+      }
+    };
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:FulldescCtrl
+ * @description
+ * # FulldescCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('FulldescCtrl', ['$scope', 'api', '$rootScope', '$routeParams','loader', "ngCart" , function ($scope, api, $rootScope, $routeParams, loader, ngCart) {
+    $(document).scrollTop(0);
+    $rootScope.itemDescription = true;
+    $(".slicknav_menu").css('display','none !important');
+    $scope.receipe;
+    $rootScope.pageTitle;
+
+    this.getRecepieById = function (id) {
+      var items = JSON.parse(localStorage.getItem('items')).filter(function (obj) {
+        if(obj.id == id){
+          return true;
+        }
+      });
+      var data = items[0];
+      var oldPrice = data.price.toString().split(".");
+      var oldNutrients = data.nutrients.split("|");
+      var subtitle = data.subtitle.split("|");
+      data.ingredients = data.ingredients.split("|");
+      data.portions = subtitle[0];
+      data.time = subtitle[1];
+      data.newPrice = {
+        grand:oldPrice[0],
+        cents:oldPrice[1]
+      }
+      data.newNutrients= {
+        callories: oldNutrients[0],
+        proteins: oldNutrients[1],
+        fats: oldNutrients[2],
+        carbohydrates: oldNutrients[3]
+      };
+      $scope.receipe = data;
+      $rootScope.pageTitle = $scope.receipe.title;
+    }
+
+    //getting quantity in cart by its id 
+    this.getInCartQuantity = function (id) {
+      var inCartQunatity = ngCart.getItemById(id);
+      var a = inCartQunatity._quantity;
+      this.inCartQunatity = a;
+      return this.inCartQunatity;
+    };
+
+    //removing or decrementing item quantity in cart
+    this.removeFromCart = function (id) {
+      var inCart = ngCart.getItemById(id);
+      if(inCart._quantity === 1){
+        ngCart.removeItemById(id);
+      }else if(inCart._quantity > 1){
+        inCart.setQuantity(-1, true)
+      }else{
+        return;
+      }
+      this.getInCartQuantity(id);
+    };
+
+    //adding or incrementing item quantity in cart
+    this.AddToCart = function (id, name, price, q, data) {
+      var a = ngCart.getItemById(id);
+      var q = q;
+      if(a._quantity >= 1){
+        q = a._quantity + 1;
+      }
+      ngCart.addItem(id, name, price, q, data);
+      this.getInCartQuantity(id);
+    };
+
+    this.getRecepieById($routeParams.id);
+  }]);
+
+'use strict';
+
+/**
+ * @ngdoc service
+ * @name ocean04App.loader
+ * @description
+ * # loader
+ * Service in the ocean04App.
+ */
+angular.module('ocean04App')
+  .service('loader', function ($http, $rootScope) {
+    return{
+      allowed:function (){
+        $rootScope.isLoading = false;
+      }, 
+      notAllowed: function () {
+        $rootScope.isLoading = true;
+      }
+    }
+  });
+
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name ocean04App.directive:nav
+ * @description
+ * # nav
+ */
+angular.module('ocean04App')
+  .directive('rocketNavigation', function ($rootScope) {
+    return {
+      templateUrl: 'static/build/views/directives/nav/nav.html',
+      restrict: 'E'
+    };
+  });
+
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name ocean04App.directive:footer
+ * @description
+ * # footer
+ */
+angular.module('ocean04App')
+  .directive('rocketFooter', function () {
+    return {
+      templateUrl: 'static/build/views/directives/footer/footer.html',
+      restrict: 'E'
+    };
+  });
+
+'use strict';
+
+//first module
+angular.module('ocean04App')
+
+    .config([function () {
+
+    }])
+
+    .provider('$ngCart', function () {
+        this.$get = function () {
+        };
+    })
+
+    .run(['$rootScope', 'ngCart','ngCartItem', 'store', function ($rootScope, ngCart, ngCartItem, store) {
+
+        $rootScope.$on('ngCart:change', function(){
+            ngCart.$save();
+        });
+
+        if (angular.isObject(store.get('cart'))) {
+            ngCart.$restore(store.get('cart'));
+
+        } else {
+            ngCart.init();
+        }
+
+    }])
+
+    .service('ngCart', ['$rootScope', 'ngCartItem', 'store', function ($rootScope, ngCartItem, store) {
+
+        this.init = function(){
+            this.$cart = {
+                shipping : null,
+                taxRate : null,
+                tax : null,
+                items : []
+            };
+        };
+
+        this.addItem = function (id, name, price, quantity, data) {
+
+            var inCart = this.getItemById(id);
+
+            if (typeof inCart === 'object'){
+                //Update quantity of an item if it's already in the cart
+                inCart.setQuantity(quantity, false);
+            } else {
+                var newItem = new ngCartItem(id, name, price, quantity, data);
+                this.$cart.items.push(newItem);
+                $rootScope.$broadcast('ngCart:itemAdded', newItem);
+            }
+
+            $rootScope.$broadcast('ngCart:change', {});
+        };
+
+        this.getItemById = function (itemId) {
+            var items = this.getCart().items;
+            var build = false;
+
+            angular.forEach(items, function (item) {
+                if  (item.getId() === itemId) {
+                    build = item;
+                }
+            });
+            return build;
+        };
+
+        this.setShipping = function(shipping){
+            this.$cart.shipping = shipping;
+            return this.getShipping();
+        };
+
+        this.getShipping = function(){
+            if (this.getCart().items.length == 0) return 0;
+            return  this.getCart().shipping;
+        };
+
+        this.setTaxRate = function(taxRate){
+            this.$cart.taxRate = +parseFloat(taxRate).toFixed(2);
+            return this.getTaxRate();
+        };
+
+        this.getTaxRate = function(){
+            return this.$cart.taxRate
+        };
+
+        this.getTax = function(){
+            return +parseFloat(((this.getSubTotal()/100) * this.getCart().taxRate )).toFixed(2);
+        };
+
+        this.setCart = function (cart) {
+            this.$cart = cart;
+            return this.getCart();
+        };
+
+        this.getCart = function(){
+            return this.$cart;
+        };
+
+        this.getItems = function(){
+            return this.getCart().items;
+        };
+
+        this.getTotalItems = function () {
+            var count = 0;
+            var items = this.getItems();
+            angular.forEach(items, function (item) {
+                count += item.getQuantity();
+            });
+            return count;
+        };
+
+        this.getTotalUniqueItems = function () {
+            return this.getCart().items.length;
+        };
+
+        this.getSubTotal = function(){
+            var total = 0;
+            angular.forEach(this.getCart().items, function (item) {
+                total += item.getTotal();
+            });
+            return +parseFloat(total).toFixed(2);
+        };
+
+        this.totalCost = function () {
+            return +parseFloat(this.getSubTotal() + this.getShipping() + this.getTax()).toFixed(2);
+        };
+
+        this.removeItem = function (index) {
+            this.$cart.items.splice(index, 1);
+            $rootScope.$broadcast('ngCart:itemRemoved', {});
+            $rootScope.$broadcast('ngCart:change', {});
+
+        };
+
+        this.removeItemById = function (id) {
+            var cart = this.getCart();
+            angular.forEach(cart.items, function (item, index) {
+                if  (item.getId() === id) {
+                    cart.items.splice(index, 1);
+                }
+            });
+            this.setCart(cart);
+            $rootScope.$broadcast('ngCart:itemRemoved', {});
+            $rootScope.$broadcast('ngCart:change', {});
+        };
+
+        this.empty = function () {
+            
+            $rootScope.$broadcast('ngCart:change', {});
+            this.$cart.items = [];
+            localStorage.removeItem('cart');
+        };
+        
+        this.isEmpty = function () {
+            
+            return (this.$cart.items.length > 0 ? false : true);
+            
+        };
+
+        this.toObject = function() {
+
+            if (this.getItems().length === 0) return false;
+
+            var items = [];
+            angular.forEach(this.getItems(), function(item){
+                items.push (item.toObject());
+            });
+
+            return {
+                shipping: this.getShipping(),
+                tax: this.getTax(),
+                taxRate: this.getTaxRate(),
+                subTotal: this.getSubTotal(),
+                totalCost: this.totalCost(),
+                items:items
+            }
+        };
+
+
+        this.$restore = function(storedCart){
+            var _self = this;
+            _self.init();
+            _self.$cart.shipping = storedCart.shipping;
+            _self.$cart.tax = storedCart.tax;
+
+            angular.forEach(storedCart.items, function (item) {
+                _self.$cart.items.push(new ngCartItem(item._id,  item._name, item._price, item._quantity, item._data));
+            });
+            this.$save();
+        };
+
+        this.$save = function () {
+            return store.set('cart', JSON.stringify(this.getCart()));
+        }
+
+    }])
+
+    .factory('ngCartItem', ['$rootScope', '$log', function ($rootScope, $log) {
+
+        var item = function (id, name, price, quantity, data) {
+            this.setId(id);
+            this.setName(name);
+            this.setPrice(price);
+            this.setQuantity(quantity);
+            this.setData(data);
+        };
+
+
+        item.prototype.setId = function(id){
+            if (id)  this._id = id;
+            else {
+                $log.error('An ID must be provided');
+            }
+        };
+
+        item.prototype.getId = function(){
+            return this._id;
+        };
+
+
+        item.prototype.setName = function(name){
+            if (name)  this._name = name;
+            else {
+                $log.error('A name must be provided');
+            }
+        };
+        item.prototype.getName = function(){
+            return this._name;
+        };
+
+        item.prototype.setPrice = function(price){
+            var priceFloat = parseFloat(price);
+            if (priceFloat) {
+                if (priceFloat <= 0) {
+                    $log.error('A price must be over 0');
+                } else {
+                    this._price = (priceFloat);
+                }
+            } else {
+                $log.error('A price must be provided');
+            }
+        };
+        item.prototype.getPrice = function(){
+            return this._price;
+        };
+
+
+        item.prototype.setQuantity = function(quantity, relative){
+
+
+            var quantityInt = parseInt(quantity);
+            if (quantityInt % 1 === 0){
+                if (relative === true){
+                    this._quantity  += quantityInt;
+                } else {
+                    this._quantity = quantityInt;
+                }
+                if (this._quantity < 1) this._quantity = 1;
+
+            } else {
+                this._quantity = 1;
+                $log.info('Quantity must be an integer and was defaulted to 1');
+            }
+            $rootScope.itemQuantity = this._quantity;
+            $rootScope.$broadcast('ngCart:change', {});
+
+        };
+
+        item.prototype.getQuantity = function(){
+            return this._quantity;
+        };
+
+        item.prototype.setData = function(data){
+            if (data) this._data = data;
+        };
+
+        item.prototype.getData = function(){
+            if (this._data) return this._data;
+            else $log.info('This item has no data');
+        };
+
+
+        item.prototype.getTotal = function(){
+            return +parseFloat(this.getQuantity() * this.getPrice()).toFixed(2);
+        };
+
+        item.prototype.toObject = function() {
+            return {
+                id: this.getId(),
+                name: this.getName(),
+                price: this.getPrice(),
+                quantity: this.getQuantity(),
+                data: this.getData(),
+                total: this.getTotal()
+            }
+        };
+
+        return item;
+
+    }])
+
+    .service('store', ['$window', function ($window) {
+
+        return {
+
+            get: function (key) {
+                if ($window.localStorage [key]) {
+                    var cart = angular.fromJson($window.localStorage [key]);
+                    return JSON.parse(cart);
+                }
+                return false;
+
+            },
+
+
+            set: function (key, val) {
+
+                if (val === undefined) {
+                    $window.localStorage .removeItem(key);
+                } else {
+                    $window.localStorage [key] = angular.toJson(val);
+                }
+                return $window.localStorage [key];
+            }
+        }
+    }])
+
+    .controller('CartController',['$scope', 'ngCart', function($scope, ngCart) {
+        $scope.ngCart = ngCart;
+
+    }])
+
+    .value('version', '1.0.0');
+;'use strict';
+
+//second module
+angular.module('ocean04App')
+
+    .controller('CartController',['$rootScope','$scope', 'ngCart', function($rootScope,$scope, ngCart) {
+        $scope.ngCart = ngCart;
+    }])
+
+    .directive('ngcartAddtocart', ['ngCart', function(ngCart){
+        return {
+            restrict : 'E',
+            controller : 'CartController',
+            scope: {
+                id:'@',
+                name:'@',
+                quantity:'@',
+                quantityMax:'@',
+                price:'@',
+                data:'='
+            },
+            transclude: true,
+            templateUrl: function(element, attrs) {
+                if ( typeof attrs.templateUrl == 'undefined' ) {
+                    return 'static/build/views/directives/ngCart/addtocart.html';
+                } else {
+                    return attrs.templateUrl;
+                }
+            },
+            link:function(scope, element, attrs){
+                scope.attrs = attrs;
+                scope.inCart = function(){
+                    return  ngCart.getItemById(attrs.id);
+                };
+
+                if (scope.inCart()){
+                    scope.q = ngCart.getItemById(attrs.id).getQuantity();
+                } else {
+                    scope.q = parseInt(scope.quantity);
+                }
+
+                scope.qtyOpt =  [];
+                for (var i = 1; i <= scope.quantityMax; i++) {
+                    scope.qtyOpt.push(i);
+                }
+
+            }
+
+        };
+    }])
+
+    .directive('ngcartCart', [function(){
+        return {
+            restrict : 'E',
+            controller : 'CartController',
+            scope: {},
+            templateUrl: function(element, attrs) {
+                if ( typeof attrs.templateUrl == 'undefined' ) {
+                    return 'static/build/views/directives/ngCart/cart.html';
+                } else {
+                    return attrs.templateUrl;
+                }
+            },
+            link:function(scope, element, attrs){
+
+            }
+        };
+    }])
+
+    .directive('ngcartSummary', [function(){
+        return {
+            restrict : 'E',
+            controller : 'CartController',
+            scope: {},
+            transclude: true,
+            templateUrl: function(element, attrs) {
+                if ( typeof attrs.templateUrl == 'undefined' ) {
+                    return 'static/build/views/directives/ngCart/summary.html';
+                } else {
+                    return attrs.templateUrl;
+                }
+            }
+        };
+    }])
+
+    .directive('ngcartCheckout', [function(){
+        return {
+            restrict : 'E',
+            controller : ('CartController', ['$rootScope', '$scope', 'ngCart', 'fulfilmentProvider', function($rootScope, $scope, ngCart, fulfilmentProvider) {
+                $scope.ngCart = ngCart;
+
+                $scope.checkout = function () {
+                    fulfilmentProvider.setService($scope.service);
+                    fulfilmentProvider.setSettings($scope.settings);
+                    fulfilmentProvider.checkout()
+                        .success(function (data, status, headers, config) {
+                            $rootScope.$broadcast('ngCart:checkout_succeeded', data);
+                        })
+                        .error(function (data, status, headers, config) {
+                            $rootScope.$broadcast('ngCart:checkout_failed', {
+                                statusCode: status,
+                                error: data
+                            });
+                        });
+                }
+            }]),
+            scope: {
+                service:'@',
+                settings:'='
+            },
+            transclude: true,
+            templateUrl: function(element, attrs) {
+                if ( typeof attrs.templateUrl == 'undefined' ) {
+                    return 'static/build/views/directives/ngCart/checkout.html';
+                } else {
+                    return attrs.templateUrl;
+                }
+            }
+        };
+    }]);
+;
+
+//third module
+angular.module('ngCart.fulfilment', [])
+    .service('fulfilmentProvider', ['$injector', function($injector){
+
+        this._obj = {
+            service : undefined,
+            settings : undefined
+        };
+
+        this.setService = function(service){
+            this._obj.service = service;
+        };
+
+        this.setSettings = function(settings){
+            this._obj.settings = settings;
+        };
+
+        this.checkout = function(){
+            var provider = $injector.get('ngCart.fulfilment.' + this._obj.service);
+              return provider.checkout(this._obj.settings);
+
+        }
+
+    }])
+
+
+.service('ngCart.fulfilment.log', ['$q', '$log', 'ngCart', function($q, $log, ngCart){
+
+        this.checkout = function(){
+
+            var deferred = $q.defer();
+
+            $log.info(ngCart.toObject());
+            deferred.resolve({
+                cart:ngCart.toObject()
+            });
+
+            return deferred.promise;
+
+        }
+
+ }])
+
+.service('ngCart.fulfilment.http', ['$http', 'ngCart', function($http, ngCart){
+
+        this.checkout = function(settings){
+            return $http.post(settings.url,
+                { data: ngCart.toObject(), options: settings.options});
+        }
+ }])
+
+
+.service('ngCart.fulfilment.paypal', ['$http', 'ngCart', function($http, ngCart){
+
+
+}]);
+
+'use strict';
+
+/**
+ * @ngdoc directive
+ * @name ocean04App.directive:nav
+ * @description
+ * # nav
+ */
+angular.module('ocean04App')
+  .directive('rocketNavstore', function ($rootScope) {
+    return {
+      templateUrl: 'static/build/views/directives/navStore/navStore.html',
+      restrict: 'E'
+    };
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:GmapCtrl
+ * @description
+ * # GmapCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('GmapCtrl', function ($rootScope) {
+    $(document).scrollTop(0);
+    $rootScope.pageTitle = "Зона Доставки";
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:ContractCtrl
+ * @description
+ * # ContractCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('ContractCtrl', function ($rootScope) {
+    $(document).scrollTop(0);
+    $rootScope.pageTitle = "Приватность и Условия";
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:ContactsCtrl
+ * @description
+ * # ContactsCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('ContactsCtrl', function ($rootScope) {
+    $(document).scrollTop(0);
+    $rootScope.pageTitle = "Контакты";
+  });
