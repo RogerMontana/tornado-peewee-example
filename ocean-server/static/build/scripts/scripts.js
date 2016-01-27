@@ -218,7 +218,11 @@ angular.module("ocean04App")
       }
       $scope.formUser.phone = newPhone.join('');
       api.receipe.orders($scope.formUser).then(function(response){
+        $scope.notification = true;
+        $scope.successOrder = true;
       },function(err) {
+        $scope.notification = true;
+        $scope.errorOrder = true;
       });
     }
 
@@ -439,21 +443,16 @@ angular.module('ocean04App')
         } 
       }
       $scope.formUser.phone = newPhone.join('');
+    }
 
+    $scope.makeOrder = function () {
+      $('#myModal').modal('hide')
       api.receipe.orders($scope.formUser).then(function(response){
         $scope.notification = true;
         $scope.successOrder = true;
-        $timeout(function(){
-          $scope.successOrder = false;
-          $scope.notification = false;
-        }, 9000);
       },function(err) {
         $scope.notification = true;
         $scope.errorOrder = true;
-        $timeout(function(){
-          $scope.errorOrder = false;
-          $scope.notification = false;
-        }, 9000);
       });
     }
 

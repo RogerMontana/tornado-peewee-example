@@ -1,5 +1,19 @@
 <div class="gifts" ng-controller="GiftsCtrl">
 
+  <div class="container-fluid notification fadein fadeout" ng-show="notification">
+    <div class="col-xs-12 text-center">
+      <h5 ng-show="successOrder" class="fadein fadeout">
+        Ура! Ваш заказ был принят. Теперь остаётся только ждать своих вкусняшек. 
+        <span ng-click="successOrder=false; notification=false;" class="pull-right">x</span>
+      </h5>
+      <h5 ng-show="errorOrder" class="fadein fadeout">
+        Упс! Кажется что-то пошло не так. Поробуйте ещё раз через 30 секунд. 
+        <span ng-click="errorOrder=false; notification=false;" class="pull-right">x</span>
+      </h5>
+    </div>
+  </div>
+
+
   <div class="container-fluid">
     <div class="row">
       <img src="https://rocket04.imgix.net/banner_gifts.jpg?s=416b94cf6608ed05f7b259e789195785" alt="" width="100%">
@@ -42,16 +56,16 @@
       <h4 class="text-left"><strong>Шаг 2</strong> &nbsp;&nbsp;&nbsp;Предоставьте свои данные</h4>
       <div class="form row" ng-form="customerDetails" novalidate>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-          <label for="name">Ваше Имя</label>
+          <label for="name">Ваше Имя<sup style="color:red;">*</sup></label>
           <input id="name" type="text" class="adressDetails name" ng-model="formUser.name" required>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-          <label for="surname">Ваша Фамилия</label>
-          <input id="surname" type="text" class="adressDetails surname" ng-model="formUser.surname" required>
+          <label for="phone">Ваш Номер Телефона<sup style="color:red;">*</sup></label>
+          <input id="phone" type="tel" class="adressDetails phone" ng-model="formUser.phone" value="+38" required>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-          <label for="phone">Ваш Номер Телефона</label>
-          <input id="phone" type="tel" class="adressDetails phone" ng-model="formUser.phone" value="+38" required>
+          <label for="surname">Email <sup>(опционально)</sup></label>
+          <input id="surname" type="email" class="adressDetails surname" ng-model="formUser.email">
         </div>
       </div>
     </div>
@@ -65,7 +79,7 @@
 
   <div class="container-fluid">
     <dvi class="row text-center">
-      <div class="col-xs-2 div col-xs-offset-5">
+      <div class="col-sm-2 col-sm-offset-5">
         <button ng-disabled="giftForm.$invalid" class="btn text-center makeOrder" ng-click="buyGift();">Сделать Заказ</button>
       </div>
     </dvi>

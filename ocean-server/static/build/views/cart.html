@@ -2,8 +2,14 @@
 
 	<div class="container-fluid notification fadein fadeout" ng-show="notification">
 		<div class="col-xs-12 text-center">
-			<h5 ng-show="successOrder" class="fadein fadeout">Ура! Ваш заказ был принят. Теперь остаётся только ждать своих вкусняшек.</h5>
-			<h5 ng-show="errorOrder" class="fadein fadeout">Упс! Кажется что-то пошло не так. Поробуйте ещё раз через 30 секунд.</h5>
+			<h5 ng-show="successOrder" class="fadein fadeout">
+				Ура! Ваш заказ был принят. Теперь остаётся только ждать своих вкусняшек.
+				<span ng-click="successOrder=false; notification=false;" class="pull-right">x</span>
+			</h5>
+			<h5 ng-show="errorOrder" class="fadein fadeout">
+				Упс! Кажется что-то пошло не так. Поробуйте ещё раз через 30 секунд.
+				<span ng-click="errorOrder=false; notification=false;" class="pull-right">x</span>
+			</h5>
 		</div>
 	</div>
 
@@ -74,24 +80,24 @@
 						<div class="row">
 							<div class="form" ng-form="customerDetails" novalidate>
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-									<label for="adress">Адрес</label>
+									<label for="adress">Адрес<sup style="color:red;">*</sup></label>
 									<input id="adress" type="text" class="adressDetails adress" placeholder="Введите адрес" ng-model="formUser.address" required>
 								</div>
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-									<label for="appartment">Номер Квартиры</label>
+									<label for="appartment">Номер Квартиры<sup style="color:red;">*</sup></label>
 									<input id="appartment" type="text" class="adressDetails appartment" ng-model="formUser.appartment">
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-									<label for="name">Имя</label>
+									<label for="name">Имя<sup style="color:red;">*</sup></label>
 									<input id="name" type="text" class="adressDetails name" ng-model="formUser.name" required>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-									<label for="surname">Фамилия</label>
-									<input id="surname" type="text" class="adressDetails surname" ng-model="formUser.surname" required>
+									<label for="phone">Номер Телефона<sup style="color:red;">*</sup></label>
+									<input id="phone" type="tel" class="adressDetails phone" ng-model="formUser.phone" value="+38" required>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-									<label for="phone">Номер Телефона</label>
-									<input id="phone" type="tel" class="adressDetails phone" ng-model="formUser.phone" value="+38" required>
+									<label for="surname">Email <sup>(опционально)</sup></label>
+									<input id="surname" type="text" class="adressDetails surname" ng-model="formUser.surname">
 								</div>
 							</div>
 						</div>
@@ -106,7 +112,9 @@
 			<div class="row">
 				<div class="column cartInColumnWrapper pull-right">
 
-					<button ng-disabled="customerDetails.$invalid || cartTotal == 0" class="btn text-center makeOrder" ng-click="checkout();">Сделать Заказ</button>
+					<button ng-disabled="customerDetails.$invalid || cartTotal == 0" class="btn text-center makeOrder"
+						data-toggle="modal" data-target=".bs-example-modal-md" ng-click="checkout();"
+					>Сделать Заказ</button>
 
 					<h5 class="summaryHeading"><strong>Сведения о Заказе</strong></h5>
 
@@ -147,5 +155,24 @@
 		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 cartSmallText">
 			<h6>Делая заказ вы соглашаетесь с нашими <a href="#/contract" class="text-underline">Правилами и Условиями</a></h6>
 		</div>
+	</div>
+
+	<div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal">
+	  <div class="modal-dialog modal-md">
+	    <div class="modal-content col-xs-12">
+	      <div class="">
+	      	<h2 class="text-center">Давайте проверим ваши данные!</h2>
+	      	<br>
+					<p><strong>Адресс: </strong>{{formUser.address}}, кв№ {{formUser.appartment}}</p>
+					<p><strong>Имя: </strong>{{formUser.name}}</p>
+					<p><strong>Фамилия: </strong>{{formUser.surname}}</p>
+					<p><strong>Телефон: </strong>{{formUser.phone}}</p>
+					<p><strong>Ваш заказ: </strong>{{formUser.order_details}}</p>
+					<p><strong>Время доставки: </strong>{{formUser.timegap}}</p>
+					<p><strong>Общая стоимость заказа: </strong>{{formUser.total}} грн</p>					
+	      	<button ng-click="makeOrder();" class="btn text-center makeOrder">Сделать Заказ</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 </div>
