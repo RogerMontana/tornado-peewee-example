@@ -96,8 +96,8 @@
 									<input id="phone" type="tel" class="adressDetails phone" ng-model="formUser.phone" value="+38" required>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-									<label for="surname">Email <sup>(опционально)</sup></label>
-									<input id="surname" type="text" class="adressDetails surname" ng-model="formUser.surname">
+									<label for="email">Email <sup>(опционально)</sup></label>
+									<input id="email" type="text" class="adressDetails surname" ng-model="formUser.email">
 								</div>
 							</div>
 						</div>
@@ -165,11 +165,11 @@
 	      	<br>
 					<p><strong>Адресс: </strong>{{formUser.address}}, кв№ {{formUser.appartment}}</p>
 					<p><strong>Имя: </strong>{{formUser.name}}</p>
-					<p><strong>Фамилия: </strong>{{formUser.surname}}</p>
 					<p><strong>Телефон: </strong>{{formUser.phone}}</p>
 					<p><strong>Ваш заказ: </strong>{{formUser.order_details}}</p>
 					<p><strong>Время доставки: </strong>{{formUser.timegap}}</p>
-					<p><strong>Общая стоимость заказа: </strong>{{formUser.total}} грн</p>					
+					<p><strong>Общая стоимость заказа: </strong>{{formUser.total}} грн</p>		
+					<p ng-show="formUser.email"><strong>Email: </strong>{{formUser.email}}</p>			
 	      	<button ng-click="makeOrder();" class="btn text-center makeOrder">Сделать Заказ</button>
 	      </div>
 	    </div>
