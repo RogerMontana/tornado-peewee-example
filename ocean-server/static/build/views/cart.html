@@ -112,9 +112,9 @@
 			<div class="row">
 				<div class="column cartInColumnWrapper pull-right">
 
-					<button ng-disabled="customerDetails.$invalid || cartTotal == 0" class="btn text-center makeOrder"
-						data-toggle="modal" data-target=".bs-example-modal-md" ng-click="checkout();"
-					>Сделать Заказ</button>
+					<button ng-disabled="customerDetails.$invalid || cartTotal == 0" class="btn text-center makeOrder" id="modalButton" ng-click="checkout();">
+						Сделать Заказ
+					</button>
 
 					<h5 class="summaryHeading"><strong>Сведения о Заказе</strong></h5>
 
@@ -168,8 +168,8 @@
 					<p><strong>Телефон: </strong>{{formUser.phone}}</p>
 					<p><strong>Ваш заказ: </strong>{{formUser.order_details}}</p>
 					<p><strong>Время доставки: </strong>{{formUser.timegap}}</p>
-					<p><strong>Общая стоимость заказа: </strong>{{formUser.total}} грн</p>		
-					<p ng-show="formUser.email"><strong>Email: </strong>{{formUser.email}}</p>			
+					<p><strong>Общая стоимость заказа: </strong>{{formUser.total}} грн</p>
+					<p ng-show="formUser.email"><strong>Email: </strong>{{formUser.email}}</p>						
 	      	<button ng-click="makeOrder();" class="btn text-center makeOrder">Сделать Заказ</button>
 	      </div>
 	    </div>
