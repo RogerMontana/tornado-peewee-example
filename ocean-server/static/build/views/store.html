@@ -13,7 +13,7 @@
 
     <ul class="list-unstyled">
       <li ng-repeat="i in receipeLst1 | filter:search:strict | filter:colourFilter">
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 card" >
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 card" >
           
           <div style="background: white;">
             <a ng-href="#/desc/{{i.id}}">
@@ -37,7 +37,7 @@
               <div class="separator"></div>
               <div class="actions">
                 <div class="price" style="display: inline;">
-                  &#8372;{{i.newPrice.grand}}.<sup>{{i.newPrice.cents}}<span ng-hide="i.newPrice.cents.length">00</span></sup>
+                  {{i.newPrice.grand}}.<sup>{{i.newPrice.cents}}<span ng-hide="i.newPrice.cents.length">00</span></sup> UAH
                 </div>
                 <div class="buttons pull-right" style="display: inline;">
                   <a class="btn btn-sm removeFromCart" ng-click="s.removeFromCart(i.id)" ng-hide="!s.getInCartQuantity(i.id)"><i class="glyphicon glyphicon-minus"></i></a>
