@@ -24,52 +24,52 @@ angular
 
     $routeProvider
       .when('/', {
-        templateUrl: 'static/build/views/main.html',
+        templateUrl: 'static/build/viewsmain.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
       .when('/about', {
-        templateUrl: 'static/build/views/about.html',
+        templateUrl: 'static/build/viewsabout.html',
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
       .when('/gifts', {
-        templateUrl: 'static/build/views/gifts.html',
+        templateUrl: 'static/build/viewsgifts.html',
         controller: 'GiftsCtrl',
         controllerAs: 'gifts'
       })
       .when('/how', {
-        templateUrl: 'static/build/views/how.html',
+        templateUrl: 'static/build/viewshow.html',
         controller: 'HowCtrl',
         controllerAs: 'how'
       })
       .when('/rocket04', {
-        templateUrl: 'static/build/views/store.html',
+        templateUrl: 'static/build/viewsstore.html',
         controller: 'storeCtrl',
         controllerAs: 'store'
       })
       .when('/cart', {
-        templateUrl: 'static/build/views/cart.html',
+        templateUrl: 'static/build/viewscart.html',
         controller: 'cartCtrl',
         controllerAs: 'cart'
       })
       .when('/desc/:id', {
-        templateUrl: 'static/build/views/fulldesc.html',
+        templateUrl: 'static/build/viewsfulldesc.html',
         controller: 'FulldescCtrl',
         controllerAs: 'f'
       })
       .when('/gMap', {
-        templateUrl: 'static/build/views/gmap.html',
+        templateUrl: 'static/build/viewsgmap.html',
         controller: 'GmapCtrl',
         controllerAs: 'gMap'
       })
       .when('/contract', {
-        templateUrl: 'static/build/views/contract.html',
+        templateUrl: 'static/build/viewscontract.html',
         controller: 'ContractCtrl',
         controllerAs: 'contract'
       })
       .when('/contacts', {
-        templateUrl: 'static/build/views/contacts.html',
+        templateUrl: 'static/build/viewscontacts.html',
         controller: 'ContactsCtrl',
         controllerAs: 'contacts'
       })
@@ -115,6 +115,12 @@ angular
         };
       }
     };
+  }).factory('Page', function(){
+    var title = 'default';
+    return {
+      title: function() { return title; },
+      setTitle: function(newTitle) { title = newTitle; }
+    };
   });
 'use strict';
 
@@ -126,8 +132,10 @@ angular
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('MainCtrl', function ($rootScope) {
+  .controller('MainCtrl', function ($rootScope, $location,$window) {
   	$(document).scrollTop(0);
+  	$window.ga('send', 'pageview', { page: $location.url() });
+  	$rootScope.pagetitle = 'Главная Страница';
   });
 
 'use strict';
@@ -140,9 +148,11 @@ angular.module('ocean04App')
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('AboutCtrl', function ($rootScope) {
-  	$rootScope.pageTitle = "О Нас";
+  .controller('AboutCtrl', function ($rootScope,$location,$window,Page) {
+  	$rootScope.pagetitle = "О Нас";
   	$(document).scrollTop(0);
+  	$window.ga('send', 'pageview', { page: $location.url() });
+  	Page.setTitle('title1');
   });
 
 "use strict";
@@ -155,8 +165,9 @@ angular.module('ocean04App')
  * Controller of the ocean04App
  */
 angular.module("ocean04App")
-  .controller("GiftsCtrl", function ($rootScope, $scope, api) {
+  .controller("GiftsCtrl", function ($rootScope, $scope, api, $location,$window) {
   	$(document).scrollTop(0);
+    $window.ga('send', 'pageview', { page: $location.url() });
 
   	var giftCards = $(".giftCard");
 
@@ -164,7 +175,7 @@ angular.module("ocean04App")
 
     $scope.formUser = {};
 
-    $rootScope.pageTitle = "Подарки";
+    $rootScope.pagetitle = "Подарки";
 
   	$scope.selectedGift;
 
@@ -184,19 +195,19 @@ angular.module("ocean04App")
   			img:"https://rocket04.imgix.net/gifts_2.jpg?s=77307f3ac2cd865f502625a63ad84970",
   			id:2,
   			price:100,
-  			text:"Целая неделя вкусных обедов и ужинов на двоих.",
+  			text:"Идеально, что бы закрыть углеводное окно",
   			popular:""
   		},{
   			img:"https://rocket04.imgix.net/gifts_3.jpg?s=67d0cef4aafa8c934c57a971ee6f4e22",
   			id:3,
   			price:250,
-  			text:"Идеальные выходные без головной боли на двоих.",
+  			text:"Перфекто для мистер или миссис Эгоисто на уно вечер",
   			popular:"Популярное"
   		},{
   			img:"https://rocket04.imgix.net/gifts_4.jpg?s=bf19b02e7d7a5a76de7773444db6656f",
   			id:4,
   			price:500,
-  			text:"Целая неделя вкусных обедов и ужинов на двоих.",
+  			text:"Идеальные выходные без головной боли на двоих",
   			popular:""
   		}
   	];
@@ -234,9 +245,10 @@ angular.module("ocean04App")
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('HowCtrl', function ($rootScope) {
+  .controller('HowCtrl', function ($rootScope, $location,$window) {
   	$(document).scrollTop(0);
-  	$rootScope.pageTitle = "Принцип Работы";
+  	$rootScope.pagetitle = "Принцип Работы";
+  	$window.ga('send', 'pageview', { page: $location.url() });
   });
 
 'use strict';
@@ -249,13 +261,15 @@ angular.module('ocean04App')
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('storeCtrl', function ($scope, $rootScope, api, loader, ngCart, ngCartItem) {
+  .controller('storeCtrl', function ($scope, $rootScope, api, loader, ngCart, ngCartItem, $location,$window, Page) {
     $(document).scrollTop(0);
     $rootScope.itemDescription = false;
-    $rootScope.pageTitle = "Ежедневное Меню";
+    $rootScope.pagetitle = "Ежедневное Меню";
+    Page.setTitle('Ежедневное Меню');
     $(".slicknav_menu").show();
     $scope.receipeLst1 = [];
     $scope.recepie;
+    $window.ga('send', 'pageview', { page: $location.url() });
     $scope.spinner=false;
     $scope.colourIncludes = [];
 
@@ -345,13 +359,14 @@ angular.module('ocean04App')
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('cartCtrl', function ($scope, $rootScope, ngCart, api, $timeout) {
+  .controller('cartCtrl', function ($scope, $rootScope, ngCart, api, $timeout, $location,$window) {
     $(document).scrollTop(0);
     $("#phone").mask("+38(999)999-99-99");
     $(".slicknav_menu").show();
     $rootScope.itemDescription = false;
-    $rootScope.pageTitle = "Корзина";
+    $rootScope.pagetitle = "Корзина";
     $scope.formUser = {};
+    $window.ga('send', 'pageview', { page: $location.url() });
     $scope.deliveryDate;
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
@@ -446,6 +461,7 @@ angular.module('ocean04App')
       api.receipe.orders($scope.formUser).then(function(response){
         $scope.notification = true;
         $scope.successOrder = true;
+        localStorage.removeItem('cart');
       },function(err) {
         $scope.notification = true;
         $scope.errorOrder = true;
@@ -535,12 +551,13 @@ angular.module('ocean04App')
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('FulldescCtrl', ['$scope', 'api', '$rootScope', '$routeParams','loader', "ngCart" , function ($scope, api, $rootScope, $routeParams, loader, ngCart) {
+  .controller('FulldescCtrl', function ($scope, api, $rootScope, $routeParams, loader, ngCart, $location, $window) {
     $(document).scrollTop(0);
     $rootScope.itemDescription = true;
     $(".slicknav_menu").css('display','none !important');
     $scope.receipe;
-    $rootScope.pageTitle;
+    $rootScope.pagetitle;
+    $window.ga('send', 'pageview', { page: $location.url() });
 
     this.getRecepieById = function (id) {
       var items = JSON.parse(localStorage.getItem('items')).filter(function (obj) {
@@ -566,7 +583,7 @@ angular.module('ocean04App')
         carbohydrates: oldNutrients[3]
       };
       $scope.receipe = data;
-      $rootScope.pageTitle = $scope.receipe.title;
+      $rootScope.pagetitle = $scope.receipe.title;
     }
 
     //getting quantity in cart by its id 
@@ -602,7 +619,7 @@ angular.module('ocean04App')
     };
 
     this.getRecepieById($routeParams.id);
-  }]);
+  });
 
 'use strict';
 
@@ -636,7 +653,7 @@ angular.module('ocean04App')
 angular.module('ocean04App')
   .directive('rocketNavigation', function ($rootScope) {
     return {
-      templateUrl: 'static/build/views/directives/nav/nav.html',
+      templateUrl: 'static/build/viewsdirectives/nav/nav.html',
       restrict: 'E'
     };
   });
@@ -652,7 +669,7 @@ angular.module('ocean04App')
 angular.module('ocean04App')
   .directive('rocketFooter', function () {
     return {
-      templateUrl: 'static/build/views/directives/footer/footer.html',
+      templateUrl: 'static/build/viewsdirectives/footer/footer.html',
       restrict: 'E'
     };
   });
@@ -1016,7 +1033,7 @@ angular.module('ocean04App')
             transclude: true,
             templateUrl: function(element, attrs) {
                 if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'static/build/views/directives/ngCart/addtocart.html';
+                    return 'static/build/viewsdirectives/ngCart/addtocart.html';
                 } else {
                     return attrs.templateUrl;
                 }
@@ -1050,7 +1067,7 @@ angular.module('ocean04App')
             scope: {},
             templateUrl: function(element, attrs) {
                 if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'static/build/views/directives/ngCart/cart.html';
+                    return 'static/build/viewsdirectives/ngCart/cart.html';
                 } else {
                     return attrs.templateUrl;
                 }
@@ -1069,7 +1086,7 @@ angular.module('ocean04App')
             transclude: true,
             templateUrl: function(element, attrs) {
                 if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'static/build/views/directives/ngCart/summary.html';
+                    return 'static/build/viewsdirectives/ngCart/summary.html';
                 } else {
                     return attrs.templateUrl;
                 }
@@ -1105,7 +1122,7 @@ angular.module('ocean04App')
             transclude: true,
             templateUrl: function(element, attrs) {
                 if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'static/build/views/directives/ngCart/checkout.html';
+                    return 'static/build/viewsdirectives/ngCart/checkout.html';
                 } else {
                     return attrs.templateUrl;
                 }
@@ -1182,7 +1199,7 @@ angular.module('ngCart.fulfilment', [])
 angular.module('ocean04App')
   .directive('rocketNavstore', function ($rootScope) {
     return {
-      templateUrl: 'static/build/views/directives/navStore/navStore.html',
+      templateUrl: 'static/build/viewsdirectives/navStore/navStore.html',
       restrict: 'E'
     };
   });
@@ -1197,9 +1214,10 @@ angular.module('ocean04App')
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('GmapCtrl', function ($rootScope) {
+  .controller('GmapCtrl', function ($rootScope, $location,$window) {
     $(document).scrollTop(0);
-    $rootScope.pageTitle = "Зона Доставки";
+    $rootScope.pagetitle = "Зона Доставки";
+    $window.ga('send', 'pageview', { page: $location.url() });
   });
 
 'use strict';
@@ -1212,9 +1230,10 @@ angular.module('ocean04App')
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('ContractCtrl', function ($rootScope) {
+  .controller('ContractCtrl', function ($rootScope,$location,$window) {
     $(document).scrollTop(0);
-    $rootScope.pageTitle = "Приватность и Условия";
+    $rootScope.pagetitle = "Приватность и Условия";
+    $window.ga('send', 'pageview', { page: $location.url() });
   });
 
 'use strict';
@@ -1227,7 +1246,8 @@ angular.module('ocean04App')
  * Controller of the ocean04App
  */
 angular.module('ocean04App')
-  .controller('ContactsCtrl', function ($rootScope) {
+  .controller('ContactsCtrl', function ($rootScope, $location,$window) {
     $(document).scrollTop(0);
-    $rootScope.pageTitle = "Контакты";
+    $rootScope.pagetitle = "Контакты";
+    $window.ga('send', 'pageview', { page: $location.url() });
   });

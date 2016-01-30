@@ -157,19 +157,25 @@
 	</div>
 
 	<div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal">
-	  <div class="modal-dialog modal-md">
+	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content col-xs-12">
 	      <div class="">
-	      	<h2 class="text-center">Давайте проверим ваши данные!</h2>
-	      	<br>
-					<p><strong>Адресс: </strong>{{formUser.address}}, кв№ {{formUser.appartment}}</p>
-					<p><strong>Имя: </strong>{{formUser.name}}</p>
-					<p><strong>Телефон: </strong>{{formUser.phone}}</p>
-					<p><strong>Ваш заказ: </strong>{{formUser.order_details}}</p>
-					<p><strong>Время доставки: </strong>{{formUser.timegap}}</p>
-					<p><strong>Общая стоимость заказа: </strong>{{formUser.total}} грн</p>
-					<p ng-show="formUser.email"><strong>Email: </strong>{{formUser.email}}</p>						
-	      	<button ng-click="makeOrder();" class="btn text-center makeOrder">Сделать Заказ</button>
+	      	<div class="col-sm-10 col-xs-12 col-sm-offset-1 text-left">
+	      		<div class="row">
+	      			<h3 class="">{{formUser.name}}, Давайте проверим ваши данные:</h3>
+	      		</div>
+	      	</div>
+					<div class="col-sm-10 col-xs-12 col-sm-offset-1 tri-down text-center">
+						<img src="http://rocket04.imgix.net/modal.svg?s=6986829433bfff761f82f5a8e4e4673b" alt="" width="18%">
+						<h5>Итоговая стоимость заказа</h5>
+						<h1>{{formUser.total}}.<sup>00</sup> UAH</h1>
+						<br>
+						<h5>Номер телефона для связи с Вами</h5>
+						<h1>{{formUser.phone}}</h1>
+					</div>				
+	      	<div class="col-xs-12 text-center">
+	      		<button ng-click="makeOrder();" class="btn text-center makeOrder">Сделать Заказ</button>
+	      	</div>
 	      </div>
 	    </div>
 	  </div>
