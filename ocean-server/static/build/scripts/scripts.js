@@ -365,7 +365,9 @@ angular.module('ocean04App')
     $(".slicknav_menu").show();
     $rootScope.itemDescription = false;
     $rootScope.pagetitle = "Корзина";
-    $scope.formUser = {};
+    $scope.formUser = {
+      email:""
+    };
     $window.ga('send', 'pageview', { page: $location.url() });
     $scope.deliveryDate;
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
