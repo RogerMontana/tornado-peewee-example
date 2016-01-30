@@ -24,52 +24,52 @@ angular
 
     $routeProvider
       .when('/', {
-        templateUrl: 'static/build/viewsmain.html',
+        templateUrl: 'static/build/views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
       .when('/about', {
-        templateUrl: 'static/build/viewsabout.html',
+        templateUrl: 'static/build/views/about.html',
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
       .when('/gifts', {
-        templateUrl: 'static/build/viewsgifts.html',
+        templateUrl: 'static/build/views/gifts.html',
         controller: 'GiftsCtrl',
         controllerAs: 'gifts'
       })
       .when('/how', {
-        templateUrl: 'static/build/viewshow.html',
+        templateUrl: 'static/build/views/how.html',
         controller: 'HowCtrl',
         controllerAs: 'how'
       })
       .when('/rocket04', {
-        templateUrl: 'static/build/viewsstore.html',
+        templateUrl: 'static/build/views/store.html',
         controller: 'storeCtrl',
         controllerAs: 'store'
       })
       .when('/cart', {
-        templateUrl: 'static/build/viewscart.html',
+        templateUrl: 'static/build/views/cart.html',
         controller: 'cartCtrl',
         controllerAs: 'cart'
       })
       .when('/desc/:id', {
-        templateUrl: 'static/build/viewsfulldesc.html',
+        templateUrl: 'static/build/views/fulldesc.html',
         controller: 'FulldescCtrl',
         controllerAs: 'f'
       })
       .when('/gMap', {
-        templateUrl: 'static/build/viewsgmap.html',
+        templateUrl: 'static/build/views/gmap.html',
         controller: 'GmapCtrl',
         controllerAs: 'gMap'
       })
       .when('/contract', {
-        templateUrl: 'static/build/viewscontract.html',
+        templateUrl: 'static/build/views/contract.html',
         controller: 'ContractCtrl',
         controllerAs: 'contract'
       })
       .when('/contacts', {
-        templateUrl: 'static/build/viewscontacts.html',
+        templateUrl: 'static/build/views/contacts.html',
         controller: 'ContactsCtrl',
         controllerAs: 'contacts'
       })
@@ -653,7 +653,7 @@ angular.module('ocean04App')
 angular.module('ocean04App')
   .directive('rocketNavigation', function ($rootScope) {
     return {
-      templateUrl: 'static/build/viewsdirectives/nav/nav.html',
+      templateUrl: 'static/build/views/directives/nav/nav.html',
       restrict: 'E'
     };
   });
@@ -669,7 +669,7 @@ angular.module('ocean04App')
 angular.module('ocean04App')
   .directive('rocketFooter', function () {
     return {
-      templateUrl: 'static/build/viewsdirectives/footer/footer.html',
+      templateUrl: 'static/build/views/directives/footer/footer.html',
       restrict: 'E'
     };
   });
@@ -1033,7 +1033,7 @@ angular.module('ocean04App')
             transclude: true,
             templateUrl: function(element, attrs) {
                 if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'static/build/viewsdirectives/ngCart/addtocart.html';
+                    return 'static/build/views/directives/ngCart/addtocart.html';
                 } else {
                     return attrs.templateUrl;
                 }
@@ -1067,7 +1067,7 @@ angular.module('ocean04App')
             scope: {},
             templateUrl: function(element, attrs) {
                 if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'static/build/viewsdirectives/ngCart/cart.html';
+                    return 'static/build/views/directives/ngCart/cart.html';
                 } else {
                     return attrs.templateUrl;
                 }
@@ -1086,7 +1086,7 @@ angular.module('ocean04App')
             transclude: true,
             templateUrl: function(element, attrs) {
                 if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'static/build/viewsdirectives/ngCart/summary.html';
+                    return 'static/build/views/directives/ngCart/summary.html';
                 } else {
                     return attrs.templateUrl;
                 }
@@ -1122,7 +1122,7 @@ angular.module('ocean04App')
             transclude: true,
             templateUrl: function(element, attrs) {
                 if ( typeof attrs.templateUrl == 'undefined' ) {
-                    return 'static/build/viewsdirectives/ngCart/checkout.html';
+                    return 'static/build/views/directives/ngCart/checkout.html';
                 } else {
                     return attrs.templateUrl;
                 }
@@ -1199,7 +1199,7 @@ angular.module('ngCart.fulfilment', [])
 angular.module('ocean04App')
   .directive('rocketNavstore', function ($rootScope) {
     return {
-      templateUrl: 'static/build/viewsdirectives/navStore/navStore.html',
+      templateUrl: 'static/build/views/directives/navStore/navStore.html',
       restrict: 'E'
     };
   });
