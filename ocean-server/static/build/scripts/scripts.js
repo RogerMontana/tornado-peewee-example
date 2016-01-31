@@ -384,10 +384,10 @@ angular.module('ocean04App')
       var a = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"][new Date().getDay()];
       switch(a){
         case "Пн":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*2));
+          $scope.deliveryDate = new Date(+new Date()+(86400000*6));
           break;
         case "Вт":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*1));
+          $scope.deliveryDate = new Date(+new Date()+(86400000*5));
           break;
         case "Ср":
           $scope.deliveryDate = new Date(+new Date()+(86400000*4));
@@ -402,7 +402,7 @@ angular.module('ocean04App')
           $scope.deliveryDate = new Date(+new Date()+(86400000*1));
           break;
         case "Вс":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*3));
+          $scope.deliveryDate = new Date(+new Date()+(86400000*7));
           break;
         default:
           break;
