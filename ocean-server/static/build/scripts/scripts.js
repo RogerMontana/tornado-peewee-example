@@ -229,6 +229,7 @@ angular.module("ocean04App")
         $scope.notification = true;
         $scope.successOrder = true;
       },function(err) {
+        alert(err);
         $scope.notification = true;
         $scope.errorOrder = true;
       });
@@ -530,6 +531,9 @@ angular.module('ocean04App')
           resolve(data);
         }).error(function (data, status, headers, config) {
           if(reject){
+            alert(data);
+            alert(headers);
+            alert(status);
             reject(data);
           }
         });
