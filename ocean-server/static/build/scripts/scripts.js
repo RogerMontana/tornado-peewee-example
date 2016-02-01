@@ -229,7 +229,8 @@ angular.module("ocean04App")
         $scope.notification = true;
         $scope.successOrder = true;
       },function(err) {
-        $scope.errorMess = err;
+        var a = JSON.stringify(arguments);
+        alert(a);
         $scope.notification = true;
         $scope.errorOrder = true;
       });
@@ -558,6 +559,8 @@ angular.module('ocean04App')
         .success(function (data) {
           resolve(data);
         }).error(function (data, status, headers, config) {
+          var a = JSON.stringify(arguments);
+          alert(a);
           reject(data);
         });
       });
