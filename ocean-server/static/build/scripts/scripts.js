@@ -507,7 +507,7 @@ angular.module('ocean04App')
 'use strict';
 
 angular.module('ocean04App')
-  .service('api', function ($http,$q,$window) {
+  .service('api', function ($http,$q,$window, $rootScope) {
     $http.defaults.useXDomain = true;
     var url = 'https://rocket04.com/'
 
@@ -531,9 +531,7 @@ angular.module('ocean04App')
           resolve(data);
         }).error(function (data, status, headers, config) {
           if(reject){
-            alert(data);
-            alert(headers);
-            alert(status);
+            $rootScope.errorMessOp = data;
             reject(data);
           }
         });
