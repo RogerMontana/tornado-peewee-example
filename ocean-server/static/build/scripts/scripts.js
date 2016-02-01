@@ -473,6 +473,11 @@ angular.module('ocean04App')
     $scope.checkout = function () {
       $('#myModal').modal('show');
       $scope.formUser.address = $scope.address.formatted_address;
+      if($scope.address.formatted_address == undefined){
+        $scope.formUser.address = $('#adress').val();
+      } else {
+        $scope.formUser.address = $scope.address.formatted_address;
+      }
       $scope.formUser.total = (ngCart.totalCost() + $scope.shipping);
 
       var order_details = [];
