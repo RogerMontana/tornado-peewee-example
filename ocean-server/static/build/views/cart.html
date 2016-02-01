@@ -9,6 +9,10 @@
 			<h5 ng-show="errorOrder" class="fadein fadeout">
 				Упс! Кажется что-то пошло не так. Поробуйте ещё раз через 30 секунд.
 				<span ng-click="errorOrder=false; notification=false;" class="pull-right">x</span>
+
+				<div class="col-xs-12">
+					<span>Ошибка: {{errorMess}}</span>
+				</div>
 			</h5>
 		</div>
 	</div>

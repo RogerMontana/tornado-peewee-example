@@ -229,7 +229,7 @@ angular.module("ocean04App")
         $scope.notification = true;
         $scope.successOrder = true;
       },function(err) {
-        alert(err);
+        $scope.errorMess = err;
         $scope.notification = true;
         $scope.errorOrder = true;
       });
