@@ -35,17 +35,17 @@
 				          <uib-tab heading="19.00 - 22.00"></uib-tab>
 				        </uib-tabset>
 							</div>
-			        
+
 							<div class="col-xs-12 cartTable">
 								<table class="table table-responsive" cols="4">
 									<tbody>
 										<tr ng-repeat="item in cartItems.items">
 											<td class="imgPreview text-left" background="{{item._data.img}}" width="48px" height="48px">
 											</td>
-											<td class="text-left infoBox"> 
-												<strong>{{item._name}}</strong> 
-												<br> 
-												<span>{{item._price | currency:"\u20b4"}}</span>
+											<td class="text-left infoBox">
+												<strong>{{item._name}}</strong>
+												<br>
+												<span class="price">{{item._price }} UAH</span>
 											</td>
 											<td class="text-center plusMinusBox" width="10%">
 												<a class="btn btn-xs removeFromCart" ng-click="item.setQuantity(-1, true); getCart(); countTotal(); checkShipping()">
@@ -107,7 +107,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- <div class="col-lg-1 col-md-1"></div> -->
 
 		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -125,11 +125,11 @@
 							<tbody>
 								<tr>
 									<td class="text-left">Продукты</td>
-									<td class="text-right">{{ cartTotal | currency:"\u20b4" }}</td>
+									<td class="text-right price">{{ cartTotal}} UAH</td>
 								</tr>
 								<tr>
 									<td class="text-left">Доставка</td>
-									<td class="text-right">{{ shipping | currency:"\u20b4" }}</td>
+									<td class="text-right price">{{ shipping }} UAH</td>
 								</tr>
 							</tbody>
 						</table>
@@ -146,7 +146,7 @@
 						<thead>
 							<tr>
 								<th class="text-left">ИТОГО</th>
-								<th class="text-right">{{ totalWithShipping | currency:"\u20b4" }}</th>
+								<th class="text-right price">{{ totalWithShipping }} UAH</th>
 							</tr>
 						</thead>
 					</table>
@@ -175,7 +175,7 @@
 						<br>
 						<h5>Номер телефона для связи с Вами</h5>
 						<h1>{{formUser.phone}}</h1>
-					</div>				
+					</div>
 	      	<div class="col-xs-12 text-center">
 	      		<button ng-click="makeOrder();" class="btn text-center makeOrder">Сделать Заказ</button>
 	      	</div>

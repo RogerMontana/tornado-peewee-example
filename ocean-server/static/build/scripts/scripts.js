@@ -229,8 +229,6 @@ angular.module("ocean04App")
         $scope.notification = true;
         $scope.successOrder = true;
       },function(err) {
-        var a = JSON.stringify(arguments);
-        alert(a);
         $scope.notification = true;
         $scope.errorOrder = true;
       });
@@ -508,8 +506,9 @@ angular.module('ocean04App')
 'use strict';
 
 angular.module('ocean04App')
-  .service('api', function ($http,$q,$window, $rootScope) {
+  .service('api', function ($http,$q,$window) {
     $http.defaults.useXDomain = true;
+     $http.defaults.headers.post["Content-Type"] = "text/plain";
     var url = 'https://rocket04.com/'
 
 // MAIN API REQUEST METHODS
@@ -532,7 +531,6 @@ angular.module('ocean04App')
           resolve(data);
         }).error(function (data, status, headers, config) {
           if(reject){
-            $rootScope.errorMessOp = status;
             reject(data);
           }
         });
@@ -541,21 +539,18 @@ angular.module('ocean04App')
 
     var post = function(suburl,param){
       return $q(function(resolve, reject) {
-        //  $http.post(url+suburl,param,
-        //   {
-        //     headers: {'Content-Type': 'application/json'}
-        //   }
-        // )
-        var data =  JSON.stringify(param);
-        $.ajax({
-          url: url+suburl,
-          type: 'post',
-          data: data ,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          dataType: 'json'
-        })
+         $http.post(url+suburl,param
+        )
+        // var data =  JSON.stringify(param);
+        // $.ajax({
+        //   url: url+suburl,
+        //   type: 'post',
+        //   data: data ,
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   dataType: 'json'
+        // })
         .success(function (data) {
           resolve(data);
         }).error(function (data, status, headers, config) {
