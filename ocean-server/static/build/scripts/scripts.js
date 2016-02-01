@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'ngCart.fulfilment', 
     'ui.bootstrap',
-    'GoogleMapsNative'
+    'GoogleMapsNative',
+    'google.places'
   ])
   .config(function ($routeProvider,$httpProvider) {
 
@@ -368,6 +369,7 @@ angular.module('ocean04App')
     $scope.formUser = {
       email:""
     };
+    $scope.address = {};
     $window.ga('send', 'pageview', { page: $location.url() });
     $scope.deliveryDate;
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -384,28 +386,44 @@ angular.module('ocean04App')
       var a = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"][new Date().getDay()];
       switch(a){
         case "Пн":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*6));
+          $scope.setDeliveryDate('Пн', 6);
           break;
         case "Вт":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*5));
+          $scope.setDeliveryDate('Вт', 5);
           break;
         case "Ср":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*4));
+          $scope.setDeliveryDate('Ср', 4);
           break;
         case "Чт":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*3));
+          $scope.setDeliveryDate('Чт', 3);
           break;
         case "Пт":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*2));
+          $scope.setDeliveryDate('Пт', 2);
           break;
         case "Сб":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*1));
+          $scope.setDeliveryDate('Сб', 1);
           break;
         case "Вс":
-          $scope.deliveryDate = new Date(+new Date()+(86400000*7));
+          $scope.setDeliveryDate('Вс', 7);
           break;
         default:
           break;
+      }
+    }
+
+    $scope.setDeliveryDate = function (day, count){
+      if(day == 'Сб'){
+        var hours = new Date().getHours();
+        if(hours >= 16 && hours <= 17){
+          console.log("у вас осталось мало времени");
+          $scope.deliveryDate = new Date(+new Date()+(86400000*1));
+        } else if(hours >= 17) {
+          $scope.deliveryDate = new Date(+new Date()+(86400000*7));
+        } else {
+          $scope.deliveryDate = new Date(+new Date()+(86400000*1));
+        }
+      } else {
+        $scope.deliveryDate = new Date(+new Date()+(86400000*count));
       }
     }
     $scope.getDeliveryDate();
@@ -417,6 +435,10 @@ angular.module('ocean04App')
       $scope.cartTotal = ngCart.totalCost();
     }
 
+    $scope.autocompleteOptions = {
+      componentRestrictions: { country: 'ua' }
+    }
+
     $scope.removeItem = function(id){
       ngCart.removeItemById(id);
     }
@@ -426,12 +448,21 @@ angular.module('ocean04App')
       $scope.totalWithShipping = ngCart.totalCost() + $scope.shipping;
     }
 
+    $scope.deliveryCost = function (a) {
+      // if(a.vicinity = "Індустріальний район"){
+      //   $scope.shipping = 50;
+      // // }
+      // console.log(a.geometry.location.lat());
+      // console.log(a.geometry.location.lng());
+    }
+
     $scope.getCart();
     $scope.checkShipping();
     $scope.countTotal();   
 
     $scope.checkout = function () {
       $('#myModal').modal('show');
+      $scope.formUser.address = $scope.address.formatted_address;
       $scope.formUser.total = (ngCart.totalCost() + $scope.shipping);
 
       var order_details = [];

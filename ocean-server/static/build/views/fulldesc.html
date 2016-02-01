@@ -29,7 +29,7 @@
           </p>
         </div>
         <div class="description col-xs-12">
-          <p class="text-muted small-description">Порция на {{receipe.portions}}. Время приготовления {{receipe.time}} минут.</p>
+          <p class="text-muted small-description">Порция на {{receipe.portions}} человек. Время приготовления {{receipe.time}} минут.</p>
         </div>
         <div class="actions col-xs-12">
           <button class="btn btn-md btnAdd" ng-click="f.AddToCart(receipe.id, receipe.title, receipe.price, 1, {img:receipe.photo})"><i class="glyphicon glyphicon-plus"></i> Добавить</button>
@@ -42,47 +42,109 @@
       <div class="col-xs-12">
         <uib-tabset >
           <uib-tab heading="Детали">
-            <p class="description">{{receipe.description}}</p>
+            <div class="row">
+              <div class="col-xs-12 allergies recipeDetails" style="display:none;">
+                <span>
+                  <img src="" alt="">
+                  <p class="description">{{}}</p>
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 history recipeDetails">
+                <p class="text-capitalize heading">История рецепта</p>
+                <p class="description">{{receipe.description}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 vine recipeDetails" style="display:none;">
+                <p class="text-capitalize heading">Рекомендованное вино</p>
+                <p class="description">{{}}</p>
+              </div>
+            </div>
           </uib-tab>
 
           <uib-tab heading="Ингредиенты">
-            <p class="ingredientsHeading">Ингредиенты</p>
-            <div class="ingredientsContent">
-              <span ng-repeat="ing in receipe.ingredients" class="ingredientsContent">
-                <p class="ingredients">{{ing}}</p>
-              </span>
+            <div class="row ingredientsContent recipeDetails">
+              <div class="col-xs-12">
+                <p class="heading">Ингредиенты</p>
+                <div class="ingredientsList">
+                  <span ng-repeat="ing in receipe.ingredients">
+                    <p class="description">{{ing}}</p>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row ingredientsContent recipeDetails">
+              <div class="col-xs-12">
+                <p class="heading">Предостережение</p>
+                <p class="description">
+                  Предостережение по пищевой аллергии: внимательно изучайте ингредиенты рецепта.
+                  Если у вас есть пищевая аллергия на определенный ингредиент, пожалуйста,
+                  воздержитесь от заказа и сначала проконсультируйтесь у диетолога.
+                </p>
+              </div>
             </div>
           </uib-tab>
 
           <uib-tab heading="Нутриенты">
             <table class="table descriptionTable">
               <tr>
+                <!-- <th>
+                  <p class="heading">Размер Порции</p>
+                  <p class="content">
+                    {{receipe.newNutrients.callories}} g
+                  </p>
+                </th> -->
                 <th>
                   <p class="heading">Калории</p>
                   <p class="content">
-                    {{receipe.newNutrients.callories}}
-                  </p>
-                </th>
-                <th>
-                  <p class="heading">Белки</p>
-                  <p class="content">
-                    {{receipe.newNutrients.proteins}}g
-                  </p>
-                </th>
-                <th>
-                  <p class="heading">Жиры</p>
-                  <p class="content">
-                    {{receipe.newNutrients.fats}}g
-                  </p>
-                </th>
-                <th>
-                  <p class="heading">Углеводы</p>
-                  <p class="content">
-                    {{receipe.newNutrients.carbohydrates}}g
+                    {{receipe.newNutrients.callories}} ccal
                   </p>
                 </th>
               </tr>
             </table>
+
+            <div class="col-xs-12 nutriensTable">
+              <p class="description">На Порцию*</p>
+              <table class="table table-striped">
+                <tr>
+                  <td class="text-left">
+                    <p class="heading">Белки</p>
+                  </td>
+                  <td class="text-right">
+                    <p class="description">
+                      {{receipe.newNutrients.proteins}}g
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left">
+                    <p class="heading">Жиры</p>
+                  </td>
+                  <td class="text-right">
+                    <p class="description">
+                      {{receipe.newNutrients.fats}}g
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left"> 
+                    <p class="heading">Углеводы</p>
+                  </td>
+                  <td class="text-right">
+                    <p class="description">
+                      {{receipe.newNutrients.carbohydrates}}g
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              <p class="description">
+                *Мы стараемся всегда чётко соответствовать объявленному номиналу,
+                но все работы выполняются вручную и возможны мелкие отклонения от указанного веса.
+              </p>
+            </div>
+
           </uib-tab>
         </uib-tabset>
       </div>

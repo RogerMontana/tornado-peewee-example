@@ -78,9 +78,12 @@
 						</div>
 						<div class="row">
 							<div class="form" ng-form="customerDetails" novalidate>
+								<!-- <div class="col-xs-12">
+									<input class="form-control"  ng-model="formUser.place"/> PLACE!
+								</div> -->
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 									<label for="adress">Адрес<sup style="color:red;">*</sup></label>
-									<input id="adress" type="text" class="adressDetails adress" placeholder="Введите адрес" ng-model="formUser.address" required>
+									<input id="adress" type="text" class="adressDetails adress" g-places-autocomplete options="autocompleteOptions" force-selection="true" placeholder="Введите адрес" ng-model="address" required ng-change="deliveryCost(address);">
 								</div>
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 									<label for="appartment">Номер Квартиры<sup style="color:red;">*</sup></label>
