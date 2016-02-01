@@ -531,7 +531,7 @@ angular.module('ocean04App')
           resolve(data);
         }).error(function (data, status, headers, config) {
           if(reject){
-            $rootScope.errorMessOp = data;
+            $rootScope.errorMessOp = status;
             reject(data);
           }
         });

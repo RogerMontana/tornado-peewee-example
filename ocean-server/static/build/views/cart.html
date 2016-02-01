@@ -11,8 +11,8 @@
 				<span ng-click="errorOrder=false; notification=false;" class="pull-right">x</span>
 
 				<div class="col-xs-12">
-					<span>Ошибка: {{errorMess}}</span>
-					<span>Ошибка с опшинс: {{errorMessOp}}</span>
+					<span ng-show="errorMess">Ошибка: {{errorMess}}</span>
+					<span ng-show="errorMessOp">Ошибка с опшинс: {{errorMessOp}}</span>
 				</div>
 			</h5>
 		</div>
