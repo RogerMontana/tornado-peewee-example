@@ -44,7 +44,7 @@ class Orders(Model):
     order_details = TextField()
     name = TextField()
     address = TextField()
-    total_bill = DecimalField()
+    total_bill = DecimalField(default=0)
     time_gap = TextField()
     status = TextField()
     phone = TextField()
