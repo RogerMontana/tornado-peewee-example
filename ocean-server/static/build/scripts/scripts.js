@@ -629,6 +629,41 @@ angular.module('ocean04App')
       $rootScope.pagetitle = $scope.receipe.title;
     }
 
+    $scope.diet = [
+      {
+        img:'',
+        name:'',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_1.svg?s=4c4e6a0cab130c322c6aca083b5a3076',
+        name:'Вегетарианское',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_2.svg?s=086e988e8553d4028ed8e29377359fe6',
+        name:'Веганское',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_3.svg?s=85af099e62e0349cc057f83300d7482a',
+        name:'Без Глютена',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_4.svg?s=27c75e9d2a090988e06b640a6c457b72',
+        name:'Без Лактозы',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_5.svg?s=501744a476ede9d815c68ea228821fbc',
+        name:'Без Орехов',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_6.svg?s=58e666fdb84a3510d6005701d2a6b4a9',
+        name:'Без Яиц',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_7.svg?s=d111f8f6c71db9d42505f9c2199b3920',
+        name:'Палеодиета',
+      }
+    ]
+
     //getting quantity in cart by its id 
     this.getInCartQuantity = function (id) {
       var inCartQunatity = ngCart.getItemById(id);

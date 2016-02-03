@@ -43,11 +43,16 @@
         <uib-tabset >
           <uib-tab heading="Детали">
             <div class="row">
-              <div class="col-xs-12 allergies recipeDetails" style="display:none;">
-                <span>
-                  <img src="" alt="">
-                  <p class="description">{{}}</p>
-                </span>
+              <div class="col-xs-12 allergies recipeDetails">
+                <ul class="list-inline list-unstyled">
+                  <li ng-repeat="i in receipe.diet" class="text-center">
+                    <span >
+                      <img ng-src="{{diet[i].img}}" alt="">
+                      <br>
+                      <p class="description" style="display: inline-block">{{diet[i].name}}</p>
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
             <div class="row">
@@ -57,15 +62,15 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-12 vine recipeDetails" style="display:none;">
+              <div class="col-xs-12 vine recipeDetailsLast">
                 <p class="text-capitalize heading">Рекомендованное вино</p>
-                <p class="description">{{}}</p>
+                <p class="description">{{receipe.vine}}</p>
               </div>
             </div>
           </uib-tab>
 
           <uib-tab heading="Ингредиенты">
-            <div class="row ingredientsContent recipeDetails">
+            <div class="row ingredientsContent">
               <div class="col-xs-12">
                 <p class="heading">Ингредиенты</p>
                 <div class="ingredientsList">
@@ -75,7 +80,7 @@
                 </div>
               </div>
             </div>
-            <div class="row ingredientsContent recipeDetails">
+            <div class="row ingredientsContent recipeDetailsLast">
               <div class="col-xs-12">
                 <p class="heading">Предостережение</p>
                 <p class="description">
@@ -90,12 +95,12 @@
           <uib-tab heading="Нутриенты">
             <table class="table descriptionTable">
               <tr>
-                <!-- <th>
+                <th>
                   <p class="heading">Размер Порции</p>
                   <p class="content">
-                    {{receipe.newNutrients.callories}} g
+                    {{receipe.size}} g
                   </p>
-                </th> -->
+                </th>
                 <th>
                   <p class="heading">Калории</p>
                   <p class="content">
