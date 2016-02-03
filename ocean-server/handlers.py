@@ -62,6 +62,8 @@ class AllRecipesHandler(PeeweeRequestHandler):
                 "description" : recipe.description,
                 "price" : float(recipe.price),
                 "photo" : recipe.photo,
+                "ingredients_photo": recipe.ingredients_photo,
+                "diet": recipe.diet_type.split("|"),
                 "ingredients" : recipe.ingredients,
                 "nutrients" : recipe.nutrients
             }
@@ -88,7 +90,14 @@ class OrdersHandler(PeeweeRequestHandler):
         self.set_header("Content-Type", "application/json")
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
-        result = json.loads(self.request.body)
+        result = None
+        try:
+            result = json.loads(self.request.body)
+            print(result["order_details"] + result["address"] + result["timegap"] + result["phone"])
+        except:
+            print("json is not valid")
+            self.write(json.dumps(self.response_error))
+
         # SMS NOTIFICATION
         try:
             client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
@@ -103,10 +112,11 @@ class OrdersHandler(PeeweeRequestHandler):
 
         try:
             order = Orders.create(
-            order_details = result["order_details"] + " " + str(result["total"]) + " EMAIL: " + result["email"],
+            order_details = result["order_details"] + " EMAIL: " + result["email"],
             name = result["name"],
-            timegap = result["timegap"],
-            address = result["address"]+"/"+result["appartment"],
+            total_bill = result["total"],
+            time_gap = result["timegap"],
+            address = result["address"]+" / "+result["appartment"],
             status = "new",
             phone = result["phone"]
             )
@@ -117,16 +127,18 @@ class OrdersHandler(PeeweeRequestHandler):
 
     def get(self, *args, **kwargs):
         response =[]
-    #     for order in Orders.select():
-    #         order_obj = {
-    #             "id": order.id,
-    #             "order_details" : order.order_details,
-    #             "address" : order.address,
-    #             "name" : order.name,
-    #             "status" : order.status,
-    #             "phone" : order.phone
-    #         }
-    #         response.append(order_obj)
+        # for order in Orders.select():
+        #     order_obj = {
+        #         "id": order.id,
+        #         "order_details" : order.order_details,
+        #         "total_bill": float(order.total_bill),
+        #         "time_gap": order.time_gap,
+        #         "address" : order.address,
+        #         "name" : order.name,
+        #         "status" : order.status,
+        #         "phone" : order.phone
+        #     }
+        #     response.append(order_obj)
         self.set_header("Content-Type", "application/json")
         self.set_header("Access-Control-Allow-Origin", "*")
         self.write(json.dumps(response))
