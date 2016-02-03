@@ -59,6 +59,7 @@ class AllRecipesHandler(PeeweeRequestHandler):
                 "subtitle" : recipe.subtitle,
                 "title" : recipe.title,
                 "tag" : recipe.tag,
+                "vine": recipe.vine,
                 "description" : recipe.description,
                 "price" : float(recipe.price),
                 "photo" : recipe.photo,
