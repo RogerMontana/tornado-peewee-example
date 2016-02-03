@@ -92,7 +92,7 @@ class OrdersHandler(PeeweeRequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
         result = json.loads(self.request.body)
-
+        print(result)
         # SMS NOTIFICATION
         try:
             client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
