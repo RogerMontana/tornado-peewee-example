@@ -519,7 +519,7 @@ angular.module('ocean04App')
   .service('api', function ($http,$q,$window) {
     $http.defaults.useXDomain = true;
      $http.defaults.headers.post["Content-Type"] = "text/plain";
-    var url = 'http://0.0.0.0:5000/'
+    var url = 'https://rocket04.com/'
 
 // MAIN API REQUEST METHODS
     var list =  function (suburl,field,param){
