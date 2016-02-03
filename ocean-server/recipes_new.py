@@ -1,4 +1,4 @@
-__author__ = 'artem'
+# -*- coding: utf-8 -*-
 import os
 from peewee import *
 from models import Recipes
