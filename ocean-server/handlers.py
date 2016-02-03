@@ -90,13 +90,7 @@ class OrdersHandler(PeeweeRequestHandler):
         self.set_header("Content-Type", "application/json")
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
-        result = None
-        try:
-            result = json.loads(self.request.body)
-            print(result["order_details"] + result["address"] + result["timegap"] + result["phone"])
-        except:
-            print("json is not valid")
-            self.write(json.dumps(self.response_error))
+        result = json.loads(self.request.body)
 
         # SMS NOTIFICATION
         try:
@@ -114,7 +108,7 @@ class OrdersHandler(PeeweeRequestHandler):
             order = Orders.create(
             order_details = result["order_details"] + " EMAIL: " + result["email"],
             name = result["name"],
-            total_bill = result["total"],
+            total_bill = ["total"],
             time_gap = result["timegap"],
             address = result["address"]+" / "+result["appartment"],
             status = "new",
