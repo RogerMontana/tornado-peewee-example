@@ -62,6 +62,7 @@ class AllRecipesHandler(PeeweeRequestHandler):
                 "vine": recipe.vine,
                 "description" : recipe.description,
                 "price" : float(recipe.price),
+                "size": float(recipe.size),
                 "photo" : recipe.photo,
                 "ingredients_photo": recipe.ingredients_photo,
                 "diet": recipe.diet_type.split("|"),
