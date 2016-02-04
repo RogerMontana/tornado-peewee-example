@@ -715,9 +715,11 @@ angular.module('ocean04App')
     return{
       allowed:function (){
         $rootScope.storeLoader = false;
+        $('.loader').css('display','none');
       }, 
       notAllowed: function () {
         $rootScope.storeLoader = true;
+        $('.loader').css('display','block');
       }
     }
   });
