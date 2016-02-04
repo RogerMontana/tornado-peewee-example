@@ -39,7 +39,7 @@
     </div>
 
     <div class="col-xs-12 col-lg-6 tabsetColumn columnWrapper">
-      <div class="col-xs-12">
+      <div class="col-xs-12 tabsetColumnWrapper">
         <uib-tabset >
           <uib-tab heading="Детали">
             <div class="row">
@@ -56,7 +56,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-xs-12 history recipeDetails">
+              <div class="col-xs-12 history recipeDetailsLast">
                 <p class="text-capitalize heading">История рецепта</p>
                 <p class="description">{{receipe.description}}</p>
               </div>
@@ -97,13 +97,13 @@
               <tr>
                 <th>
                   <p class="heading">Размер Порции</p>
-                  <p class="content">
+                  <p class="content ACR">
                     {{receipe.size}} g
                   </p>
                 </th>
                 <th>
                   <p class="heading">Калории</p>
-                  <p class="content">
+                  <p class="content ACR">
                     {{receipe.newNutrients.callories}} ccal
                   </p>
                 </th>
@@ -118,8 +118,8 @@
                     <p class="heading">Белки</p>
                   </td>
                   <td class="text-right">
-                    <p class="description">
-                      {{receipe.newNutrients.proteins}}g
+                    <p class="description ACR" style="margin:0;">
+                      {{receipe.newNutrients.proteins}} g
                     </p>
                   </td>
                 </tr>
@@ -128,8 +128,8 @@
                     <p class="heading">Жиры</p>
                   </td>
                   <td class="text-right">
-                    <p class="description">
-                      {{receipe.newNutrients.fats}}g
+                    <p class="description ACR" style="margin:0;">
+                      {{receipe.newNutrients.fats}} g
                     </p>
                   </td>
                 </tr>
@@ -138,8 +138,8 @@
                     <p class="heading">Углеводы</p>
                   </td>
                   <td class="text-right">
-                    <p class="description">
-                      {{receipe.newNutrients.carbohydrates}}g
+                    <p class="description ACR" style="margin:0;">
+                      {{receipe.newNutrients.carbohydrates}} g
                     </p>
                   </td>
                 </tr>

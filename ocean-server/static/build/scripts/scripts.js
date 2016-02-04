@@ -597,7 +597,9 @@ angular.module('ocean04App')
   .controller('FulldescCtrl', function ($scope, api, $rootScope, $routeParams, loader, ngCart, $location, $window) {
     $(document).scrollTop(0);
     $rootScope.itemDescription = true;
-    $(".slicknav_menu").css('display','none !important');
+    $('.slicknav_menu').each(function () {
+        this.style.setProperty( 'display', 'none', 'important' );
+    });
     $scope.receipe;
     $rootScope.pagetitle;
     $window.ga('send', 'pageview', { page: $location.url() });
@@ -718,38 +720,6 @@ angular.module('ocean04App')
         $rootScope.storeLoader = true;
       }
     }
-  });
-
-'use strict';
-
-/**
- * @ngdoc directive
- * @name ocean04App.directive:nav
- * @description
- * # nav
- */
-angular.module('ocean04App')
-  .directive('rocketNavigation', function ($rootScope) {
-    return {
-      templateUrl: 'static/build/views/directives/nav/nav.html',
-      restrict: 'E'
-    };
-  });
-
-'use strict';
-
-/**
- * @ngdoc directive
- * @name ocean04App.directive:footer
- * @description
- * # footer
- */
-angular.module('ocean04App')
-  .directive('rocketFooter', function () {
-    return {
-      templateUrl: 'static/build/views/directives/footer/footer.html',
-      restrict: 'E'
-    };
   });
 
 'use strict';
@@ -1265,22 +1235,6 @@ angular.module('ngCart.fulfilment', [])
 
 
 }]);
-
-'use strict';
-
-/**
- * @ngdoc directive
- * @name ocean04App.directive:nav
- * @description
- * # nav
- */
-angular.module('ocean04App')
-  .directive('rocketNavstore', function ($rootScope) {
-    return {
-      templateUrl: 'static/build/views/directives/navStore/navStore.html',
-      restrict: 'E'
-    };
-  });
 
 'use strict';
 

@@ -48,7 +48,8 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <!-- mainNav -->
-    <rocket-navigation ng-hide="itemDescription"></rocket-navigation>
+<!--     <rocket-navigation ng-hide="itemDescription"></rocket-navigation> -->
+    <div ng-include="'static/build/views/navigation.html'" ng-hide="itemDescription"></div>
     <!--Slick nav menu-->
     <ul id="menuStick" style="display:none;" ng-hide="itemDescription">
       <li><a href="#/how">Принцип Работы</a></li>
@@ -66,7 +67,8 @@
     <!--Main view-->
     <div ng-view ng-hide="storeLoader" class="rocket-view"></div>
     <!-- footer -->
-    <rocket-footer></rocket-footer>
+    <!-- <rocket-footer></rocket-footer> -->
+    <div ng-include="'static/build/views/footer.html'"></div>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script src="static/build/scripts/vendor.js"></script>
     <script src="static/build/scripts/scripts.js"></script>

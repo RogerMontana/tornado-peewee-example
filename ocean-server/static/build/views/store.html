@@ -1,5 +1,6 @@
 <div ng-controller="storeCtrl as s" class="store">
-  <rocket-navstore></rocket-navstore>
+  <!-- <rocket-navstore></rocket-navstore> -->
+  <div ng-include="'static/build/views/navigation-store.html'" ng-hide="itemDescription"></div>
   <div class="container-fluid">
     <div class="banner">
       <img src="http://rocket04.imgix.net/banner_opening.jpg?s=39b5c3311526952305b8ed63870d38d8" width="100%" alt="">
