@@ -77,7 +77,8 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  }).run(['$location',function(){
+  }).run(['$location',function($scope){
+    $scope.storeLoader = false;
     $('#menuStick').slicknav({
       brand:"<a href=\"#/\"><img src=\"https://rocket04.imgix.net/logo.svg?s=533089706d3998f2811d218fd2fe2fa5\" alt=\"\"></a>",
       label:"  ",
