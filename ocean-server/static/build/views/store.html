@@ -1,6 +1,6 @@
 <div ng-controller="storeCtrl as s" class="store">
   <!-- <rocket-navstore></rocket-navstore> -->
-  <div ng-include="'static/build/views/navigation-store.html'" ng-hide="itemDescription"></div>
+  <div ng-include="'views/navigation-store.html'" ng-hide="itemDescription"></div>
   <div class="container-fluid">
     <div class="banner">
       <img src="http://rocket04.imgix.net/banner_opening.jpg?s=39b5c3311526952305b8ed63870d38d8" width="100%" alt="">
@@ -15,7 +15,7 @@
     <ul class="list-unstyled">
       <li ng-repeat="i in receipeLst1 | filter:search:strict | filter:colourFilter">
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 card" >
-          
+
           <div style="background: white;">
             <a ng-href="#/desc/{{i.id}}">
               <div class="image photo-container" ng-class="{'quantity fadein fadeout':s.getInCartQuantity(i.id)}" style="margin-bottom: -21px;">
