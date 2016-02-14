@@ -15,7 +15,12 @@
         <div ng-hide="!f.getInCartQuantity(receipe.id)" class="inCart fadein fadeout"> 
           <p>{{f.getInCartQuantity(receipe.id)}} в Вашей корзине</p>
         </div>
-        <img ng-src="{{receipe.photo}}">
+        <!-- <img ng-src="{{receipe.photo}}"> -->
+        <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+          <uib-slide ng-repeat="slide in receipe.slides">
+            <img ng-src="{{slide}}">
+          </uib-slide>
+        </uib-carousel>
       </div>
     </div>
 
@@ -61,7 +66,7 @@
                 <p class="description">{{receipe.description}}</p>
               </div>
             </div>
-            <div class="row">
+            <div class="row" ng-show="receipe.vine">
               <div class="col-xs-12 vine recipeDetailsLast">
                 <p class="text-capitalize heading">Рекомендованное вино</p>
                 <p class="description">{{receipe.vine}}</p>

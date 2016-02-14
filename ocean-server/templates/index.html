@@ -7,30 +7,33 @@
       }
     </script>
     <meta charset="utf-8">
-    
-    <meta property="place:location:latitude" content="48.462134"/>
-    <meta property="place:location:longitude" content="35.052646"/>
-    <meta property="business:contact_data:street_address" content="Barrikadna 4-B"/>
-    <meta property="business:contact_data:locality" content="Dnipropetrovsk"/>
-    <meta property="business:contact_data:postal_code" content="49000"/>
-    <meta property="business:contact_data:country_name" content="Ukraine"/>
-    <meta property="business:contact_data:email" content="support@rocket04.com"/>
-    <meta property="business:contact_data:phone_number" content="+38 0504802319"/>
-    <meta property="business:contact_data:website" content="https://www.rocket04.com"/>
-    <meta property="og:image" content="http://rocket04.imgix.net/preview.jpg?s=e79b4804a6481"/>
-    <meta property="og:image:type" content="image/jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:title" content="Rocket 04 - Сервис Доставки Продуктов"/>
-    <meta property="og:description" content="Свежие органические ингредиенты для приготовления блюд по рецептам с доставкой в Днепропетровске."/>
-    <meta property="og:url" content="https://rocket04.com/" />
-    <meta property="og:type" content="restaurant" />
-    <meta property="og:site_name" content="Rocket 04" />
-    <meta name="description" content="Свежие органические ингредиенты для приготовления блюд по рецептам с доставкой в Днепропетровске." />
-    <meta name="title" content="Rocket 04 - Сервис Доставки Продуктов" />
-    <meta name="keywords" content="доставка продуктов Днепропетровск,доставка продуктов,Днепропетровск,еда,продукты,рецепты,доставка рядом" />
-    <meta name="google" value="notranslate" />
-
+<meta property="place:location:latitude" content="48.462134">
+<meta property="place:location:longitude" content="35.052646">
+<meta property="business:contact_data:street_address" content="Barrikadna 4-B">
+<meta property="business:contact_data:locality" content="Dnipropetrovsk">
+<meta property="business:contact_data:postal_code" content="49000">
+<meta property="business:contact_data:country_name" content="Ukraine">
+<meta property="business:contact_data:email" content="support@rocket04.com">
+<meta property="business:contact_data:phone_number" content="+38 0504802319">
+<meta property="business:contact_data:website" content="https://www.rocket04.com">
+<meta property="og:image" content="http://rocket04.imgix.net/preview.jpg?s=e79b4804a6481">
+<meta property="og:image:type" content="image/jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:title" content="Rocket 04 - Сервис Доставки Продуктов">
+<meta property="og:description" content="Свежие органические ингредиенты для приготовления блюд по рецептам с доставкой в Днепропетровске.">
+<meta property="og:url" content="https://rocket04.com/">
+<meta property="og:type" content="restaurant">
+<meta property="og:site_name" content="Rocket 04">
+<meta name="description" content="Свежие органические ингредиенты для приготовления блюд по рецептам с доставкой в Днепропетровске.">
+<meta name="title" content="Rocket 04 - Сервис Доставки Продуктов">
+<meta name="keywords" content="доставка продуктов Днепропетровск,доставка продуктов,Днепропетровск,еда,продукты,рецепты,доставка рядом">
+<meta name="google" value="notranslate">
+<title ng-bind="'Rocket04' + (pagetitle ? ' | '+pagetitle:'')" class="ng-binding">Rocket04 | Главная Страница</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <base href="/">
     <title ng-bind="'Rocket04' + (pagetitle ? ' | '+pagetitle:'')"></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
@@ -73,7 +76,7 @@
     <![endif]-->
     <!-- mainNav -->
 <!--     <rocket-navigation ng-hide="itemDescription"></rocket-navigation> -->
-    <div ng-include="'static/build/views/navigation.html'" ng-hide="itemDescription"></div>
+    <div ng-include="'views/navigation.html'" ng-hide="itemDescription"></div>
     <!--Slick nav menu-->
     <ul id="menuStick" style="display:none;" ng-hide="itemDescription">
       <li><a href="#/how">Принцип Работы</a></li>
@@ -92,7 +95,7 @@
     <div ng-view ng-hide="storeLoader" class="rocket-view"></div>
     <!-- footer -->
     <!-- <rocket-footer></rocket-footer> -->
-    <div ng-include="'static/build/views/footer.html'"></div>
+    <div ng-include="'views/footer.html'"></div>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script src="static/build/scripts/vendor.js"></script>
     <script src="static/build/scripts/scripts.js"></script>

@@ -23,16 +23,34 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-12 date">
-								<h3>Ближайшая доступная дата доставки: <strong><span class="text-capitalize">{{deliveryDate|date:'EEEE, d MMMM'}}</span></strong></h3>
+							<div class="col-xs-12 date text-center text-uppercase">
+								<h3>Выберите дату</h3>
+							</div>
+
+							<div class="col-xs-12">
+								<ul class="list-inlyne list-unstyled text-center">
+									<li class="dateWrapper" ng-repeat="i in dates" ng-click="setActiveDelivery(i)" ng-class="{active: i.isActive}">
+										<div class="col-sm-2 col-xs-4 text-center">
+											<div class="dateCircle text-center">
+												<p class="day">{{i.day}}</p>
+												<p class="dateNumber">{{i.date}}</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+							<div class="col-xs-12 date text-center text-uppercase">
+								<h3>Выберите интервал доставки</h3>
 							</div>
 
 							<div class="col-xs-12">
 								<uib-tabset >
-				          <uib-tab heading="10.00 - 13.00"></uib-tab>
-				          <uib-tab heading="13.00 - 16.00"></uib-tab>
-				          <uib-tab heading="16.00 - 19.00"></uib-tab>
-				          <uib-tab heading="19.00 - 22.00"></uib-tab>
+				          <uib-tab heading="НА СЕЙЧАС"></uib-tab>
+				          <uib-tab heading="18.00 - 19.00"></uib-tab>
+				          <uib-tab heading="19.00 - 20.00"></uib-tab>
+				          <uib-tab heading="20.00 - 21.00"></uib-tab>
+				          <uib-tab heading="21.00 - 22.00"></uib-tab>
 				        </uib-tabset>
 							</div>
 
@@ -108,8 +126,6 @@
 			</div>
 		</div>
 
-		<!-- <div class="col-lg-1 col-md-1"></div> -->
-
 		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 			<div class="row">
 				<div class="column cartInColumnWrapper pull-right">
@@ -117,10 +133,8 @@
 					<button ng-disabled="customerDetails.$invalid || cartTotal == 0" class="btn text-center makeOrder" id="modalButton" ng-click="checkout();">
 						Сделать Заказ
 					</button>
-
-					<h5 class="summaryHeading"><strong>Сведения о Заказе</strong></h5>
-
-					<div class="col-xs-12">
+					<h5 class="summaryHeading">Сведения о Заказе</h5>
+					<div class="">
 						<table class="table orderSummary">
 							<tbody>
 								<tr>
@@ -155,7 +169,7 @@
 		</div>
 
 		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 cartSmallText">
-			<h6>Делая заказ вы соглашаетесь с нашими <a href="#/contract" class="text-underline">Правилами и Условиями</a></h6>
+			<h6>Совершая заказ вы соглашаетесь с нашими <a href="#/contract" class="text-underline">Правилами</a></h6>
 		</div>
 	</div>
 

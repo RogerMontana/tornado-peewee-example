@@ -21,70 +21,72 @@ angular
     'GoogleMapsNative',
     'google.places'
   ])
-  .config(function ($routeProvider,$httpProvider) {
-
+  .config(function ($routeProvider,$httpProvider, $locationProvider, $rootScopeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'static/build/views/main.html',
+        templateUrl: '/static/build/views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
       .when('/about', {
-        templateUrl: 'static/build/views/about.html',
+        templateUrl: '/static/build/views/about.html',
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
       .when('/gifts', {
-        templateUrl: 'static/build/views/gifts.html',
+        templateUrl: '/static/build/views/gifts.html',
         controller: 'GiftsCtrl',
         controllerAs: 'gifts'
       })
       .when('/how', {
-        templateUrl: 'static/build/views/how.html',
+        templateUrl: '/static/build/views/how.html',
         controller: 'HowCtrl',
         controllerAs: 'how'
       })
       .when('/rocket04', {
-        templateUrl: 'static/build/views/store.html',
+        templateUrl: '/static/build/views/store.html',
         controller: 'storeCtrl',
         controllerAs: 'store'
       })
       .when('/cart', {
-        templateUrl: 'static/build/views/cart.html',
+        templateUrl: '/static/build/views/cart.html',
         controller: 'cartCtrl',
         controllerAs: 'cart'
       })
       .when('/desc/:id', {
-        templateUrl: 'static/build/views/fulldesc.html',
+        templateUrl: '/static/build/views/fulldesc.html',
         controller: 'FulldescCtrl',
         controllerAs: 'f'
       })
       .when('/gMap', {
-        templateUrl: 'static/build/views/gmap.html',
+        templateUrl: '/static/build/views/gmap.html',
         controller: 'GmapCtrl',
         controllerAs: 'gMap'
       })
       .when('/contract', {
-        templateUrl: 'static/build/views/contract.html',
+        templateUrl: '/static/build/views/contract.html',
         controller: 'ContractCtrl',
         controllerAs: 'contract'
       })
       .when('/contacts', {
-        templateUrl: 'static/build/views/contacts.html',
+        templateUrl: '/static/build/views/contacts.html',
         controller: 'ContactsCtrl',
         controllerAs: 'contacts'
       })
       .otherwise({
         redirectTo: '/'
       });
-  }).run(['$location',function(){
+
+      // $locationProvider.html5Mode(true);
+  }).run(['$location',function($scope){
+    $scope.storeLoader = false;
     $('#menuStick').slicknav({
       brand:"<a href=\"#/\"><img src=\"https://rocket04.imgix.net/logo.svg?s=533089706d3998f2811d218fd2fe2fa5\" alt=\"\"></a>",
       label:"  ",
       closeOnClick: true
     });
 
-    function centerin () {
+    $scope.centerin = function centerin () {
       var b = (((document.body.clientWidth - 120) / 2)/document.body.clientWidth)*100;
       var c = b + "%";
       $('.slicknav_brand').css('left', c);
@@ -94,12 +96,10 @@ angular
       var a = f + "%";
       $('.spinner').css ('left', a);
     };
-      
     $(window).resize(function(){
-      centerin();
+      $scope.centerin();
     });
-
-    centerin();
+    $scope.centerin();
   }]).animation('.rocket-view', function() {
     return {
       enter: function(element, done) {
@@ -116,614 +116,7 @@ angular
         };
       }
     };
-  }).factory('Page', function(){
-    var title = 'default';
-    return {
-      title: function() { return title; },
-      setTitle: function(newTitle) { title = newTitle; }
-    };
   });
-'use strict';
-
-/**
- * @ngdoc function
- * @name ocean04App.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the ocean04App
- */
-angular.module('ocean04App')
-  .controller('MainCtrl', function ($rootScope, $location,$window) {
-  	$(document).scrollTop(0);
-  	$window.ga('send', 'pageview', { page: $location.url() });
-  	$rootScope.pagetitle = 'Главная Страница';
-  });
-
-'use strict';
-
-/**
- * @ngdoc function
- * @name ocean04App.controller:AboutCtrl
- * @description
- * # AboutCtrl
- * Controller of the ocean04App
- */
-angular.module('ocean04App')
-  .controller('AboutCtrl', function ($rootScope,$location,$window,Page) {
-  	$rootScope.pagetitle = "О Нас";
-  	$(document).scrollTop(0);
-  	$window.ga('send', 'pageview', { page: $location.url() });
-  	Page.setTitle('title1');
-  });
-
-"use strict";
-
-/**
- * @ngdoc function
- * @name ocean04App.controller:GiftsCtrl
- * @description
- * # GiftsCtrl
- * Controller of the ocean04App
- */
-angular.module("ocean04App")
-  .controller("GiftsCtrl", function ($rootScope, $scope, api, $location,$window) {
-  	$(document).scrollTop(0);
-    $window.ga('send', 'pageview', { page: $location.url() });
-
-  	var giftCards = $(".giftCard");
-
-    $("#phone").mask("+38(999)999-99-99");
-
-    $scope.formUser = {};
-
-    $rootScope.pagetitle = "Подарки";
-
-  	$scope.selectedGift;
-
-  	$scope.selectGift = function(id, gift){
-  		$scope.selectedGift = id;
-      $scope.formUser.order_details = "Подарочный сертификат стоимостью: " + gift.price;
-  	}
-
-  	$scope.gifts = [
-  		{
-  			img:"https://rocket04.imgix.net/gifts_1.jpg?s=fa9dea2977649ce50e30185840863067",
-  			price:50,
-  			text:"Быстро. Вкусно. Надёжно. Идеальный вариант, если других вариантов нет.",
-  			id:1,
-  			popular:""
-  		},{
-  			img:"https://rocket04.imgix.net/gifts_2.jpg?s=77307f3ac2cd865f502625a63ad84970",
-  			id:2,
-  			price:100,
-  			text:"Идеально, что бы закрыть углеводное окно",
-  			popular:""
-  		},{
-  			img:"https://rocket04.imgix.net/gifts_3.jpg?s=67d0cef4aafa8c934c57a971ee6f4e22",
-  			id:3,
-  			price:250,
-  			text:"Перфекто для мистер или миссис Эгоисто на уно вечер",
-  			popular:"Популярное"
-  		},{
-  			img:"https://rocket04.imgix.net/gifts_4.jpg?s=bf19b02e7d7a5a76de7773444db6656f",
-  			id:4,
-  			price:500,
-  			text:"Идеальные выходные без головной боли на двоих",
-  			popular:""
-  		}
-  	];
-
-    $scope.buyGift = function () {
-      var newPhone = [];
-      for (var i = 0; i<$scope.formUser.phone.length;i++){
-        if($scope.formUser.phone[i] !== ")"){
-          if($scope.formUser.phone[i] !== "("){
-            if($scope.formUser.phone[i] !== "-"){
-              newPhone.push($scope.formUser.phone[i]);
-            }
-          }
-        } 
-      }
-      $scope.formUser.phone = newPhone.join('');
-      api.receipe.orders($scope.formUser).then(function(response){
-        $scope.notification = true;
-        $scope.successOrder = true;
-      },function(err) {
-        $scope.notification = true;
-        $scope.errorOrder = true;
-      });
-    }
-
-  });
-
-'use strict';
-
-/**
- * @ngdoc function
- * @name ocean04App.controller:HowCtrl
- * @description
- * # HowCtrl
- * Controller of the ocean04App
- */
-angular.module('ocean04App')
-  .controller('HowCtrl', function ($rootScope, $location,$window) {
-  	$(document).scrollTop(0);
-  	$rootScope.pagetitle = "Принцип Работы";
-  	$window.ga('send', 'pageview', { page: $location.url() });
-  });
-
-'use strict';
-
-/**
- * @ngdoc function
- * @name ocean04App.controller:TeamCtrl
- * @description
- * # TeamCtrl
- * Controller of the ocean04App
- */
-angular.module('ocean04App')
-  .controller('storeCtrl', function ($scope, $rootScope, api, loader, ngCart, ngCartItem, $location,$window, Page) {
-    $(document).scrollTop(0);
-    $rootScope.itemDescription = false;
-    $rootScope.pagetitle = "Ежедневное Меню";
-    Page.setTitle('Ежедневное Меню');
-    $(".slicknav_menu").show();
-    $scope.receipeLst1 = [];
-    $scope.recepie;
-    $window.ga('send', 'pageview', { page: $location.url() });
-    $scope.spinner=false;
-    $scope.colourIncludes = [];
-
-    //getting data from server Artem
-    this.getReceipesList = function() {
-      loader.notAllowed();
-      api.receipe.store().then(function(response) {
-        $scope.receipeLst1 = response;
-        loader.allowed();
-      }, function(err) {
-        $scope.receipeLst1 = [];
-        loader.allowed();
-      });
-    };
-      
-    $scope.includeColour = function(colour) {
-      var i = $.inArray(colour, $scope.colourIncludes);
-      if (i > -1) {
-        $scope.colourIncludes.splice(i, 1);
-      } else {
-        $scope.colourIncludes.push(colour);
-      }
-    }
-      
-    $scope.colourFilter = function(fruit) {
-      if ($scope.colourIncludes.length > 0) {
-        if ($.inArray(fruit.tag, $scope.colourIncludes) < 0)
-          return;
-      }  
-      return $scope.receipeLst1;
-    }
-
-    $scope.clearFilter = function () {
-      $scope.colourIncludes = [];
-      $('input[type="checkbox"]').prop( "checked", false ).parent().css('background', 'white');
-      // $('input[type="checkbox"]')
-    }
-
-    //getting quantity in cart by its id 
-    this.getInCartQuantity = function (id) {
-      var inCartQunatity = ngCart.getItemById(id);
-      var a = inCartQunatity._quantity;
-      this.inCartQunatity = a;
-      return this.inCartQunatity;
-    };
-
-    //removing or decrementing item quantity in cart
-    this.removeFromCart = function (id) {
-      var inCart = ngCart.getItemById(id);
-      if(inCart._quantity === 1){
-        ngCart.removeItemById(id);
-      }else if(inCart._quantity > 1){
-        inCart.setQuantity(-1, true)
-      }else{
-        return;
-      }
-      this.getInCartQuantity(id);
-    };
-
-    //adding or incrementing item quantity in cart
-    this.AddToCart = function (id, name, price, q, data) {
-      var a = ngCart.getItemById(id);
-      var q = q;
-      if(a._quantity >= 1){
-        q = a._quantity + 1;
-      }
-      ngCart.addItem(id, name, price, q, data);
-      this.getInCartQuantity(id);
-    };
-
-    $(window).scroll(function(){
-      var sticky = $('.storeNav'),
-          scroll = $(window).scrollTop();
-      if (scroll >= 80) sticky.addClass('fixed');
-      else sticky.removeClass('fixed');
-    });
-
-    this.getReceipesList();
-  });
-'use strict';
-
-/**
- * @ngdoc function
- * @name ocean04App.controller:TeamCtrl
- * @description
- * # TeamCtrl
- * Controller of the ocean04App
- */
-angular.module('ocean04App')
-  .controller('cartCtrl', function ($scope, $rootScope, ngCart, api, $timeout, $location,$window) {
-    $(document).scrollTop(0);
-    $("#phone").mask("+38(999)999-99-99");
-    $(".slicknav_menu").show();
-    $rootScope.itemDescription = false;
-    $rootScope.pagetitle = "Корзина";
-    $scope.formUser = {
-      email:""
-    };
-    $scope.address = {};
-    $window.ga('send', 'pageview', { page: $location.url() });
-    $scope.deliveryDate;
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
-    $scope.checkShipping = function () {
-      if(ngCart.totalCost()>500){
-        $scope.shipping = 0;
-      }else{
-        $scope.shipping = 20;
-      }
-    }
-
-    $scope.getDeliveryDate = function (){
-      var a = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"][new Date().getDay()];
-      switch(a){
-        case "Пн":
-          $scope.setDeliveryDate('Пн', 6);
-          break;
-        case "Вт":
-          $scope.setDeliveryDate('Вт', 5);
-          break;
-        case "Ср":
-          $scope.setDeliveryDate('Ср', 4);
-          break;
-        case "Чт":
-          $scope.setDeliveryDate('Чт', 3);
-          break;
-        case "Пт":
-          $scope.setDeliveryDate('Пт', 2);
-          break;
-        case "Сб":
-          $scope.setDeliveryDate('Сб', 1);
-          break;
-        case "Вс":
-          $scope.setDeliveryDate('Вс', 7);
-          break;
-        default:
-          break;
-      }
-    }
-
-    $scope.setDeliveryDate = function (day, count){
-      if(day == 'Сб'){
-        var hours = new Date().getHours();
-        if(hours >= 16 && hours <= 17){
-          console.log("у вас осталось мало времени");
-          $scope.deliveryDate = new Date(+new Date()+(86400000*1));
-        } else if(hours >= 17) {
-          $scope.deliveryDate = new Date(+new Date()+(86400000*7));
-        } else {
-          $scope.deliveryDate = new Date(+new Date()+(86400000*1));
-        }
-      } else {
-        $scope.deliveryDate = new Date(+new Date()+(86400000*count));
-      }
-    }
-    $scope.getDeliveryDate();
-    // 86400000 - one day in miliseconds
-
-    $scope.cartItems = ngCart.getCart();
-
-    $scope.getCart = function(){
-      $scope.cartTotal = ngCart.totalCost();
-    }
-
-    $scope.autocompleteOptions = {
-      componentRestrictions: { country: 'ua' }
-    }
-
-    $scope.removeItem = function(id){
-      ngCart.removeItemById(id);
-    }
-
-    $scope.countTotal = function () {
-      $scope.checkShipping();
-      $scope.totalWithShipping = ngCart.totalCost() + $scope.shipping;
-    }
-
-    $scope.deliveryCost = function (a) {
-      // if(a.vicinity = "Індустріальний район"){
-      //   $scope.shipping = 50;
-      // // }
-      // console.log(a.geometry.location.lat());
-      // console.log(a.geometry.location.lng());
-    }
-
-    $scope.destroyUI = function () {
-      localStorage.removeItem('cart');
-      $scope.formUser = {
-        email:""
-      };
-      $scope.cartItems = {};
-      $scope.cartTotal = 0;
-      $scope.address = {};
-    }
-
-    $scope.getCart();
-    $scope.checkShipping();
-    $scope.countTotal();   
-
-    $scope.checkout = function () {
-      $('#myModal').modal('show');
-      $scope.formUser.address = $scope.address.formatted_address;
-      $scope.formUser.total = (ngCart.totalCost() + $scope.shipping);
-
-      var order_details = [];
-      ngCart.getCart().items.forEach(function (key) {
-        order_details.push(key._name + " - " + key._quantity);
-      });
-      $scope.formUser.order_details = order_details.join(", ");
-
-      var b = new Date ($scope.deliveryDate);
-      var date = b.getDate()+' '+monthNames[b.getMonth()];
-
-      $scope.formUser.timegap = date + '|' + $("li.active>a")[0].innerHTML;
-
-      var newPhone = [];
-      for (var i = 0; i<$scope.formUser.phone.length;i++){
-        if($scope.formUser.phone[i] !== ")"){
-          if($scope.formUser.phone[i] !== "("){
-            if($scope.formUser.phone[i] !== "-"){
-              newPhone.push($scope.formUser.phone[i]);
-            }
-          }
-        } 
-      }
-      $scope.formUser.phone = newPhone.join('');
-    }
-
-    $scope.makeOrder = function () {
-      $('#myModal').modal('hide');
-      api.receipe.orders($scope.formUser).then(function(response){
-        $scope.notification = true;
-        $scope.successOrder = true;
-        $scope.destroyUI ();
-      },function(err) {
-        $scope.notification = true;
-        $scope.errorOrder = true;
-      });
-    }
-
-  });
-
-'use strict';
-
-angular.module('ocean04App')
-  .service('api', function ($http,$q,$window) {
-    $http.defaults.useXDomain = true;
-     $http.defaults.headers.post["Content-Type"] = "text/plain";
-    var url = 'https://rocket04.com/'
-
-// MAIN API REQUEST METHODS
-    var list =  function (suburl,field,param){
-      return $q(function(resolve, reject) {
-        $http({
-          method:'GET',
-          url: url+suburl,
-          params:param
-        }).success(function (data) {
-          for(var i = 0; i<data.length; i++){
-            var oldPrice = data[i].price.toString().split(".");
-            data[i].price;
-            data[i].newPrice = {
-              grand:oldPrice[0],
-              cents:oldPrice[1]
-            }
-          }
-          localStorage.setItem('items', JSON.stringify(data));
-          resolve(data);
-        }).error(function (data, status, headers, config) {
-          if(reject){
-            reject(data);
-          }
-        });
-      });
-    };
-
-    var post = function(suburl,param){
-      return $q(function(resolve, reject) {
-         $http.post(url+suburl,param
-        )
-        // var data =  JSON.stringify(param);
-        // $.ajax({
-        //   url: url+suburl,
-        //   type: 'post',
-        //   data: data ,
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   dataType: 'json'
-        // })
-        .success(function (data) {
-          resolve(data);
-        }).error(function (data, status, headers, config) {
-          var a = JSON.stringify(arguments);
-          alert(a);
-          reject(data);
-        });
-      });
-    };
-
-//API functionality
-    return {
-      receipe: {
-        store: function () {
-          return list('get_recipes');
-        },
-        orders: function (order) {
-          return post('order', order);
-        }
-      }
-    };
-  });
-
-'use strict';
-
-/**
- * @ngdoc function
- * @name ocean04App.controller:FulldescCtrl
- * @description
- * # FulldescCtrl
- * Controller of the ocean04App
- */
-angular.module('ocean04App')
-  .controller('FulldescCtrl', function ($scope, api, $rootScope, $routeParams, loader, ngCart, $location, $window) {
-    $(document).scrollTop(0);
-    $rootScope.itemDescription = true;
-    $('.slicknav_menu').each(function () {
-        this.style.setProperty( 'display', 'none', 'important' );
-    });
-    $scope.receipe;
-    $rootScope.pagetitle;
-    $window.ga('send', 'pageview', { page: $location.url() });
-
-    this.getRecepieById = function (id) {
-      var items = JSON.parse(localStorage.getItem('items')).filter(function (obj) {
-        if(obj.id == id){
-          return true;
-        }
-      });
-      var data = items[0];
-      var oldPrice = data.price.toString().split(".");
-      var oldNutrients = data.nutrients.split("|");
-      var subtitle = data.subtitle.split("|");
-      data.ingredients = data.ingredients.split("|");
-      data.portions = subtitle[0];
-      data.time = subtitle[1];
-      data.newPrice = {
-        grand:oldPrice[0],
-        cents:oldPrice[1]
-      }
-      data.newNutrients= {
-        callories: oldNutrients[0],
-        proteins: oldNutrients[1],
-        fats: oldNutrients[2],
-        carbohydrates: oldNutrients[3]
-      };
-      $scope.receipe = data;
-      $rootScope.pagetitle = $scope.receipe.title;
-    }
-
-    $scope.diet = [
-      {
-        img:'',
-        name:'',
-      },
-      {
-        img:'http://rocket04.imgix.net/diet_1.svg?s=4c4e6a0cab130c322c6aca083b5a3076',
-        name:'Вегетарианское',
-      },
-      {
-        img:'http://rocket04.imgix.net/diet_2.svg?s=086e988e8553d4028ed8e29377359fe6',
-        name:'Веганское',
-      },
-      {
-        img:'http://rocket04.imgix.net/diet_3.svg?s=85af099e62e0349cc057f83300d7482a',
-        name:'Без Глютена',
-      },
-      {
-        img:'http://rocket04.imgix.net/diet_4.svg?s=27c75e9d2a090988e06b640a6c457b72',
-        name:'Без Лактозы',
-      },
-      {
-        img:'http://rocket04.imgix.net/diet_5.svg?s=501744a476ede9d815c68ea228821fbc',
-        name:'Без Орехов',
-      },
-      {
-        img:'http://rocket04.imgix.net/diet_6.svg?s=58e666fdb84a3510d6005701d2a6b4a9',
-        name:'Без Яиц',
-      },
-      {
-        img:'http://rocket04.imgix.net/diet_7.svg?s=d111f8f6c71db9d42505f9c2199b3920',
-        name:'Палеодиета',
-      }
-    ]
-
-    //getting quantity in cart by its id 
-    this.getInCartQuantity = function (id) {
-      var inCartQunatity = ngCart.getItemById(id);
-      var a = inCartQunatity._quantity;
-      this.inCartQunatity = a;
-      return this.inCartQunatity;
-    };
-
-    //removing or decrementing item quantity in cart
-    this.removeFromCart = function (id) {
-      var inCart = ngCart.getItemById(id);
-      if(inCart._quantity === 1){
-        ngCart.removeItemById(id);
-      }else if(inCart._quantity > 1){
-        inCart.setQuantity(-1, true)
-      }else{
-        return;
-      }
-      this.getInCartQuantity(id);
-    };
-
-    //adding or incrementing item quantity in cart
-    this.AddToCart = function (id, name, price, q, data) {
-      var a = ngCart.getItemById(id);
-      var q = q;
-      if(a._quantity >= 1){
-        q = a._quantity + 1;
-      }
-      ngCart.addItem(id, name, price, q, data);
-      this.getInCartQuantity(id);
-    };
-
-    this.getRecepieById($routeParams.id);
-  });
-
-'use strict';
-
-/**
- * @ngdoc service
- * @name ocean04App.loader
- * @description
- * # loader
- * Service in the ocean04App.
- */
-angular.module('ocean04App')
-  .service('loader', function ($http, $rootScope) {
-    return{
-      allowed:function (){
-        $rootScope.storeLoader = false;
-        $('.loader').css('display','none');
-      }, 
-      notAllowed: function () {
-        $rootScope.storeLoader = true;
-        $('.loader').css('display','block');
-      }
-    }
-  });
-
 'use strict';
 
 //first module
@@ -1241,18 +634,604 @@ angular.module('ngCart.fulfilment', [])
 'use strict';
 
 /**
+ * @ngdoc service
+ * @name ocean04App.loader
+ * @description
+ * # loader
+ * Service in the ocean04App.
+ */
+angular.module('ocean04App')
+  .service('loader', function ($http,$rootScope,$window,$location) {
+    return{
+      allowed:function (){
+        $rootScope.storeLoader = false;
+        $('.loader').css('display','none');
+      }, 
+      notAllowed: function () {
+        $rootScope.storeLoader = true;
+        $('.loader').css('display','block');
+      },
+      gaTitleScroll: function (title) {
+        $rootScope.pagetitle = title;
+        $(document).scrollTop(0);
+        $window.ga('send', 'pageview', { page: $location.url() });
+      }
+    }
+  });
+
+'use strict';
+
+angular.module('ocean04App')
+  .service('api', function ($http,$q,$window) {
+    $http.defaults.useXDomain = true;
+     $http.defaults.headers.post["Content-Type"] = "text/plain";
+    var url = 'https://rocket04.com/'
+
+// MAIN API REQUEST METHODS
+    var list =  function (suburl,field,param){
+      return $q(function(resolve, reject) {
+        $http({
+          method:'GET',
+          url: url+suburl,
+          params:param
+        }).success(function (data) {
+          for(var i = 0; i<data.length; i++){
+            var oldPrice = data[i].price.toString().split(".");
+            data[i].price;
+            data[i].newPrice = {
+              grand:oldPrice[0],
+              cents:oldPrice[1]
+            }
+          }
+          localStorage.setItem('items', JSON.stringify(data));
+          resolve(data);
+        }).error(function (data, status, headers, config) {
+          if(reject){
+            reject(data);
+          }
+        });
+      });
+    };
+
+    var post = function(suburl,param){
+      return $q(function(resolve, reject) {
+         $http.post(url+suburl,param
+        )
+        // var data =  JSON.stringify(param);
+        // $.ajax({
+        //   url: url+suburl,
+        //   type: 'post',
+        //   data: data ,
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   dataType: 'json'
+        // })
+        .success(function (data) {
+          resolve(data);
+        }).error(function (data, status, headers, config) {
+          var a = JSON.stringify(arguments);
+          alert(a);
+          reject(data);
+        });
+      });
+    };
+
+//API functionality
+    return {
+      receipe: {
+        store: function () {
+          return list('get_recipes');
+        },
+        orders: function (order) {
+          return post('order', order);
+        }
+      }
+    };
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:MainCtrl
+ * @description
+ * # MainCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App').controller('MainCtrl', function (loader) {
+	loader.gaTitleScroll("Главная Страница");
+});
+
+'use strict';
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:AboutCtrl
+ * @description
+ * # AboutCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App').controller('AboutCtrl', function (loader) {
+	loader.gaTitleScroll("О Нас");
+});
+
+"use strict";
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:GiftsCtrl
+ * @description
+ * # GiftsCtrl
+ * Controller of the ocean04App
+ */
+angular.module("ocean04App")
+  .controller("GiftsCtrl", function ($scope, api, loader) {
+    loader.gaTitleScroll("Подарки");
+    $scope.gifts = [
+      {
+        img:"https://rocket04.imgix.net/gifts_1.jpg?s=fa9dea2977649ce50e30185840863067",
+        price:50,
+        text:"Быстро. Вкусно. Надёжно. Идеальный вариант, если других вариантов нет.",
+        id:1,
+        popular:""
+      },{
+        img:"https://rocket04.imgix.net/gifts_2.jpg?s=77307f3ac2cd865f502625a63ad84970",
+        id:2,
+        price:100,
+        text:"Идеально, что бы закрыть углеводное окно",
+        popular:""
+      },{
+        img:"https://rocket04.imgix.net/gifts_3.jpg?s=67d0cef4aafa8c934c57a971ee6f4e22",
+        id:3,
+        price:250,
+        text:"Перфекто для мистер или миссис Эгоисто на уно вечер",
+        popular:"Популярное"
+      },{
+        img:"https://rocket04.imgix.net/gifts_4.jpg?s=bf19b02e7d7a5a76de7773444db6656f",
+        id:4,
+        price:500,
+        text:"Идеальные выходные без головной боли на двоих",
+        popular:""
+      }
+    ];
+  	var giftCards = $(".giftCard");
+    $("#phone").mask("+38(999)999-99-99");
+    $scope.formUser = {};
+  	$scope.selectedGift;
+
+  	$scope.selectGift = function(id, gift){
+  		$scope.selectedGift = id;
+      $scope.formUser.order_details = "Подарочный сертификат стоимостью: " + gift.price;
+  	}
+
+    $scope.buyGift = function () {
+      var newPhone = [];
+      for (var i = 0; i<$scope.formUser.phone.length;i++){
+        if($scope.formUser.phone[i] !== ")"){
+          if($scope.formUser.phone[i] !== "("){
+            if($scope.formUser.phone[i] !== "-"){
+              newPhone.push($scope.formUser.phone[i]);
+            }
+          }
+        } 
+      }
+      $scope.formUser.phone = newPhone.join('');
+      api.receipe.orders($scope.formUser).then(function(response){
+        $scope.notification = true;
+        $scope.successOrder = true;
+      },function(err) {
+        $scope.notification = true;
+        $scope.errorOrder = true;
+      });
+    }
+  });
+
+'use strict';
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:HowCtrl
+ * @description
+ * # HowCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App').controller('HowCtrl', function (loader) {
+	loader.gaTitleScroll("Принцип Работы");
+});
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:TeamCtrl
+ * @description
+ * # TeamCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('storeCtrl', function ($scope, $rootScope, api, loader, ngCart, ngCartItem, $interval) {
+    loader.gaTitleScroll("Ежедневное Меню");
+    $rootScope.itemDescription = false;
+    $(".slicknav_menu").show();
+    $scope.receipeLst1 = [];
+    $scope.colourIncludes = [];
+
+    //getting data from server Artem
+    this.getReceipesList = function() {
+      loader.notAllowed();
+      api.receipe.store().then(function(response) {
+        $scope.receipeLst1 = response;
+        loader.allowed();
+      }, function(err) {
+        $scope.receipeLst1 = [];
+        loader.allowed();
+      });
+    };
+
+    var countDownTimer = new Date().getHours();
+    $scope.countDownFlag = false;
+
+    if(countDownTimer == 17){
+      $scope.countDownFlag = true;
+      $scope.countDown = 59-new Date().getMinutes();
+      $interval(function() {
+        $scope.countDown = $scope.countDown - 1
+        if ($scope.countDown == 0){
+          $scope.stopCountDown();
+          $scope.countDownFlag = false;
+        }
+        console.log($scope.countDown);
+      }, 60000);
+    }
+
+    $scope.stopCountDown = function() {
+      if (angular.isDefined(stop)) {
+        $interval.cancel(stop);
+        stop = undefined;
+      }
+    };
+
+    $scope.includeColour = function(colour) {
+      var i = $.inArray(colour, $scope.colourIncludes);
+      if (i > -1) {
+        $scope.colourIncludes.splice(i, 1);
+      } else {
+        $scope.colourIncludes.push(colour);
+      }
+    }
+      
+    $scope.colourFilter = function(fruit) {
+      if ($scope.colourIncludes.length > 0) {
+        if ($.inArray(fruit.tag, $scope.colourIncludes) < 0)
+          return;
+      }  
+      return $scope.receipeLst1;
+    }
+
+    $scope.clearFilter = function () {
+      $scope.colourIncludes = [];
+      $('input[type="checkbox"]').prop( "checked", false ).parent().css('background', 'white');
+    }
+
+    //getting quantity in cart by its id 
+    this.getInCartQuantity = function (id) {
+      // var inCartQunatity = ngCart.getItemById(id);
+      // var a = inCartQunatity._quantity;
+      // this.inCartQunatity = ngCart.getItemById(id)._quantity;
+      // return this.inCartQunatity;
+      return ngCart.getItemById(id)._quantity;
+    };
+
+    //removing or decrementing item quantity in cart
+    this.removeFromCart = function (id) {
+      // var inCart = ngCart.getItemById(id);
+      // if(inCart._quantity === 1){
+      //   ngCart.removeItemById(id);
+      // }else if(inCart._quantity > 1){
+      //   inCart.setQuantity(-1, true)
+      // }else{
+      //   return;
+      // }
+      ngCart.getItemById(id)._quantity === 1 ? 
+        ngCart.removeItemById(id) : 
+          ngCart.getItemById(id).setQuantity(-1, true);
+      this.getInCartQuantity(id);
+    };
+
+    //adding or incrementing item quantity in cart
+    this.AddToCart = function (id, name, price, q, data) {
+      if(ngCart.getItemById(id)._quantity >= 1) q = ngCart.getItemById(id)._quantity + 1;
+      ngCart.addItem(id, name, price, q, data);
+      this.getInCartQuantity(id);
+    };
+
+    $(window).scroll(function(){
+      if ($(window).scrollTop() >= 79) $('.storeNav').addClass('fixed');
+      else $('.storeNav').removeClass('fixed');
+    });
+
+    this.getReceipesList();
+  });
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:TeamCtrl
+ * @description
+ * # TeamCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('cartCtrl', function ($scope, $rootScope, $timeout, loader, ngCart, api) {
+    loader.gaTitleScroll("Корзина");
+    $("#phone").mask("+38(999)999-99-99");
+    $(".slicknav_menu").show();
+    $rootScope.itemDescription = false;
+    $scope.formUser = {email:""};
+    $scope.delivery;
+    $scope.address = {};
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+    $scope.checkShipping = function (km) {
+      ngCart.totalCost()>500 ? $scope.shipping = 0 : $scope.shipping = 50;
+      if($scope.shipping == 50){
+        km>5 ? $scope.shipping=Math.round(((km-5)*0.5+$scope.shipping)) : $scope.shipping = 50;
+      }
+    }
+
+    $scope.getWeekDay = function (i) {
+      if(new Date().getHours() >= 18) i=i+1;
+      return {
+        day:[
+          "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
+          "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
+          "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
+          "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"
+        ][new Date().getDay()+i],
+        date:new Date(+new Date()+(86400000*i)).getDate(),
+        originalDate: new Date(+new Date()+(86400000*i))
+      };
+    }
+
+    $scope.setDeliveryDates = function(){
+      $scope.dates = [$scope.getWeekDay(0)];
+      $scope.dates[0].isActive = true;
+      $scope.deliveryDate = $scope.dates[0].originalDate;
+      for (var i=1;i<6;i++) $scope.dates.push($scope.getWeekDay(i));
+    }
+
+    $scope.setDeliveryDates();
+
+    $scope.$watch("address", function (data) {
+      if(data){
+        var coor = {
+          lat:data.geometry.location.lat(),
+          lng:data.geometry.location.lng()
+        };
+        $scope.getDirection(coor);
+      }
+    })
+
+    $scope.getDirection = (address) => {
+      var directionsService = new google.maps.DirectionsService(),
+          start = new google.maps.LatLng(48.466392, 35.025341),
+          end = new google.maps.LatLng(address.lat, address.lng),
+          bounds = new google.maps.LatLngBounds();
+      bounds.extend(start);
+      bounds.extend(end);
+      var request = {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.DRIVING
+      };
+      directionsService.route(request, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK)
+          $scope.checkShipping(response.routes[0].legs[0].distance.value / 1000);
+      });
+    }
+
+    $scope.setActiveDelivery = function (choosen){
+      $('.dateWrapper').click(function(){
+        $('.dateWrapper').removeClass('active');
+        $(this).addClass('active');
+      });
+      $scope.deliveryDate = choosen.originalDate;
+    }
+
+    $scope.cartItems = ngCart.getCart();
+
+    $scope.getCart = function(){
+      $scope.cartTotal = ngCart.totalCost();
+    }
+
+    $scope.autocompleteOptions = {
+      componentRestrictions: { country: 'ua' }
+    }
+
+    $scope.removeItem = function(id){
+      ngCart.removeItemById(id);
+    }
+
+    $scope.countTotal = function () {
+      $scope.checkShipping();
+      $scope.totalWithShipping = ngCart.totalCost() + $scope.shipping;
+    }
+
+    $scope.destroyUI = function () {
+      localStorage.removeItem('cart');
+      $scope.formUser = {email:""};
+      $scope.cartItems = {};
+      $scope.cartTotal = 0;
+      $scope.address = {};
+    }
+
+    $scope.getCart();
+    $scope.checkShipping();
+    $scope.countTotal();
+
+    $scope.checkout = function () {
+      $('#myModal').modal('show');
+      if(!$scope.address.formatted_address)
+        $scope.address.formatted_address = $('#adress').val();
+      
+      $scope.formUser.address = $scope.address.formatted_address;
+      $scope.formUser.total = (ngCart.totalCost() + $scope.shipping);
+
+      var order_details = [];
+      ngCart.getCart().items.forEach(function (key) {
+        order_details.push(key._name + " - " + key._quantity);
+      });
+      $scope.formUser.order_details = order_details.join(", ");
+
+      var date = new Date($scope.deliveryDate).getDate()+' '+monthNames[new Date($scope.deliveryDate).getMonth()];
+      var time = $("li.active>a")[0].innerHTML;
+
+      if(time == "НА СЕЙЧАС"){
+        time = (new Date().getHours() + 1) + ":" + (new Date().getMinutes());
+      }
+
+      $scope.formUser.timegap = date + '|' + time;
+
+      $scope.formUser.phone = "+"+$scope.formUser.phone.replace(/\W/g,"");
+      console.log($scope.formUser);
+    }
+
+    $scope.makeOrder = function () {
+      $('#myModal').modal('hide');
+      api.receipe.orders($scope.formUser).then(function(response){
+        $scope.notification = true;
+        $scope.successOrder = true;
+        $scope.destroyUI ();
+      },function(err) {
+        $scope.notification = true;
+        $scope.errorOrder = true;
+      });
+    }
+
+  });
+
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name ocean04App.controller:FulldescCtrl
+ * @description
+ * # FulldescCtrl
+ * Controller of the ocean04App
+ */
+angular.module('ocean04App')
+  .controller('FulldescCtrl', function ($scope, $rootScope, $routeParams, api, loader, ngCart) {
+    $rootScope.itemDescription = true;
+    $('.slicknav_menu').each(function () {
+        this.style.setProperty( 'display', 'none', 'important' );
+    });
+    $scope.receipe;
+    this.getRecepieById = function (id) {
+      var items = JSON.parse(localStorage.getItem('items')).filter(function (obj) {
+        if(obj.id == id){
+          return true;
+        }
+      });
+      var data = items[0];
+      var oldPrice = data.price.toString().split(".");
+      var oldNutrients = data.nutrients.split("|");
+      var subtitle = data.subtitle.split("|");
+      data.ingredients = data.ingredients.split("|");
+      data.portions = subtitle[0];
+      data.time = subtitle[1];
+      data.newPrice = {
+        grand:oldPrice[0],
+        cents:oldPrice[1]
+      }
+      data.slides=[];
+      data.slides.push(data.photo);
+      data.slides.push(data.ingredients_photo);
+      data.newNutrients= {
+        callories: oldNutrients[0],
+        proteins: oldNutrients[1],
+        fats: oldNutrients[2],
+        carbohydrates: oldNutrients[3]
+      };
+      $scope.receipe = data;
+      loader.gaTitleScroll($scope.receipe.title);
+    }
+
+    $scope.diet = [
+      {
+        img:'',
+        name:'',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_1.svg?s=4c4e6a0cab130c322c6aca083b5a3076',
+        name:'Вегетарианское',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_2.svg?s=086e988e8553d4028ed8e29377359fe6',
+        name:'Веганское',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_3.svg?s=85af099e62e0349cc057f83300d7482a',
+        name:'Без Глютена',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_4.svg?s=27c75e9d2a090988e06b640a6c457b72',
+        name:'Без Лактозы',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_5.svg?s=501744a476ede9d815c68ea228821fbc',
+        name:'Без Орехов',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_6.svg?s=58e666fdb84a3510d6005701d2a6b4a9',
+        name:'Без Яиц',
+      },
+      {
+        img:'http://rocket04.imgix.net/diet_7.svg?s=d111f8f6c71db9d42505f9c2199b3920',
+        name:'Палеодиета',
+      }
+    ]
+
+    //getting quantity in cart by its id 
+    this.getInCartQuantity = function (id) {
+      return ngCart.getItemById(id)._quantity;
+    };
+
+    //removing or decrementing item quantity in cart
+    this.removeFromCart = function (id) {
+      // var inCart = ngCart.getItemById(id);
+      // if(inCart._quantity === 1){
+      //   ngCart.removeItemById(id);
+      // }else if(inCart._quantity > 1){
+      //   inCart.setQuantity(-1, true)
+      // }else{
+      //   return;
+      // }
+      ngCart.getItemById(id)._quantity === 1 ? 
+        ngCart.removeItemById(id) : 
+          ngCart.getItemById(id).setQuantity(-1, true);
+      this.getInCartQuantity(id);
+    };
+
+    //adding or incrementing item quantity in cart
+    this.AddToCart = function (id, name, price, q, data) {
+      if(ngCart.getItemById(id)._quantity >= 1) q = ngCart.getItemById(id)._quantity + 1;
+      ngCart.addItem(id, name, price, q, data);
+      this.getInCartQuantity(id);
+    };
+
+    this.getRecepieById($routeParams.id);
+  });
+
+'use strict';
+/**
  * @ngdoc function
  * @name ocean04App.controller:GmapCtrl
  * @description
  * # GmapCtrl
  * Controller of the ocean04App
  */
-angular.module('ocean04App')
-  .controller('GmapCtrl', function ($rootScope, $location,$window) {
-    $(document).scrollTop(0);
-    $rootScope.pagetitle = "Зона Доставки";
-    $window.ga('send', 'pageview', { page: $location.url() });
-  });
+angular.module('ocean04App').controller('GmapCtrl', function (loader) {
+	loader.gaTitleScroll("Зона Доставки");
+});
 
 'use strict';
 
@@ -1263,12 +1242,9 @@ angular.module('ocean04App')
  * # ContractCtrl
  * Controller of the ocean04App
  */
-angular.module('ocean04App')
-  .controller('ContractCtrl', function ($rootScope,$location,$window) {
-    $(document).scrollTop(0);
-    $rootScope.pagetitle = "Приватность и Условия";
-    $window.ga('send', 'pageview', { page: $location.url() });
-  });
+angular.module('ocean04App').controller('ContractCtrl', function (loader) {
+  loader.gaTitleScroll("Приватность и Условия");
+});
 
 'use strict';
 
@@ -1279,9 +1255,6 @@ angular.module('ocean04App')
  * # ContactsCtrl
  * Controller of the ocean04App
  */
-angular.module('ocean04App')
-  .controller('ContactsCtrl', function ($rootScope, $location,$window) {
-    $(document).scrollTop(0);
-    $rootScope.pagetitle = "Контакты";
-    $window.ga('send', 'pageview', { page: $location.url() });
-  });
+angular.module('ocean04App').controller('ContactsCtrl', function (loader) {
+  loader.gaTitleScroll("Контакты");
+});
