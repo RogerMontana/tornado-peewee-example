@@ -76,7 +76,7 @@
     <![endif]-->
     <!-- mainNav -->
 <!--     <rocket-navigation ng-hide="itemDescription"></rocket-navigation> -->
-    <div ng-include="'views/navigation.html'" ng-hide="itemDescription"></div>
+    <div ng-include="'static/build/views/navigation.html'" ng-hide="itemDescription"></div>
     <!--Slick nav menu-->
     <ul id="menuStick" style="display:none;" ng-hide="itemDescription">
       <li><a href="#/how">Принцип Работы</a></li>
@@ -95,7 +95,7 @@
     <div ng-view ng-hide="storeLoader" class="rocket-view"></div>
     <!-- footer -->
     <!-- <rocket-footer></rocket-footer> -->
-    <div ng-include="'views/footer.html'"></div>
+    <div ng-include="'static/build/views/footer.html'"></div>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script src="static/build/scripts/vendor.js"></script>
     <script src="static/build/scripts/scripts.js"></script>
