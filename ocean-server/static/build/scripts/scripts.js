@@ -1011,7 +1011,7 @@ angular.module('ocean04App')
       }
     })
 
-    $scope.getDirection = (address) => {
+    $scope.getDirection = function (address)  {
       var directionsService = new google.maps.DirectionsService(),
           start = new google.maps.LatLng(48.466392, 35.025341),
           end = new google.maps.LatLng(address.lat, address.lng),
