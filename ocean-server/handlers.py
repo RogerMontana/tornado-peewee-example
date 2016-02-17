@@ -97,9 +97,15 @@ class OrdersHandler(PeeweeRequestHandler):
         # SMS NOTIFICATION
         try:
             client = TwilioRestClient(account="AC62c3e1728fb6f97d87e04c923a364450", token="75f320c1bbe0b77ac012e9a796c2f2b5")
+            
             message = client.messages.create(body="Vash zakaz bydet dostavlen " + result["timegap"] + ". K oplate " + str(result["total"]) + "UAH",
                 to=result["phone"],    # Replace with your phone number
                 from_="Rocket04") # Replace with your Twilio number
+
+            message_to_p = client.messages.create(body="NOVIY ZAKAZ k " + result["timegap"] + "pozvoni na" + result["phone"],
+                                                  to ="+380503415646",
+                                                  from_="Rocket04")
+            print(message_to_p.sid)
             print(message.sid)
             print(result["phone"])
         except:
