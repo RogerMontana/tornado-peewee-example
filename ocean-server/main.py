@@ -23,6 +23,7 @@ class Application(tornado.web.Application):
             (r"/login", LoginHandler),
             (r"/get_recipes", AllRecipesHandler),
             (r"/order", OrdersHandler),
+            (r"/promo", PromoCodeHandler)
         ]
         settings = {
             "template_path": TEMPLATE_PATH,

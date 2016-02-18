@@ -144,3 +144,30 @@ class OrdersHandler(PeeweeRequestHandler):
         self.set_header("Content-Type", "application/json")
         self.set_header("Access-Control-Allow-Origin", "*")
         self.write(json.dumps(response))
+
+
+class PromoCodeHandler(tornado.web.RequestHandler):
+    response_promotion1 = {'provider':"Test1", 'discount':15}
+    response_promotion2 = {'provider':"Test1", 'discount':10}
+    response_error = {'provider':'ERROR', 'discount':0}
+
+    promocodes_p1 = ["test1",]
+    promocodes_p2 = ["test2",]
+
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Content-Type", "application/json")
+        self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+
+    def post(self, *args, **kwargs):
+        promo = json.loads(self.request.body)
+        code = promo["code"]
+        if(code in self.promocodes_p1):
+            self.write(json.dumps(self.response_promotion1))
+        elif (code in self.promocodes_p2):
+            self.write(json.dumps(self.response_promotion2))
+        else:
+            self.write(json.dumps(self.response_error))
+
+
+
