@@ -1134,10 +1134,12 @@ angular.module('ocean04App')
       }
     }
 
+    var that = this;
+
     this.getReceipesList = function() {
       api.receipe.store().then(function(response) {
         $scope.receipeLst1 = response;
-        this.getRecepieById($routeParams.id)
+        that.getRecepieById($routeParams.id)
       }, function(err) {
         $scope.receipeLst1 = [];
         loader.allowed();
