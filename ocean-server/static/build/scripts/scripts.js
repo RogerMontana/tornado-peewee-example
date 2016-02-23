@@ -1125,6 +1125,27 @@ angular.module('ocean04App')
         this.style.setProperty( 'display', 'none', 'important' );
     });
     $scope.receipe;
+
+    this.checkLocal = function () {
+      if(localStorage.getItem('items')){
+        this.getRecepieById($routeParams.id);
+      } else {
+        this.getReceipesList();
+      }
+    }
+
+    var that = this;
+
+    this.getReceipesList = function() {
+      api.receipe.store().then(function(response) {
+        $scope.receipeLst1 = response;
+        that.getRecepieById($routeParams.id)
+      }, function(err) {
+        $scope.receipeLst1 = [];
+        loader.allowed();
+      });
+    };
+
     this.getRecepieById = function (id) {
       var items = JSON.parse(localStorage.getItem('items')).filter(function (obj) {
         if(obj.id == id){
@@ -1218,7 +1239,7 @@ angular.module('ocean04App')
       this.getInCartQuantity(id);
     };
 
-    this.getRecepieById($routeParams.id);
+    this.checkLocal();
   });
 
 'use strict';
