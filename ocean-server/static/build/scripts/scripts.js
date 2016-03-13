@@ -48,11 +48,11 @@ angular
         controller: 'storeCtrl',
         controllerAs: 'store'
       })
-      .when('/cart', {
-        templateUrl: '/static/build/views/cart.html',
-        controller: 'cartCtrl',
-        controllerAs: 'cart'
-      })
+      // .when('/cart', {
+      //   templateUrl: '/static/build/views/cart.html',
+      //   controller: 'cartCtrl',
+      //   controllerAs: 'cart'
+      // })
       .when('/desc/:id', {
         templateUrl: '/static/build/views/fulldesc.html',
         controller: 'FulldescCtrl',

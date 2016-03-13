@@ -60,8 +60,8 @@
                 </div>
 
                 <div class="buttons pull-right" style="display: inline;">
-                  <a class="btn btn-sm removeFromCart" ng-click="s.removeFromCart(i.id)" ng-hide="!s.getInCartQuantity(i.id)"><i class="glyphicon glyphicon-minus"></i></a>
-                  <a class="btn btn-sm" ng-click="s.AddToCart(i.id, i.title, i.price, 1, {img:i.photo})"><i class="glyphicon glyphicon-plus"></i></a>
+                  <a class="btn btn-sm removeFromCart" ng-disabled="true" ng-click="s.removeFromCart(i.id)" ng-hide="!s.getInCartQuantity(i.id)"><i class="glyphicon glyphicon-minus"></i></a>
+                  <a class="btn btn-sm" ng-disabled="true" ng-click="s.AddToCart(i.id, i.title, i.price, 1, {img:i.photo})"><i class="glyphicon glyphicon-plus"></i></a>
                 </div>
               </div>
             </div>
