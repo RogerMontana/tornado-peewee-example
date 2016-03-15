@@ -10,6 +10,7 @@ import sys, inspect
 import os
 from models import Recipes
 from models import Orders
+from models import Promocodes
 from models import db_proxy
 from peewee import *
 from promo import PromoCodes
@@ -128,26 +129,38 @@ class OrdersHandler(PeeweeRequestHandler):
         except:
             self.write(json.dumps(self.response_error))
 
-    def get(self, *args, **kwargs):
-        response =[]
-        # for order in Orders.select():
-        #     order_obj = {
-        #         "id": order.id,
-        #         "order_details" : order.order_details,
-        #         "total_bill": float(order.total_bill),
-        #         "time_gap": order.time_gap,
-        #         "address" : order.address,
-        #         "name" : order.name,
-        #         "status" : order.status,
-        #         "phone" : order.phone
-        #     }
-        #     response.append(order_obj)
-        self.set_header("Content-Type", "application/json")
+
+
+class AdminOrderHandler(PeeweeRequestHandler):
+    secret_keys = ["POVARPOVAR",]
+
+    def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Content-Type", "application/json")
+        self.set_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+
+    def post(self, *args, **kwargs):
+        response =[]
+        auth = json.loads(self.request.body)
+        key = auth["key"]
+
+        if(key in self.secret_keys):
+         for order in Orders.select():
+             order_obj = {
+                    "id": order.id,
+                    "order_details" : order.order_details,
+                    "total_bill": float(order.total_bill),
+                    "time_gap": order.time_gap,
+                    "address" : order.address,
+                    "name" : order.name,
+                    "status" : order.status,
+                    "phone" : order.phone
+             }
+             response.append(order_obj)
         self.write(json.dumps(response))
 
 
-class PromoCodeHandler(tornado.web.RequestHandler):
+class PromoCodeHandler(PeeweeRequestHandler):
     response_promotion1 = {'provider':"Ekipazh", 'discount':25}
     response_promotion2 = {'provider':"Test1", 'discount':10}
     response_error = {'provider':'ERROR', 'discount':0}
