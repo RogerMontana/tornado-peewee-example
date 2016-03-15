@@ -10,9 +10,7 @@ import sys, inspect
 import os
 from models import Recipes
 from models import Orders
-from models import Promocodes
 from models import db_proxy
-from peewee import *
 from promo import PromoCodes
 import json
 
