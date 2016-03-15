@@ -17,46 +17,55 @@
 
     <div class="row">
 
-    <div class="col-xs-12">
-      <h3 class="text-uppercase menuHeader">Меню</h3>
+    <div class="col-xs-12 menuHeaderContainer">
+      <h3 class="text-uppercase text-center menuHeader">
+        <span>
+          ежедневное Меню
+        </span>
+      </h3>
+      <p class="text-center menuSubHeader">С нашей кухни прямо на вашу</p>
     </div>
 
     <ul class="list-unstyled">
       <li ng-repeat="i in receipeLst1 | filter:search:strict | filter:colourFilter">
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 card" >
-
           <div style="background: white;">
             <a ng-href="#/desc/{{i.id}}">
               <div class="image photo-container" ng-class="{'quantity fadein fadeout':s.getInCartQuantity(i.id)}" style="margin-bottom: -21px;">
-                <div ng-hide="!s.getInCartQuantity(i.id)" class="inCart fadein fadeout">
+                <div ng-show="s.getInCartQuantity(i.id)" class="inCart fadein fadeout">
                   <h1>{{s.getInCartQuantity(i.id)}}</h1>
                   <p>в Вашей корзине</p>
                 </div>
+
                 <img ng-src="{{i.photo}}">
               </div>
             </a>
+
             <div class="description" style="padding: 6%; border: 1px solid #e8ebe9;">
               <div class="title">
                 <h3>{{i.title}}</h3>
               </div>
+
               <div class="tags">
                 <p class="itemTag text-capitalize">
                   Размер Порции: {{i.size}} грамм
                 </p>
               </div>
+
               <div class="separator"></div>
+
               <div class="actions">
                 <div class="price" style="display: inline;">
                   {{i.newPrice.grand}}.<sup>{{i.newPrice.cents}}<span ng-hide="i.newPrice.cents.length">00</span></sup> UAH
                 </div>
+
                 <div class="buttons pull-right" style="display: inline;">
-                  <a class="btn btn-sm removeFromCart" ng-click="s.removeFromCart(i.id)" ng-hide="!s.getInCartQuantity(i.id)"><i class="glyphicon glyphicon-minus"></i></a>
-                  <a class="btn btn-sm" ng-click="s.AddToCart(i.id, i.title, i.price, 1, {img:i.photo})"><i class="glyphicon glyphicon-plus"></i></a>
+                  <a class="btn btn-sm removeFromCart" ng-disabled="true" ng-click="s.removeFromCart(i.id)" ng-hide="!s.getInCartQuantity(i.id)"><i class="glyphicon glyphicon-minus"></i></a>
+                  <a class="btn btn-sm" ng-disabled="true" ng-click="s.AddToCart(i.id, i.title, i.price, 1, {img:i.photo})"><i class="glyphicon glyphicon-plus"></i></a>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
        </li>
      </ul>
