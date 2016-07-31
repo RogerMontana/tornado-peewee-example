@@ -23,14 +23,13 @@ class Recipes(Model):
     publication_date = DateTimeField(default=datetime.datetime.now)
     is_published = BooleanField(default=True)
 
-
     def __str__(self):
         r = {}
         for k in self._data.keys():
-         try:
-           r[k] = str(getattr(self, k))
-         except:
-           r[k] = json.dumps(getattr(self, k))
+            try:
+                r[k] = str(getattr(self, k))
+            except:
+                r[k] = json.dumps(getattr(self, k))
         return str(r)
 
     class Meta:
@@ -39,6 +38,7 @@ class Recipes(Model):
             # create a unique on fields below
             (('title',), True),
         )
+
 
 class Orders(Model):
     order_details = TextField()
@@ -53,11 +53,31 @@ class Orders(Model):
     class Meta:
         database = db_proxy
 
+
+class Promocodes(Model):
+    provider = TextField(default="Rocket04")
+    code = TextField(default="TestPromoCode")
+    isUsed = BooleanField(default=False)
+
+    class Meta:
+        database = db_proxy
+
+
 if 'HEROKU' in os.environ:
     import urlparse, psycopg2
+
     urlparse.uses_netloc.append('postgres')
     url = urlparse.urlparse(os.environ["DATABASE_URL"])
-    db = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname, port=url.port, autocommit=True, autorollback=True)
+
+    db = PostgresqlDatabase(
+        database=url.path[1:],
+        user=url.username,
+        password=url.password,
+        host=url.hostname,
+        port=url.port,
+        autocommit=True,
+        autorollback=True)
+
     db_proxy.initialize(db)
 else:
     db = SqliteDatabase('ocean04-dev.db')

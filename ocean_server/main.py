@@ -3,8 +3,10 @@ import os
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
-from handlers import *
 
+from ocean_server.handlers.web import MainHandler, InfoApiHandler
+from ocean_server.handlers.recipes import AllRecipesHandler
+from ocean_server.handlers.orders import OrdersHandler
 
 # TODO Refactor settings
 dirname = os.path.dirname(__file__)
@@ -18,13 +20,9 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", MainHandler),
-            (r"/rockettest", TestRocket),
             (r"/info", InfoApiHandler),
-            (r"/login", LoginHandler),
             (r"/get_recipes", AllRecipesHandler),
             (r"/order", OrdersHandler),
-            (r"/promo", PromoCodeHandler),
-            (r"/admin_orders", AdminOrderHandler),
         ]
         settings = {
             "template_path": TEMPLATE_PATH,
@@ -37,6 +35,7 @@ def main():
     http_server = tornado.httpserver.HTTPServer(applicaton)
     port = int(os.environ.get("PORT", 5000))
     http_server.listen(port)
+    print("server address is 0.0.0.0:", str(port))
     tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":

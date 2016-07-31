@@ -1,1 +1,1 @@
-web: python ocean-server/main.py
+web: python ocean_server/main.py
