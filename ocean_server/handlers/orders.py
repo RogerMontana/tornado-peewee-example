@@ -6,9 +6,9 @@ from ocean_server.database.models import Orders
 
 
 class OrdersHandler(PeeweeRequestHandler):
-    account_sid = 'AC62c3e1728fb6f97d87e04c923a364450'
-    auth_token = '{{75f320c1bbe0b77ac012e9a796c2f2b5}}'
-    number = '+380504814277'
+    account_sid = 'XXXXXXXXXXXXX'
+    auth_token = '{{XXXXXXXXXXXX}}'
+    number = '+XXXXXXXXXX'
 
     response_ok = {'code': 200, 'response': 'OK'}
     response_error = {'code': 400, 'response': 'ERROR'}
